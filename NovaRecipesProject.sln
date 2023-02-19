@@ -1,0 +1,108 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D51C10D3-D1E0-454F-8874-537618692DBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F93FF718-2027-47EA-ADC2-AF8721A0F2A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{F5479285-E545-4CDC-82C4-D03DC58BD9E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Systems", "Systems", "{0C0EF47D-C334-4402-A389-364160B173F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{340386CD-C4AA-4DC2-8EE3-EF175A8FDFA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{3EDBA3A1-9EDF-4591-87F5-3F0BFEFF7C29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{95E8CC8A-F45B-468F-8712-B4F579F132FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Api", "Systems\Api\NovaRecipesProject.Api\NovaRecipesProject.Api.csproj", "{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Api.Settings", "Systems\Api\NovaRecipesProject.Api.Settings\NovaRecipesProject.Api.Settings.csproj", "{E23E503A-FC5A-4B08-8356-7DACC6815D26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Identity", "Systems\Identity\NovaRecipesProject.Identity\NovaRecipesProject.Identity.csproj", "{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Common", "Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj", "{67299E75-98EA-4F61-AE49-450DBC2FE37C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Settings", "Shared\NovaRecipesProject.Settings\NovaRecipesProject.Settings.csproj", "{271DA03B-E3A0-4139-8F64-34FD1F398753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.Settings", "Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj", "{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context.Migrations.MSSQL", "Data\Migrations\NovaRecipesProject.Context.Migrations.MSSQL\NovaRecipesProject.Context.Migrations.MSSQL.csproj", "{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context.Migrations.PostgreSQL", "Data\Migrations\NovaRecipesProject.Context.Migrations.PostgreSQL\NovaRecipesProject.Context.Migrations.PostgreSQL.csproj", "{43E89087-86C6-45C2-A367-C5D453DAEA73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context", "Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj", "{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context.Entities", "Data\NovaRecipesProject.Context.Entities\NovaRecipesProject.Context.Entities.csproj", "{B71D57B3-BEC0-4F4E-86E1-843070CCC822}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23E503A-FC5A-4B08-8356-7DACC6815D26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23E503A-FC5A-4B08-8356-7DACC6815D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23E503A-FC5A-4B08-8356-7DACC6815D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23E503A-FC5A-4B08-8356-7DACC6815D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67299E75-98EA-4F61-AE49-450DBC2FE37C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67299E75-98EA-4F61-AE49-450DBC2FE37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67299E75-98EA-4F61-AE49-450DBC2FE37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67299E75-98EA-4F61-AE49-450DBC2FE37C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{271DA03B-E3A0-4139-8F64-34FD1F398753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{271DA03B-E3A0-4139-8F64-34FD1F398753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{271DA03B-E3A0-4139-8F64-34FD1F398753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{271DA03B-E3A0-4139-8F64-34FD1F398753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43E89087-86C6-45C2-A367-C5D453DAEA73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43E89087-86C6-45C2-A367-C5D453DAEA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43E89087-86C6-45C2-A367-C5D453DAEA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43E89087-86C6-45C2-A367-C5D453DAEA73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B71D57B3-BEC0-4F4E-86E1-843070CCC822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B71D57B3-BEC0-4F4E-86E1-843070CCC822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B71D57B3-BEC0-4F4E-86E1-843070CCC822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B71D57B3-BEC0-4F4E-86E1-843070CCC822}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{340386CD-C4AA-4DC2-8EE3-EF175A8FDFA0} = {0C0EF47D-C334-4402-A389-364160B173F6}
+		{3EDBA3A1-9EDF-4591-87F5-3F0BFEFF7C29} = {0C0EF47D-C334-4402-A389-364160B173F6}
+		{95E8CC8A-F45B-468F-8712-B4F579F132FF} = {D51C10D3-D1E0-454F-8874-537618692DBE}
+		{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A} = {340386CD-C4AA-4DC2-8EE3-EF175A8FDFA0}
+		{E23E503A-FC5A-4B08-8356-7DACC6815D26} = {340386CD-C4AA-4DC2-8EE3-EF175A8FDFA0}
+		{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8} = {3EDBA3A1-9EDF-4591-87F5-3F0BFEFF7C29}
+		{67299E75-98EA-4F61-AE49-450DBC2FE37C} = {F5479285-E545-4CDC-82C4-D03DC58BD9E2}
+		{271DA03B-E3A0-4139-8F64-34FD1F398753} = {F5479285-E545-4CDC-82C4-D03DC58BD9E2}
+		{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
+		{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6} = {95E8CC8A-F45B-468F-8712-B4F579F132FF}
+		{43E89087-86C6-45C2-A367-C5D453DAEA73} = {95E8CC8A-F45B-468F-8712-B4F579F132FF}
+		{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0} = {D51C10D3-D1E0-454F-8874-537618692DBE}
+		{B71D57B3-BEC0-4F4E-86E1-843070CCC822} = {D51C10D3-D1E0-454F-8874-537618692DBE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {923486EB-E594-49ED-9246-C7BBAA6025EB}
+	EndGlobalSection
+EndGlobal

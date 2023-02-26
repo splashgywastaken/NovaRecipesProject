@@ -17,25 +17,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{3E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{95E8CC8A-F45B-468F-8712-B4F579F132FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Api", "Systems\Api\NovaRecipesProject.Api\NovaRecipesProject.Api.csproj", "{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Api", "Systems\Api\NovaRecipesProject.Api\NovaRecipesProject.Api.csproj", "{0D790D6F-DDB6-495D-843E-6C2F0DF12B0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Api.Settings", "Systems\Api\NovaRecipesProject.Api.Settings\NovaRecipesProject.Api.Settings.csproj", "{E23E503A-FC5A-4B08-8356-7DACC6815D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Api.Settings", "Systems\Api\NovaRecipesProject.Api.Settings\NovaRecipesProject.Api.Settings.csproj", "{E23E503A-FC5A-4B08-8356-7DACC6815D26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Identity", "Systems\Identity\NovaRecipesProject.Identity\NovaRecipesProject.Identity.csproj", "{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Identity", "Systems\Identity\NovaRecipesProject.Identity\NovaRecipesProject.Identity.csproj", "{D2A0CC32-16CA-4B14-BE47-2F79D6F57EC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Common", "Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj", "{67299E75-98EA-4F61-AE49-450DBC2FE37C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Common", "Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj", "{67299E75-98EA-4F61-AE49-450DBC2FE37C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Settings", "Shared\NovaRecipesProject.Settings\NovaRecipesProject.Settings.csproj", "{271DA03B-E3A0-4139-8F64-34FD1F398753}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Settings", "Shared\NovaRecipesProject.Settings\NovaRecipesProject.Settings.csproj", "{271DA03B-E3A0-4139-8F64-34FD1F398753}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.Settings", "Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj", "{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Settings", "Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj", "{3ECAB15F-E63D-41FD-8BCE-BECB47F7A291}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context.Migrations.MSSQL", "Data\Migrations\NovaRecipesProject.Context.Migrations.MSSQL\NovaRecipesProject.Context.Migrations.MSSQL.csproj", "{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Context.Migrations.MSSQL", "Data\Migrations\NovaRecipesProject.Context.Migrations.MSSQL\NovaRecipesProject.Context.Migrations.MSSQL.csproj", "{B28DAA64-C4CC-42D3-A93F-A70B099FCDB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context.Migrations.PostgreSQL", "Data\Migrations\NovaRecipesProject.Context.Migrations.PostgreSQL\NovaRecipesProject.Context.Migrations.PostgreSQL.csproj", "{43E89087-86C6-45C2-A367-C5D453DAEA73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Context.Migrations.PostgreSQL", "Data\Migrations\NovaRecipesProject.Context.Migrations.PostgreSQL\NovaRecipesProject.Context.Migrations.PostgreSQL.csproj", "{43E89087-86C6-45C2-A367-C5D453DAEA73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context", "Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj", "{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Context", "Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj", "{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Context.Entities", "Data\NovaRecipesProject.Context.Entities\NovaRecipesProject.Context.Entities.csproj", "{B71D57B3-BEC0-4F4E-86E1-843070CCC822}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Context.Entities", "Data\NovaRecipesProject.Context.Entities\NovaRecipesProject.Context.Entities.csproj", "{B71D57B3-BEC0-4F4E-86E1-843070CCC822}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A35DAE5C-16B5-4E0F-B461-6B835CDCEF62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.UserAccount", "Services\NovaRecipesProject.Services.UserAccount\NovaRecipesProject.Services.UserAccount.csproj", "{746C8EF6-6800-4B14-8BFE-9A100DADAFFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,14 @@ Global
 		{B71D57B3-BEC0-4F4E-86E1-843070CCC822}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B71D57B3-BEC0-4F4E-86E1-843070CCC822}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B71D57B3-BEC0-4F4E-86E1-843070CCC822}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A35DAE5C-16B5-4E0F-B461-6B835CDCEF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A35DAE5C-16B5-4E0F-B461-6B835CDCEF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A35DAE5C-16B5-4E0F-B461-6B835CDCEF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A35DAE5C-16B5-4E0F-B461-6B835CDCEF62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{746C8EF6-6800-4B14-8BFE-9A100DADAFFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746C8EF6-6800-4B14-8BFE-9A100DADAFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746C8EF6-6800-4B14-8BFE-9A100DADAFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746C8EF6-6800-4B14-8BFE-9A100DADAFFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +113,7 @@ Global
 		{43E89087-86C6-45C2-A367-C5D453DAEA73} = {95E8CC8A-F45B-468F-8712-B4F579F132FF}
 		{386ECAAA-4CA8-471B-8830-22BA0FCE5FD0} = {D51C10D3-D1E0-454F-8874-537618692DBE}
 		{B71D57B3-BEC0-4F4E-86E1-843070CCC822} = {D51C10D3-D1E0-454F-8874-537618692DBE}
+		{746C8EF6-6800-4B14-8BFE-9A100DADAFFE} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {923486EB-E594-49ED-9246-C7BBAA6025EB}

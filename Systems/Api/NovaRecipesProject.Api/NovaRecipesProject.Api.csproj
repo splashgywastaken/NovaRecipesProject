@@ -1,9 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DocumentationFile>E:\projects SSD\DSR\NovaRecipesProject\api.xml</DocumentationFile>
   </PropertyGroup>
 	
   <ItemGroup>
@@ -41,6 +46,12 @@
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj" />
     <ProjectReference Include="..\..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Api.Settings\NovaRecipesProject.Api.Settings.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>

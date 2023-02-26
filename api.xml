@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NovaRecipesProject.Api</name>
+    </assembly>
+    <members>
+        <member name="T:NovaRecipesProject.Api.Bootstrapper">
+            <summary>
+            API services bootstrapper
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Bootstrapper.RegisterAppServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Main to register app services
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.AutoMapperConfiguration">
+            <summary>
+            AutoMapper configuration
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.AutoMapperConfiguration.AddAppAutoMappers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add automappers
+            </summary>
+            <param name="services">Services collection</param>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.ControllerAndViewsConfiguration">
+            <summary>
+            Class to use in DI in Program
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.ControllerAndViewsConfiguration.AddAppControllerAndViews(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            DI for services
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.ControllerAndViewsConfiguration.UseAppControllerAndViews(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            DI for builder
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.CorsConfiguration">
+            <summary>
+            CORS configuration
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.CorsConfiguration.AddAppCors(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add CORS
+            </summary>
+            <param name="services">Services collection</param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.CorsConfiguration.UseAppCors(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use service
+            </summary>
+            <param name="app">Application</param>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.LoggerConfiguration">
+            <summary>
+            Logger Configuration
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.LoggerConfiguration.AddAppLogger(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
+            <summary>
+            Add logger
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.MiddlewaresConfiguration">
+            <summary>
+            Middleware configuration class
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.MiddlewaresConfiguration.UseAppMiddlewares(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Method for DI to use custom middlewares
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.SwaggerConfiguration">
+            <summary>
+            Swagger configuration
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.SwaggerConfiguration.AddAppSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection,NovaRecipesProject.Services.Settings.IdentitySettings,NovaRecipesProject.Services.Settings.SwaggerSettings)">
+            <summary>
+            Add OpenAPI for API
+            </summary>
+            <param name="services">Services collection</param>
+            <param name="mainSettings"></param>
+            <param name="swaggerSettings"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.SwaggerConfiguration.UseAppSwagger(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary>
+            Start OpenAPI UI
+            </summary>
+            <param name="app">Web application</param>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.ValidatorConfiguration">
+            <summary>
+            Configuration class for validation
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.ValidatorConfiguration.AddAppValidator(Microsoft.Extensions.DependencyInjection.IMvcBuilder)">
+            <summary>
+            Method for DI
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.VersioningConfiguration">
+            <summary>
+            Versioning configuration
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.VersioningConfiguration.AddAppVersioning(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add version support for API
+            </summary>
+            <param name="services">Services collection</param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Middleware.ExceptionsMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Middleware.ExceptionsMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Main async method
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Pages.IndexModel">
+            <summary>
+            Index page model
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,59 @@
+version: '3.4'
+
+services:
+
+# Solution WEBAPI projects
+  novarecipesproject_api:
+    ports:
+      - "10000:80"
+    networks:
+      - shared_novarecipesproject_net
+    env_file:
+      - env.api
+      
+  novarecipesproject_identity:
+    ports:
+      - "10001:80"
+    networks:
+      - shared_novarecipesproject_net
+    env_file:
+      - env.identity
+
+# Databases
+  #novarecipesproject_mssql:
+  #  environment:
+  #    - POSTGRES_NAME=NovaRecipesProject
+  #    - POSTGRES_USER=sa
+  #    - POSTGRES_PASSWORD=Passw0rd
+  #  ports:
+  #    - "15432:15432"
+  #  networks:
+  #    - shared_novarecipesproject_net
+  #  volumes:
+  #    - ~/.docker-conf/postgresql/data/:/var/lib/mssql/data
+  novarecipesproject_postgresql:
+    environment:
+      - POSTGRES_NAME=NovaRecipesProject
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Passw0rd
+    ports:
+      - "5432:5432"
+    networks:
+      - shared_novarecipesproject_net
+    volumes:
+      - ~/.docker-conf/postgresql/data/:/var/lib/postgresql/data
+
+# Misc services
+  novarecipesproject_redis:
+    ports:
+      - "6379:6379"
+    networks:
+      - shared_novarecipesproject_net
+    volumes:
+      - ~/.docker-conf/redis/data/:/data    
+
+# Other configuration
+networks:
+  shared_novarecipesproject_net:
+    name: novarecipesproject
+    driver: bridge

@@ -14,5 +14,9 @@
 	<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="7.0.3" />
 	<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Security\" />
+  </ItemGroup>
 
 </Project>

@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+
+# Database
+  ## MSSQL
+  #novarecipesproject_mssql:
+  #  image: mcr.microsoft.com/mssql/server:2022-latest
+  # PostgreSQL
+  novarecipesproject_postgresql:
+    image: postgres:14.1
+
+# Misc services
+  novarecipesproject_redis:
+    image: redis
+
+# Solution WEBAPI projects
+  novarecipesproject_api:
+    image: ${DOCKER_REGISTRY-}novarecipesprojectapi
+    build:
+      context: .
+      dockerfile: Systems/Api/NovaRecipesProject.Api/Dockerfile
+    depends_on:
+      - novarecipesproject_postgresql
+      - novarecipesproject_redis
+
+  novarecipesproject_identity:
+    image: ${DOCKER_REGISTRY-}novarecipesprojectidentity
+    build:
+      context: .
+      dockerfile: Systems/Identity/NovaRecipesProject.Identity/Dockerfile
+    depends_on:
+      - novarecipesproject_postgresql
+      - novarecipesproject_redis
+      - novarecipesproject_api

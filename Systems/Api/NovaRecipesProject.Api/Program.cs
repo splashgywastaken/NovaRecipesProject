@@ -1,10 +1,8 @@
 using NovaRecipesProject.Api.Configuration;
 using NovaRecipesProject.Services.Settings;
 using NovaRecipesProject.Api;
-using NovaRecipesProject.Api.Configuration;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Setup;
-using NovaRecipesProject.Services.Settings;
 using NovaRecipesProject.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +46,6 @@ app.UseAppControllerAndViews();
 app.UseAppMiddlewares();
 
 DbInitializer.Execute(app.Services);
-DbSeeder.Execute(app.Services, true, true);
+DbSeeder.Execute(app.Services, false, true);
 
 app.Run();

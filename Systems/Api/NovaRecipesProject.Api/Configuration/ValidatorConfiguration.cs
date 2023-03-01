@@ -46,14 +46,21 @@ public static class ValidatorConfiguration
                  return result;
              };
          });
-        
-        builder.AddFluentValidation(fv =>
-        {
-            fv.DisableDataAnnotationsValidation = true;
-            fv.ImplicitlyValidateChildProperties = true;
-            fv.AutomaticValidationEnabled = true;
-        });
 
+        var builderServices = builder.Services;
+
+        // Moved from deprecated method of adding FluentValidation to a new version
+        // But now you need to use SetValidator if your DTO has non primitive fields
+        // To look up more info go to those links
+        // Deprication of:
+        // 1. AddFluentValidation https://github.com/FluentValidation/FluentValidation/issues/1965
+        // 2. ImplicitlyValidateChildProperties https://github.com/FluentValidation/FluentValidation/issues/1960
+        builderServices.AddFluentValidationAutoValidation(options =>
+        {
+            options.DisableDataAnnotationsValidation = true;
+        });
+        builderServices.AddFluentValidationClientsideAdapters();
+        
         ValidatorsRegisterHelper.Register(builder.Services);
 
         builder.Services.AddSingleton(typeof(IModelValidator<>), typeof(ModelValidator<>));

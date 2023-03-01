@@ -19,18 +19,6 @@ services:
     env_file:
       - env.identity
 
-# Databases
-  #novarecipesproject_mssql:
-  #  environment:
-  #    - POSTGRES_NAME=NovaRecipesProject
-  #    - POSTGRES_USER=sa
-  #    - POSTGRES_PASSWORD=Passw0rd
-  #  ports:
-  #    - "15432:15432"
-  #  networks:
-  #    - shared_novarecipesproject_net
-  #  volumes:
-  #    - ~/.docker-conf/postgresql/data/:/var/lib/mssql/data
   novarecipesproject_postgresql:
     environment:
       - POSTGRES_NAME=NovaRecipesProject

@@ -7,6 +7,9 @@ using Common.Extensions;
 using Common.Responses;
 using System.Text.Json;
 
+/// <summary>
+/// Basic middleware exception
+/// </summary>
 public class ExceptionsMiddleware
 {
     private readonly RequestDelegate _next;

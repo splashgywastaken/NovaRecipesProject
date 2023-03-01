@@ -5,6 +5,9 @@ namespace NovaRecipesProject.Context.Factories;
 
 using Microsoft.EntityFrameworkCore;
 
+/// <summary>
+/// Factory to configure db context
+/// </summary>
 public static class DbContextOptionsFactory
 {
     private const string MigrationProjectPrefix = "NovaRecipesProject.Context.Migrations.";
@@ -39,33 +42,33 @@ public static class DbContextOptionsFactory
             switch (dbType)
             {
                 case Settings.DbType.MSSQL:
-                    builder.UseSqlServer(connectionString,
-                        opts => opts
-                            .CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)
-                            .MigrationsHistoryTable("_EFMigrationsHistory", "public")
-                            .MigrationsAssembly($"{MigrationProjectPrefix}{Settings.DbType.MSSQL}")
-                    );
-                    //ConfigureMssql(ref builder, connectionString);
+                    //builder.UseSqlServer(connectionString,
+                    //    opts => opts
+                    //        .CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)
+                    //        .MigrationsHistoryTable("_EFMigrationsHistory", "public")
+                    //        .MigrationsAssembly($"{MigrationProjectPrefix}{Settings.DbType.MSSQL}")
+                    //);
+                    ConfigureMssql(ref builder, connectionString);
                     break;
 
                 case Settings.DbType.PostgreSQL:
-                    builder.UseNpgsql(connectionString,
-                        opts => opts
-                            .CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)
-                            .MigrationsHistoryTable("_EFMigrationsHistory", "public")
-                            .MigrationsAssembly($"{MigrationProjectPrefix}{Settings.DbType.PostgreSQL}")
-                    );
-                    //ConfigurePostgreSql(ref builder, connectionString);
+                    //builder.UseNpgsql(connectionString,
+                    //    opts => opts
+                    //        .CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)
+                    //        .MigrationsHistoryTable("_EFMigrationsHistory", "public")
+                    //        .MigrationsAssembly($"{MigrationProjectPrefix}{Settings.DbType.PostgreSQL}")
+                    //);
+                    ConfigurePostgreSql(ref builder, connectionString);
                     break;
 
                 default:
-                    builder.UseNpgsql(connectionString,
-                        opts => opts
-                            .CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)
-                            .MigrationsHistoryTable("_EFMigrationsHistory", "public")
-                            .MigrationsAssembly($"{MigrationProjectPrefix}{Settings.DbType.PostgreSQL}")
-                    );
-                    //ConfigurePostgreSql(ref builder, connectionString);
+                    //builder.UseNpgsql(connectionString,
+                    //    opts => opts
+                    //        .CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)
+                    //        .MigrationsHistoryTable("_EFMigrationsHistory", "public")
+                    //        .MigrationsAssembly($"{MigrationProjectPrefix}{Settings.DbType.PostgreSQL}")
+                    //);
+                    ConfigurePostgreSql(ref builder, connectionString);
                     break;
             }
 

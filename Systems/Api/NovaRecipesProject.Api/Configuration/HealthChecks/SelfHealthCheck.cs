@@ -3,8 +3,10 @@
 using System.Reflection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
+/// <inheritdoc />
 public class SelfHealthCheck : IHealthCheck
 {
+    /// <inheritdoc />
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
         var assembly = Assembly.Load("NovaRecipesProject.API");

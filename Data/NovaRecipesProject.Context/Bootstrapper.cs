@@ -6,6 +6,9 @@ using NovaRecipesProject.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// Startup class for application's db context
+/// </summary>
 public static class Bootstrapper
 {
     /// <summary>

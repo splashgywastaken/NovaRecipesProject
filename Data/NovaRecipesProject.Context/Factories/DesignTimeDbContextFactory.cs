@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
+/// <inheritdoc />
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MainDbContext>
 {
     private const string MigrationProjectPrefix = "NovaRecipesProject.Context.Migrations.";
 
+    /// <inheritdoc />
     public MainDbContext CreateDbContext(string[] args)
     {
-        Debug.Write(args);
         var provider = (args?[0] ?? $"{Settings.DbType.MSSQL}").ToLower();
 
         var configuration = new ConfigurationBuilder()

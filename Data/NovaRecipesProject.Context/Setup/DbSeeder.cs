@@ -43,6 +43,12 @@ public static class DbSeeder
     //    }
     //}
 
+    /// <summary>
+    /// Basic method for launching all other methods of DbSeeder
+    /// </summary>
+    /// <param name="serviceProvider"></param>
+    /// <param name="addDemoData"></param>
+    /// <param name="addAdmin"></param>
     public static void Execute(IServiceProvider serviceProvider, bool addDemoData, bool addAdmin = true)
     {
         using var scope = ServiceScope(serviceProvider);
@@ -64,12 +70,26 @@ public static class DbSeeder
 
     private static async Task ConfigureDemoData(IServiceProvider serviceProvider)
     {
-        await AddBooks(serviceProvider);
+        await AddRecipes(serviceProvider);
     }
 
-    private static async Task AddBooks(IServiceProvider serviceProvider)
+    private static async Task AddRecipes(IServiceProvider serviceProvider)
     {
         await using var context = DbContext(serviceProvider);
+
+        var a1 = new Entities.Recipe()
+        {
+            Name = "Мимоза",
+            Description = "Вкусный такой салат короче"
+        };
+        context.Recipes.Add(a1);
+
+        var a2 = new Entities.Recipe()
+        {
+            Name = "Оливье",
+            Description = "Тоже вкусный такой салат короче"
+        };
+        context.Recipes.Add(a2);
 
         await context.SaveChangesAsync();
     }

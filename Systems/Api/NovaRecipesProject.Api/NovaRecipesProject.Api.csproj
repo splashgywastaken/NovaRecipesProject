@@ -12,11 +12,12 @@
   </PropertyGroup>
 	
   <ItemGroup>
-	<PackageReference Include="FluentValidation" Version="11.5.0" />
+	<PackageReference Include="FluentValidation" Version="11.5.1" />
 	<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
-	<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.0" />
+	<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
 	<PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
 	  <PrivateAssets>all</PrivateAssets>
@@ -43,13 +44,13 @@
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.MSSQL\NovaRecipesProject.Context.Migrations.MSSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.PostgreSQL\NovaRecipesProject.Context.Migrations.PostgreSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj" />
     <ProjectReference Include="..\..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Api.Settings\NovaRecipesProject.Api.Settings.csproj" />
   </ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Configuration\" />
     <Folder Include="Pages\" />
   </ItemGroup>

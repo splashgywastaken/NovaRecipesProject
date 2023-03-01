@@ -17,12 +17,14 @@ public static class SwaggerConfiguration
 {
     private static string _appTitle = "Nova Recipes";
 
+    
     /// <summary>
-    /// Add OpenAPI for API
+    /// Method for adding swagger related things (also includes some things related to OpenAPI)
     /// </summary>
-    /// <param name="services">Services collection</param>
-    /// <param name="mainSettings"></param>
+    /// <param name="services"></param>
+    /// <param name="identitySettings"></param>
     /// <param name="swaggerSettings"></param>
+    /// <returns></returns>
     public static IServiceCollection AddAppSwagger(this IServiceCollection services, IdentitySettings identitySettings, SwaggerSettings swaggerSettings)
     {
         if (!swaggerSettings.Enabled)

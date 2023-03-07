@@ -1,6 +1,19 @@
 version: '3.4'
 
 services:
+  # DB related stuff
+  novarecipesproject_postgresql:
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Passw0rd
+    ports:
+      - "5432:5432"
+    networks:
+      - shared_novarecipesproject_net
+    volumes:
+      - ~/.docker-conf/postgresql/data/:/var/lib/postgresql/data
 
 # Solution WEBAPI projects
   novarecipesproject_api:
@@ -18,18 +31,6 @@ services:
       - shared_novarecipesproject_net
     env_file:
       - env.identity
-
-  novarecipesproject_postgresql:
-    environment:
-      - POSTGRES_NAME=NovaRecipesProject
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Passw0rd
-    ports:
-      - "5432:5432"
-    networks:
-      - shared_novarecipesproject_net
-    volumes:
-      - ~/.docker-conf/postgresql/data/:/var/lib/postgresql/data
 
 # Misc services
   novarecipesproject_redis:

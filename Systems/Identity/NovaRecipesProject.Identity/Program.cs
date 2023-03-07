@@ -1,17 +1,32 @@
+using Configuration;
+using NovaRecipesProject.Context;
+using NovaRecipesProject.Identity.Configuration;
+using NovaRecipesProject.Worker;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.AddAppLogger();
 
-builder.Services.AddControllers();
+var services = builder.Services;
+
+services.AddAppCors();
+
+services.AddHttpContextAccessor();
+
+services.AddAppDbContext(builder.Configuration);
+
+services.AddAppHealthChecks();
+
+services.RegisterAppServices();
+
+services.AddIS4();
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseAppHealthChecks();
 
-app.UseHttpsRedirection();
+app.UseIS4();
 
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

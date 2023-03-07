@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NovaRecipesProject.Identity</name>
+    </assembly>
+    <members>
+        <member name="T:NovaRecipesProject.Worker.Bootstrapper">
+            <summary>
+            Class to boot up services
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Worker.Bootstrapper.RegisterAppServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adding services to the app
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Identity.Configuration.HealthCheckConfiguration">
+            <summary>
+            Class for basic HealthCheck
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Identity.Configuration.HealthCheckConfiguration.AddAppHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Extension method for adding HealthCheck for IServiceCollection
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Identity.Configuration.HealthCheckConfiguration.UseAppHealthChecks(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary>
+            Extension method for adding HealthCheck for WebApplication
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:NovaRecipesProject.Identity.Configuration.IS4Configuration">
+            <summary>
+            IS4 setup related class
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Identity.Configuration.IS4Configuration.AddIS4(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Method to configure IS4
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Identity.Configuration.IS4Configuration.UseIS4(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Extension method that enables using of IS4
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Identity.Configuration.AppApiTestUsers">
+            <summary>
+            Class for test users
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Identity.Configuration.AppApiTestUsers.ApiUsers">
+            <summary>
+            List of test users
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Identity.Configuration.AppClients">
+            <summary>
+            Class to setup config for clients of API
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Identity.Configuration.AppClients.Clients">
+            <summary>
+            List of possible clients of API and their config
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Identity.Configuration.AppResources">
+            <summary>
+            Class that contains resources for API
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Identity.Configuration.AppResources.Resources">
+            <summary>
+            Resources variable, which contains description of
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Identity.Configuration.LoggerConfiguration">
+            <summary>
+            Logger Configuration
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Identity.Configuration.LoggerConfiguration.AddAppLogger(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
+            <summary>
+            Add logger
+            </summary>
+        </member>
+        <member name="T:Configuration.CorsConfiguration">
+            <summary>
+            CORS configuration
+            </summary>
+        </member>
+        <member name="M:Configuration.CorsConfiguration.AddAppCors(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add CORS
+            </summary>
+            <param name="services">Services collection</param>
+        </member>
+        <member name="M:Configuration.CorsConfiguration.UseAppCors(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use service
+            </summary>
+            <param name="app">Application</param>
+        </member>
+    </members>
+</doc>

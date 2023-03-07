@@ -16,6 +16,26 @@
             <param name="services"></param>
             <returns></returns>
         </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.AuthConfiguration">
+            <summary>
+            Class for authentication configuration
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.AuthConfiguration.AddAppAuth(Microsoft.Extensions.DependencyInjection.IServiceCollection,NovaRecipesProject.Services.Settings.IdentitySettings)">
+            <summary>
+            Extension method for adding authentication
+            </summary>
+            <param name="services"></param>
+            <param name="settings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.AuthConfiguration.UseAppAuth(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Extension method for enabling authentication
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
         <member name="T:NovaRecipesProject.Api.Configuration.AutoMapperConfiguration">
             <summary>
             AutoMapper configuration
@@ -63,6 +83,30 @@
             </summary>
             <param name="app">Application</param>
         </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.HealthCheckConfiguration">
+            <summary>
+            Class for HealthCheck configuration 
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.HealthCheckConfiguration.AddAppHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Extension method to add HealthCheck related things
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.HealthCheckConfiguration.UseAppHealthChecks(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary>
+            Extension method to enable HealthChecks in app
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Configuration.HealthChecks.SelfHealthCheck">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Configuration.HealthChecks.SelfHealthCheck.CheckHealthAsync(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:NovaRecipesProject.Api.Configuration.LoggerConfiguration">
             <summary>
             Logger Configuration
@@ -91,11 +135,12 @@
         </member>
         <member name="M:NovaRecipesProject.Api.Configuration.SwaggerConfiguration.AddAppSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection,NovaRecipesProject.Services.Settings.IdentitySettings,NovaRecipesProject.Services.Settings.SwaggerSettings)">
             <summary>
-            Add OpenAPI for API
+            Method for adding swagger related things (also includes some things related to OpenAPI)
             </summary>
-            <param name="services">Services collection</param>
-            <param name="mainSettings"></param>
+            <param name="services"></param>
+            <param name="identitySettings"></param>
             <param name="swaggerSettings"></param>
+            <returns></returns>
         </member>
         <member name="M:NovaRecipesProject.Api.Configuration.SwaggerConfiguration.UseAppSwagger(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>
@@ -126,6 +171,159 @@
             </summary>
             <param name="services">Services collection</param>
         </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Accounts.AccountsController">
+            <summary>
+            Controller for workaround with user accounts. Such as registration, login, deleting account
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Accounts.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Accounts.AccountsController},NovaRecipesProject.Services.UserAccount.IUserAccountService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+            <param name="userAccountService"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Accounts.AccountsController.Register(NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequest)">
+            <summary>
+            Method for registration, uses model in args to register new user in database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest">
+            <summary>
+            DTO for adding new data to DB
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest.Name">
+            <summary>
+            Name of recipe
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest.Description">
+            <summary>
+            Recipe description
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequestProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequestProfile.#ctor">
+            <summary>
+            Constructor which describes mapping for this DTO
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponse">
+            <summary>
+            Recipe response model which will be used in controllers
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponse.Id">
+            <summary>
+            Recipe's id in DB
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponse.Name">
+            <summary>
+            Recipe name
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponse.Description">
+            <summary>
+            Recipe description
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponseProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponseProfile.#ctor">
+            <summary>
+            Configures mapping for this exact class
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest">
+            <summary>
+            Simple model to use as arg in requests in book controller
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequestProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequestProfile.#ctor">
+            <summary>
+            Constructor which describes mapping profiles for this DTO
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Recipes.RecipesController">
+            <summary>
+            Recipes controller
+            </summary>
+            <response code="400"></response>
+            <response code="401"></response>
+            <response code="403"></response>
+            <response code="404"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Recipes.RecipesController},NovaRecipesProject.Services.Recipes.IRecipeService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+            <param name="recipeService"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipes(System.Int32,System.Int32)">
+            <summary>
+            Basic get recipes 
+            </summary>
+            <param name="offset">Offset to the first element</param>
+            <param name="limit">Count elements on the page</param>
+            <response code="200">List of recipe responses</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipeById(System.Int32)">
+            <summary>
+            Gets recipe by its id
+            </summary>
+            <param name="id">Recipe id by which it returns correct data</param>
+            <response code="200">Recipe with corresponding id</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddRecipe(NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest)">
+            <summary>
+            Methos to add new data to DB
+            </summary>
+            <param name="request"></param>
+            <response code="200">Returns recipe model which were made while adding new data do DB</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.UpdateRecipe(System.Int32,NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest)">
+            <summary>
+            Updates recipe by its id and basic data
+            </summary>
+            <param name="id">Id of recipe model</param>
+            <param name="updateRecipeRequest">Recipe model to update to</param>
+            <response code="200"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.DeleteRecipe(System.Int32)">
+            <summary>
+            Mehtod to delete data in DB
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Middleware.ExceptionsMiddleware">
+            <summary>
+            Basic middleware exception
+            </summary>
+        </member>
         <member name="M:NovaRecipesProject.Api.Middleware.ExceptionsMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
             <summary>
             Constructor
@@ -142,6 +340,87 @@
             <summary>
             Index page model
             </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Pages.IndexModel.OpenApiEnabled">
+            <summary>
+            Toggle for OpenAPI to be enabled
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Pages.IndexModel.Version">
+            <summary>
+            Data about version
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Pages.IndexModel.HelloMessage">
+            <summary>
+            Just hello message, nothing more
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Pages.IndexModel.#ctor(NovaRecipesProject.Services.Settings.SwaggerSettings,NovaRecipesProject.Api.Settings.ApiSpecialSettings)">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Pages.IndexModel.OnGet">
+            <summary>
+            Method used if something gets property data
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequest">
+            <summary>
+            Model used for registring new users
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequest.Name">
+            <summary>
+            User's name (login)
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequest.Email">
+            <summary>
+            User's email
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequest.Password">
+            <summary>
+            User's password
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequestValidator">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequestValidator.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="T:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequestProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.API.Controllers.Models.RegisterUserAccountRequestProfile.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="T:NovaRecipesProject.API.Controllers.Models.UserAccountResponse">
+            <summary>
+            Model that controllers returns as the result of their actions
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.API.Controllers.Models.UserAccountResponse.Id">
+            <summary>
+            User's Id
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.API.Controllers.Models.UserAccountResponse.Name">
+            <summary>
+            User's name which is basically login
+            </summary> 
+        </member>
+        <member name="P:NovaRecipesProject.API.Controllers.Models.UserAccountResponse.Email">
+            <summary>
+            User email
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.API.Controllers.Models.UserAccountResponseProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.API.Controllers.Models.UserAccountResponseProfile.#ctor">
+            <inheritdoc />
         </member>
     </members>
 </doc>

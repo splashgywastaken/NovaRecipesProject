@@ -19,8 +19,8 @@ var services = builder.Services;
 services.AddHttpContextAccessor();
 services.AddAppCors();
 
-services.AddAppDbContext();
-//services.AddAppAuth(identitySettings);
+services.AddAppDbContext(builder.Configuration);
+services.AddAppAuth(identitySettings);
 
 services.AddAppVersioning();
 services.AddAppHealthChecks();
@@ -39,7 +39,7 @@ app.UseAppSwagger();
 
 app.UseStaticFiles();
 
-//app.UseAppAuth();
+app.UseAppAuth();
 
 app.UseAppControllerAndViews();
 

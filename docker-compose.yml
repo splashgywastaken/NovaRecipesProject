@@ -3,10 +3,6 @@ version: '3.4'
 services:
 
 # Database
-  ## MSSQL
-  #novarecipesproject_mssql:
-  #  image: mcr.microsoft.com/mssql/server:2022-latest
-  # PostgreSQL
   novarecipesproject_postgresql:
     image: postgres:14.1
 

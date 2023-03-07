@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace NovaRecipesProject.Context.Setup;
 
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +12,7 @@ public static class DbInitializer
     {
         using var scope = serviceProvider.GetService<IServiceScopeFactory>()?.CreateScope();
         ArgumentNullException.ThrowIfNull(scope);
-
+        
         var dbContextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<MainDbContext>>();
         using var context = dbContextFactory.CreateDbContext();
         context.Database.Migrate();

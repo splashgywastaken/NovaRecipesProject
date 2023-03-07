@@ -5,10 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <DocumentationFile>api.xml</DocumentationFile>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
-    <DocumentationFile>E:\projects SSD\DSR\NovaRecipesProject\api.xml</DocumentationFile>
   </PropertyGroup>
 	
   <ItemGroup>
@@ -30,7 +30,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 	<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
 	<PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+	<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+	<PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
+	<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
 	<PackageReference Include="Serilog.Expressions" Version="3.4.1" />
+	<PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
@@ -46,13 +50,17 @@
     <ProjectReference Include="..\..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.UserAccount\NovaRecipesProject.Services.UserAccount.csproj" />
     <ProjectReference Include="..\..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Api.Settings\NovaRecipesProject.Api.Settings.csproj" />
   </ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="Configuration\" />
-    <Folder Include="Pages\" />
+	<Folder Include="Configuration\" />
+	<Folder Include="Controllers\Recipes\" />
+	<Folder Include="Controllers\Accounts\" />
+	<Folder Include="wwwroot\" />
+	<Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>

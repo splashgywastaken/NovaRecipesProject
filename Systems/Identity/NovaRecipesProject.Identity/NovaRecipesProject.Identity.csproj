@@ -1,25 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>0c54d7a9-4ba0-425d-a3ff-2566c66f3d89</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..\..</DockerfileContext>
+	<TargetFramework>net7.0</TargetFramework>
+	<Nullable>enable</Nullable>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileContext>..\..\..</DockerfileContext>
+	<DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 	
   <ItemGroup>
 	<PackageReference Include="Duende.IdentityServer" Version="6.2.3" />
 	<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.2.3" />
-	<PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
 	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 	<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
 	<PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
   </ItemGroup>
 
-	<ItemGroup>
-    <Folder Include="Controllers\" />
+  <ItemGroup>
+	  <Folder Include="Configuration\"/>
+	  <Folder Include="Keys\"/>
   </ItemGroup>
 
   <ItemGroup>

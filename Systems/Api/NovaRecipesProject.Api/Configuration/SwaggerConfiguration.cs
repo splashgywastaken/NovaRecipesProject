@@ -1,8 +1,7 @@
-﻿//using NovaRecipesProject.Common.Security;
-
-namespace NovaRecipesProject.Api.Configuration;
+﻿namespace NovaRecipesProject.Api.Configuration;
 
 using NovaRecipesProject.Services.Settings;
+using Common.Security;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -15,9 +14,9 @@ using System.Reflection;
 /// </summary>
 public static class SwaggerConfiguration
 {
-    private static string _appTitle = "Nova Recipes";
+    private const string AppTitle = "Nova Recipes";
 
-    
+
     /// <summary>
     /// Method for adding swagger related things (also includes some things related to OpenAPI)
     /// </summary>
@@ -39,7 +38,7 @@ public static class SwaggerConfiguration
                     options.SwaggerDoc(avd.GroupName, new OpenApiInfo
                     {
                         Version = avd.GroupName,
-                        Title = $"{_appTitle}"
+                        Title = $"{AppTitle}"
                     });
                 }
             });
@@ -54,45 +53,47 @@ public static class SwaggerConfiguration
 
             options.DescribeAllParametersInCamelCase();
 
-            var xmlFile = "api.xml";
+            const string xmlFile = "api.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath);
 
-            //options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-            //{
-            //    Name = "Bearer",
-            //    Type = SecuritySchemeType.OAuth2,
-            //    Scheme = "oauth2",
-            //    BearerFormat = "JWT",
-            //    In = ParameterLocation.Header,
-            //    Flows = new OpenApiOAuthFlows
-            //    {
-            //        Password = new OpenApiOAuthFlow
-            //        {
-            //            TokenUrl = new Uri($"{identitySettings.Url}/connect/token"),
-            //            Scopes = new Dictionary<string, string>
-            //            {
-            //                {AppScopes.BooksRead, "BooksRead"},
-            //                {AppScopes.BooksWrite, "BooksWrite"}
-            //            }
-            //        }
-            //    }
-            //});
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                Name = "Bearer",
+                Type = SecuritySchemeType.OAuth2,
+                Scheme = "oauth2",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Flows = new OpenApiOAuthFlows
+                {
+                    Password = new OpenApiOAuthFlow
+                    {
+                        TokenUrl = new Uri($"{identitySettings.Url}/connect/token"),
+                        Scopes = new Dictionary<string, string>
+                        {
+                            {AppScopes.RecipesRead, "RecipesRead"},
+                            {AppScopes.RecipesPublish, "RecipesWrite"},
+                            {AppScopes.UsersView, "UsersView"},
+                            {AppScopes.UsersModerate, "UsersModerate"}
+                        }
+                    }
+                }
+            });
 
-            //options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            //    {
-            //        {
-            //            new OpenApiSecurityScheme
-            //            {
-            //                Reference = new OpenApiReference
-            //                {
-            //                    Type = ReferenceType.SecurityScheme,
-            //                    Id = "oauth2"
-            //                }
-            //            },
-            //            new List<string>()
-            //        }
-            //    });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "oauth2"
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
 
             options.UseOneOfForPolymorphism();
             options.EnableAnnotations(enableAnnotationsForInheritance: true, enableAnnotationsForPolymorphism: true);
@@ -136,7 +137,7 @@ public static class SwaggerConfiguration
 
                 options.DocExpansion(DocExpansion.List);
                 options.DefaultModelsExpandDepth(-1);
-                options.OAuthAppName(_appTitle);
+                options.OAuthAppName(AppTitle);
 
                 //options.OAuthClientId(swaggerSettings?.OAuthClientId ?? "");
                 //options.OAuthClientSecret(swaggerSettings?.OAuthClientSecret ?? "");

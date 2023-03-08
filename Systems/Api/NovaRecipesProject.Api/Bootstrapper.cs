@@ -1,4 +1,5 @@
 ﻿using NovaRecipesProject.Api.Settings;
+using NovaRecipesProject.Services.Categories;
 using NovaRecipesProject.Services.Recipes;
 using NovaRecipesProject.Services.UserAccount;
 
@@ -26,6 +27,7 @@ public static class Bootstrapper
             .AddApiSpecialSettings()
             // Controller-related services
             .AddRecipeService()
+            .AddCategoryService()
             .AddUserAccountService()
             ;
 

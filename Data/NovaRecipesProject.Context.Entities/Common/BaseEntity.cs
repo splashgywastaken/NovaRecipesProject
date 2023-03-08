@@ -10,9 +10,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 [Index("Uid", IsUnique = true)]
 public abstract class BaseEntity
 {
+    /// <summary>
+    /// Generated key of entity
+    /// </summary>
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public virtual int Id { get; set; }
 
+    /// <summary>
+    /// Entities GUID
+    /// </summary>
     [Required]
     public virtual Guid Uid { get; set; } = Guid.NewGuid();
 }

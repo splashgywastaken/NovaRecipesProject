@@ -3,7 +3,7 @@
 namespace NovaRecipesProject.Services.Recipes;
 
 /// <summary>
-/// Recipe's service with main methods to get data from context
+/// Recipe's service with main methods to implement them further
 /// </summary>
 public interface IRecipeService
 {

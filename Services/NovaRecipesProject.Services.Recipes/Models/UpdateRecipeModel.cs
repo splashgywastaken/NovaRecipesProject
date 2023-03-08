@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using NovaRecipesProject.Common.Models;
 using NovaRecipesProject.Context.Entities;
 
 namespace NovaRecipesProject.Services.Recipes.Models;
@@ -7,16 +8,8 @@ namespace NovaRecipesProject.Services.Recipes.Models;
 /// <summary>
 /// DTO for updating data in DB
 /// </summary>
-public class UpdateRecipeModel
+public class UpdateRecipeModel : BaseNameDescriptionModel
 {
-    /// <summary>
-    /// Recipe's name
-    /// </summary>
-    public string Name { get; set; } = null!;
-    /// <summary>
-    /// Recipe's description
-    /// </summary>
-    public string Description { get; set; } = string.Empty;
 }
 
 /// <inheritdoc />
@@ -27,12 +20,6 @@ public class UpdateRecipeModelValidator : AbstractValidator<UpdateRecipeModel>
     /// </summary>
     public UpdateRecipeModelValidator()
     {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name is required")
-            .MaximumLength(128).WithMessage("Name is too long");
-
-        RuleFor(x => x.Description)
-            .MaximumLength(2000).WithMessage("Description is too long");
     }
 }
 

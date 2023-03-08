@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using NovaRecipesProject.Common.Models;
 using NovaRecipesProject.Services.Recipes.Models;
 
 namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
@@ -7,16 +8,8 @@ namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
 /// <summary>
 /// Simple model to use as arg in requests in book controller
 /// </summary>
-public class UpdateRecipeRequest
+public class UpdateRecipeRequest : BaseNameDescriptionModel
 {
-    /// <summary>
-    /// Name
-    /// </summary>
-    public string Name { get; set; } = null!;
-    /// <summary>
-    /// Description
-    /// </summary>
-    public string Description { get; set; } = string.Empty;
 }
 
 /// <inheritdoc />

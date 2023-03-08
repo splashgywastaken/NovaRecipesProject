@@ -73,7 +73,7 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
-    /// Methos to add new data to DB
+    /// Method to add new data to DB
     /// </summary>
     /// <param name="request"></param>
     /// <response code="200">Returns recipe model which were made while adding new data do DB</response>

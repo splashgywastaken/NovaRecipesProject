@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NovaRecipesProject.Common.Models;
 using NovaRecipesProject.Services.Recipes.Models;
 
 namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
@@ -6,16 +7,8 @@ namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
 /// <summary>
 /// DTO for adding new data to DB
 /// </summary>
-public class AddRecipeRequest
+public class AddRecipeRequest : BaseNameDescriptionModel
 {
-    /// <summary>
-    /// Name of recipe
-    /// </summary>
-    public string Name { get; set; } = null!;
-    /// <summary>
-    /// Recipe description
-    /// </summary>
-    public string Description { get; set; } = string.Empty;
 }
 
 /// <inheritdoc />

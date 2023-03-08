@@ -14,6 +14,10 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     /// DbSet of recipes entities, nothing less or more to say here
     /// </summary>
     public DbSet<Recipe> Recipes { get; set; } = null!;
+    /// <summary>
+    /// DbSet os categories entites
+    /// </summary>
+    public DbSet<Category> Categories { get; set; } = null!;
 
     /// <inheritdoc />
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
@@ -25,6 +29,7 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
 
         modelBuilder.SetupUserRelatedEntities();
         modelBuilder.SetupRecipeEntity();
+        modelBuilder.SetupCategoryEntity();
     }
 }
 
@@ -37,7 +42,7 @@ internal static class ModelBuilderExtenstion
     /// Setting up entity to hold user account data in DB
     /// </summary>
     /// <param name="modelBuilder">Model builder himself</param>
-    public static void SetupUserRelatedEntities(this ModelBuilder modelBuilder)
+    public static ModelBuilder SetupUserRelatedEntities(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().ToTable("users");
         modelBuilder.Entity<UserRole>().ToTable("user_roles");
@@ -46,12 +51,29 @@ internal static class ModelBuilderExtenstion
         modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("user_role_claims");
         modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("user_logins");
         modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("user_claims");
+
+        return modelBuilder;
     }
 
-    public static void SetupRecipeEntity(this ModelBuilder modelBuilder)
+    /// <summary>
+    /// Setting up entity to hold recipe data in DB
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    public static ModelBuilder SetupRecipeEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>().ToTable("recipes");
         modelBuilder.Entity<Recipe>().Property(x => x.Name).IsRequired();
         modelBuilder.Entity<Recipe>().Property(x => x.Name).HasMaxLength(128);
+
+        return modelBuilder;
+    }
+
+    public static ModelBuilder SetupCategoryEntity(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Category>().ToTable("category");
+        modelBuilder.Entity<Category>().Property(x => x.Name).IsRequired();
+        modelBuilder.Entity<Category>().Property(x => x.Name).HasMaxLength(128);
+
+        return modelBuilder;
     }
 }

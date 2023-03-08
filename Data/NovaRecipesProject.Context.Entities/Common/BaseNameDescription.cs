@@ -10,9 +10,15 @@ namespace NovaRecipesProject.Context.Entities.Common
     /// </summary>
     public abstract class BaseNameDescription : BaseEntity
     {
+        /// <summary>
+        /// Entity's name
+        /// </summary>
         [Required]
         [MaxLength(128)]
         public virtual string Name { get; set; } = null!;
+        /// <summary>
+        /// Entity's description
+        /// </summary>
         [MaxLength(2000)]
         public virtual string? Description { get; set; }
     }

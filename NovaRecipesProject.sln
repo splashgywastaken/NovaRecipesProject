@@ -41,7 +41,9 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.UserAccount", "Services\NovaRecipesProject.Services.UserAccount\NovaRecipesProject.Services.UserAccount.csproj", "{746C8EF6-6800-4B14-8BFE-9A100DADAFFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.Recipes", "Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj", "{D3D2DAFC-C24A-48C6-B8F9-DF61E8475DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Recipes", "Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj", "{D3D2DAFC-C24A-48C6-B8F9-DF61E8475DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.Categories", "Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj", "{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +103,10 @@ Global
 		{D3D2DAFC-C24A-48C6-B8F9-DF61E8475DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3D2DAFC-C24A-48C6-B8F9-DF61E8475DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3D2DAFC-C24A-48C6-B8F9-DF61E8475DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +127,7 @@ Global
 		{B71D57B3-BEC0-4F4E-86E1-843070CCC822} = {D51C10D3-D1E0-454F-8874-537618692DBE}
 		{746C8EF6-6800-4B14-8BFE-9A100DADAFFE} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{D3D2DAFC-C24A-48C6-B8F9-DF61E8475DB8} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
+		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {923486EB-E594-49ED-9246-C7BBAA6025EB}

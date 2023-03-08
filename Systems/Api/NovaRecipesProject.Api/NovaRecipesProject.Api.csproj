@@ -12,6 +12,7 @@
   </PropertyGroup>
 	
   <ItemGroup>
+	<PackageReference Include="AutoMapper" Version="12.0.1" />
 	<PackageReference Include="FluentValidation" Version="11.5.1" />
 	<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
 	<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
@@ -48,6 +49,7 @@
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.MSSQL\NovaRecipesProject.Context.Migrations.MSSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.PostgreSQL\NovaRecipesProject.Context.Migrations.PostgreSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.UserAccount\NovaRecipesProject.Services.UserAccount.csproj" />
@@ -57,6 +59,7 @@
 	
   <ItemGroup>
 	<Folder Include="Configuration\" />
+	<Folder Include="Controllers\Categories\Models\" />
 	<Folder Include="Controllers\Recipes\" />
 	<Folder Include="Controllers\Accounts\" />
 	<Folder Include="wwwroot\" />

@@ -191,19 +191,101 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.CategoriesController">
+            <summary>
+            Category controller
+            </summary>
+            <response code="400"></response>
+            <response code="401"></response>
+            <response code="403"></response>
+            <response code="404"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Categories.CategoriesController},NovaRecipesProject.Services.Categories.ICategoryService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+            <param name="recipeService"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.GetCategories(System.Int32,System.Int32)">
+            <summary>
+            Basic get categories
+            </summary>
+            <param name="offset">Offset to the first element</param>
+            <param name="limit">Count elements on the page</param>
+            <response code="200">List of category responses</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.GetCategoryById(System.Int32)">
+            <summary>
+            Gets category by its id
+            </summary>
+            <param name="id">Category id by which it returns correct data</param>
+            <response code="200">Category with corresponding id</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.AddCategory(NovaRecipesProject.Api.Controllers.Categories.Models.AddCategoryRequest)">
+            <summary>
+            Method to add new data to DB
+            </summary>
+            <param name="request"></param>
+            <response code="200">Returns category model which were made while adding new data do DB</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.UpdateCategory(System.Int32,NovaRecipesProject.Api.Controllers.Categories.Models.UpdateCategoryRequest)">
+            <summary>
+            Updates category by its id and basic data
+            </summary>
+            <param name="id">Id of category model</param>
+            <param name="request">Category model to update to</param>
+            <response code="200"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.DeleteCategory(System.Int32)">
+            <summary>
+            Mehtod to delete data in DB
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.AddCategoryRequest">
+            <summary>
+            Model for adding new category to DB
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.AddCategoryRequestProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.Models.AddCategoryRequestProfile.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.CategoryResponse">
+            <summary>
+            Category response model which will be used in controllers
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Categories.Models.CategoryResponse.Id">
+            <summary>
+            Category's Id in DB
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.CategoryResponseProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.Models.CategoryResponseProfile.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateCategoryRequest">
+            <summary>
+            DTO model used as arg in update controller methods
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateCategoryRequestProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateCategoryRequestProfile.#ctor">
+            <inheritdoc />
+        </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest">
             <summary>
             DTO for adding new data to DB
-            </summary>
-        </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest.Name">
-            <summary>
-            Name of recipe
-            </summary>
-        </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest.Description">
-            <summary>
-            Recipe description
             </summary>
         </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequestProfile">
@@ -224,16 +306,6 @@
             Recipe's id in DB
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponse.Name">
-            <summary>
-            Recipe name
-            </summary>
-        </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponse.Description">
-            <summary>
-            Recipe description
-            </summary>
-        </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeResponseProfile">
             <inheritdoc />
         </member>
@@ -245,16 +317,6 @@
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest">
             <summary>
             Simple model to use as arg in requests in book controller
-            </summary>
-        </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest.Name">
-            <summary>
-            Name
-            </summary>
-        </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest.Description">
-            <summary>
-            Description
             </summary>
         </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequestProfile">
@@ -299,7 +361,7 @@
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddRecipe(NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest)">
             <summary>
-            Methos to add new data to DB
+            Method to add new data to DB
             </summary>
             <param name="request"></param>
             <response code="200">Returns recipe model which were made while adding new data do DB</response>

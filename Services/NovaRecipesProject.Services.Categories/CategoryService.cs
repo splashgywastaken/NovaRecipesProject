@@ -1,11 +1,10 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks.Dataflow;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NovaRecipesProject.Common.Exceptions;
 using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Services.Cache;
 using NovaRecipesProject.Services.Categories.Models;
 
 namespace NovaRecipesProject.Services.Categories;
@@ -13,8 +12,11 @@ namespace NovaRecipesProject.Services.Categories;
 /// <inheritdoc />
 public class CategoryService : ICategoryService
 {
+    private const string ContextCacheKey = "categories_cache_key";
+
     private readonly IDbContextFactory<MainDbContext> _dbContextFactory;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
     private readonly IModelValidator<AddCategoryModel> _addCategoryModelValidator;
     private readonly IModelValidator<UpdateCategoryModel> _updateCategoryModelValidator;
 
@@ -25,22 +27,38 @@ public class CategoryService : ICategoryService
     /// <param name="mapper"></param>
     /// <param name="addCategoryModelValidator"></param>
     /// <param name="updateCategoryModelValidator"></param>
+    /// <param name="cacheService"></param>
     public CategoryService(
         IDbContextFactory<MainDbContext> dbContextFactory, 
         IMapper mapper, 
         IModelValidator<AddCategoryModel> addCategoryModelValidator, 
-        IModelValidator<UpdateCategoryModel> updateCategoryModelValidator
+        IModelValidator<UpdateCategoryModel> updateCategoryModelValidator, 
+        ICacheService cacheService
         )
     {
         _dbContextFactory = dbContextFactory;
         _mapper = mapper;
         _addCategoryModelValidator = addCategoryModelValidator;
         _updateCategoryModelValidator = updateCategoryModelValidator;
+        _cacheService = cacheService;
     }
 
     /// <inheritdoc />
     public async Task<IEnumerable<CategoryModel>> GetCategories(int offset = 0, int limit = 10)
     {
+        try
+        {
+            var cachedData = await _cacheService.Get<IEnumerable<CategoryModel>?>(ContextCacheKey);
+            if (cachedData != null)
+                return cachedData;
+        }
+        catch
+        {
+            // ignored
+        }
+
+        await Task.Delay(500);
+
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 
         var categories = context
@@ -53,9 +71,12 @@ public class CategoryService : ICategoryService
 
         var data = 
             (await categories.ToListAsync())
-            .Select(category => _mapper.Map<CategoryModel>(category));
+            .Select(_mapper.Map<CategoryModel>);
 
-        return data;
+        var enumeratedData = data.ToList();
+        await _cacheService.Put(ContextCacheKey, enumeratedData, TimeSpan.FromSeconds(30));
+
+        return enumeratedData;
     }
 
     /// <inheritdoc />

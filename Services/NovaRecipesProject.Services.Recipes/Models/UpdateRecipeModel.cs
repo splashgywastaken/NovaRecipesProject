@@ -13,7 +13,7 @@ public class UpdateRecipeModel : BaseNameDescriptionModel
 }
 
 /// <inheritdoc />
-public class UpdateRecipeModelValidator : AbstractValidator<UpdateRecipeModel>
+public class UpdateRecipeModelValidator : BaseNameDescriptionModelValidator<UpdateRecipeModel>
 {
     /// <summary>
     /// Constructor 

@@ -24,10 +24,11 @@ public abstract class BaseNameDescriptionModel
 public class BaseNameDescriptionModelValidator<T> : AbstractValidator<T> where T : BaseNameDescriptionModel
 {
     /// <inheritdoc />
-    public BaseNameDescriptionModelValidator()
+    protected BaseNameDescriptionModelValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Recipe name is required")
+            .MinimumLength(2).WithMessage("Name is too short")
             .MaximumLength(128).WithMessage("Name is too long");
 
         RuleFor(x => x.Description)

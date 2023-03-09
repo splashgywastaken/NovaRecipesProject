@@ -24,7 +24,7 @@ public class AddRecipeModelProfile : Profile
 }
 
 /// <inheritdoc />
-public class AddRecipeModelValidator : AbstractValidator<AddRecipeModel>
+public class AddRecipeModelValidator : BaseNameDescriptionModelValidator<AddRecipeModel>
 {
     /// <inheritdoc />
     public AddRecipeModelValidator()

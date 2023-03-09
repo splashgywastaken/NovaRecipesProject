@@ -24,7 +24,7 @@ public class AddCategoryModelProfile : Profile
 }
 
 /// <inheritdoc />
-public class AddCategoryModelValidator : AbstractValidator<AddCategoryModel>
+public class AddCategoryModelValidator : BaseNameDescriptionModelValidator<AddCategoryModel>
 {
     /// <inheritdoc />
     public AddCategoryModelValidator()

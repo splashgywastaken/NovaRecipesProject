@@ -23,7 +23,7 @@ public class UpdateCategoryModelProfile : Profile
 }
 
 /// <inheritdoc />
-public class UpdateCategoryModelValidator : AbstractValidator<UpdateCategoryModel>
+public class UpdateCategoryModelValidator : BaseNameDescriptionModelValidator<UpdateCategoryModel>
 {
     /// <inheritdoc />
     public UpdateCategoryModelValidator()

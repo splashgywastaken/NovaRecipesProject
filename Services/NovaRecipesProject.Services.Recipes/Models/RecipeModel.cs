@@ -17,7 +17,7 @@ public class RecipeModel : BaseNameDescriptionModel
 }
 
 /// <inheritdoc />
-public class RecipeModelValidator : AbstractValidator<RecipeModel>
+public class RecipeModelValidator : BaseNameDescriptionModelValidator<RecipeModel>
 {
     /// <summary>
     /// Constructor to initialize all things

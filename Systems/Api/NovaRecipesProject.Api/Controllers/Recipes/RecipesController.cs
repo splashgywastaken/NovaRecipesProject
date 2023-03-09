@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Api.Controllers.Recipes.Models;
 using NovaRecipesProject.Common.Responses;

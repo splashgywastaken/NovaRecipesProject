@@ -17,7 +17,7 @@ public class CategoryModel : BaseNameDescriptionModel
 }
 
 /// <inheritdoc />
-public class CategoryModelValidator : AbstractValidator<CategoryModel>
+public class CategoryModelValidator : BaseNameDescriptionModelValidator<CategoryModel>
 {
     /// <summary>
     /// Constructor to initialize all things

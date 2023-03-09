@@ -24,6 +24,6 @@ public class RecipeResponseProfile : Profile
     /// </summary>
     public RecipeResponseProfile()
     {
-        CreateMap<RecipeResponse, RecipeModel>();
+        CreateMap<RecipeModel, RecipeResponse>();
     }
 }

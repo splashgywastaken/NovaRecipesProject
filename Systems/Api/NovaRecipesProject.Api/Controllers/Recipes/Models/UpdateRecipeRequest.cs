@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using NovaRecipesProject.Common.Models;
+using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Services.Recipes.Models;
 
 namespace NovaRecipesProject.Api.Controllers.Recipes.Models;

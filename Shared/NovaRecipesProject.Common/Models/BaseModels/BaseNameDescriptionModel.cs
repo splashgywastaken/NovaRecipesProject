@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace NovaRecipesProject.Common.Models;
+namespace NovaRecipesProject.Common.Models.BaseModels;
 
 /// <summary>
 /// Basic model for defining other models of certain services

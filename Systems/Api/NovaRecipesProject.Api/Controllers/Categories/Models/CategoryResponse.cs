@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NovaRecipesProject.Common.Models;
+using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Services.Categories.Models;
 
 namespace NovaRecipesProject.Api.Controllers.Categories.Models;

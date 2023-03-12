@@ -51,6 +51,7 @@
     <ProjectReference Include="..\..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipes.Services.Cache\NovaRecipes.Services.Cache.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Ingredients\NovaRecipesProject.Services.Ingredients.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.UserAccount\NovaRecipesProject.Services.UserAccount.csproj" />

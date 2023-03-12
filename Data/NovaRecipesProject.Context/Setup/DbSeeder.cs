@@ -12,11 +12,7 @@ public static class DbSeeder
 {
     private static IServiceScope ServiceScope(IServiceProvider serviceProvider) => serviceProvider.GetService<IServiceScopeFactory>()!.CreateScope();
     private static MainDbContext DbContext(IServiceProvider serviceProvider) => ServiceScope(serviceProvider).ServiceProvider.GetRequiredService<IDbContextFactory<MainDbContext>>().CreateDbContext();
-
-    //private static readonly string MasterUserName = "splashgyAdmin";
-    //private static readonly string MasterUserEmail = "splashgy@novarecipes.com";
-    //private static readonly string MasterUserPassword = "Pass123#";
-
+    
     /// <summary>
     /// Basic method for launching all other methods of DbSeeder
     /// </summary>
@@ -80,14 +76,14 @@ public static class DbSeeder
     {
         await using var context = DbContext(serviceProvider);
 
-        var a1 = new Entities.Recipe()
+        var a1 = new Recipe()
         {
             Name = "Мимоза",
             Description = "Вкусный такой салат короче"
         };
         context.Recipes.Add(a1);
 
-        var a2 = new Entities.Recipe()
+        var a2 = new Recipe()
         {
             Name = "Оливье",
             Description = "Тоже вкусный такой салат короче"

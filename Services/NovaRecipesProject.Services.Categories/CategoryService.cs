@@ -16,7 +16,7 @@ public class CategoryService : ICategoryService
 
     private readonly IDbContextFactory<MainDbContext> _dbContextFactory;
     private readonly IMapper _mapper;
-    private readonly ICacheService _cacheService;
+    private readonly ICacheService? _cacheService;
     private readonly IModelValidator<AddCategoryModel> _addCategoryModelValidator;
     private readonly IModelValidator<UpdateCategoryModel> _updateCategoryModelValidator;
 
@@ -33,7 +33,7 @@ public class CategoryService : ICategoryService
         IMapper mapper, 
         IModelValidator<AddCategoryModel> addCategoryModelValidator, 
         IModelValidator<UpdateCategoryModel> updateCategoryModelValidator, 
-        ICacheService cacheService
+        ICacheService? cacheService = null
         )
     {
         _dbContextFactory = dbContextFactory;
@@ -46,15 +46,18 @@ public class CategoryService : ICategoryService
     /// <inheritdoc />
     public async Task<IEnumerable<CategoryModel>> GetCategories(int offset = 0, int limit = 10)
     {
-        try
+        if (_cacheService != null)
         {
-            var cachedData = await _cacheService.Get<IEnumerable<CategoryModel>?>(ContextCacheKey);
-            if (cachedData != null)
-                return cachedData;
-        }
-        catch
-        {
-            // ignored
+            try
+            {
+                var cachedData = await _cacheService.Get<IEnumerable<CategoryModel>?>(ContextCacheKey);
+                if (cachedData != null)
+                    return cachedData;
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         await Task.Delay(500);
@@ -71,12 +74,13 @@ public class CategoryService : ICategoryService
 
         var data = 
             (await categories.ToListAsync())
-            .Select(_mapper.Map<CategoryModel>);
+            .Select(_mapper.Map<CategoryModel>)
+            .ToList();
+        
+        if (_cacheService != null)
+            await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
 
-        var enumeratedData = data.ToList();
-        await _cacheService.Put(ContextCacheKey, enumeratedData, TimeSpan.FromSeconds(30));
-
-        return enumeratedData;
+        return data;
     }
 
     /// <inheritdoc />

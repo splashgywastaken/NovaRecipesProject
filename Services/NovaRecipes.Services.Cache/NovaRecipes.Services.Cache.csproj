@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>../../api.xml</DocumentationFile>
+    <DocumentationFile>..\..\api.xml</DocumentationFile>
   </PropertyGroup>
 	
   <ItemGroup>

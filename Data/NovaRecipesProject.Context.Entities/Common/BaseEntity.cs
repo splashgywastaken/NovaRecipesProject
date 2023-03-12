@@ -14,6 +14,7 @@ public abstract class BaseEntity
     /// Generated key of entity
     /// </summary>
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public virtual int Id { get; set; }
 
     /// <summary>

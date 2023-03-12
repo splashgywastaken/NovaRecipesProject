@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using NovaRecipesProject.Common.Models;
+using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Context.Entities;
 
 namespace NovaRecipesProject.Services.Categories.Models;
@@ -25,14 +25,14 @@ public class CategoryModelValidator : BaseNameDescriptionModelValidator<Category
     public CategoryModelValidator()
     {
     }
+}
 
+/// <inheritdoc />
+public class CategoryModelProfile : Profile
+{
     /// <inheritdoc />
-    public class CategoryModelProfile : Profile
+    public CategoryModelProfile()
     {
-        /// <inheritdoc />
-        public CategoryModelProfile()
-        {
-            CreateMap<Category, CategoryModel>().ReverseMap();
-        }
+        CreateMap<CategoryModel, Category>().ReverseMap();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NovaRecipesProject.Common.Models;
+using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Recipes.Models;
 

@@ -283,6 +283,78 @@
         <member name="M:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateCategoryRequestProfile.#ctor">
             <inheritdoc />
         </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController">
+            <summary>
+            Ingredient controller
+            </summary>
+            <response code="400"></response>
+            <response code="401"></response>
+            <response code="403"></response>
+            <response code="404"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController},NovaRecipesProject.Services.Ingredients.IIngredientService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+            <param name="recipeService"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.GetIngredients(System.Int32,System.Int32)">
+            <summary>
+            Basic get categories
+            </summary>
+            <param name="offset">Offset to the first element</param>
+            <param name="limit">Count elements on the page</param>
+            <response code="200">List of category responses</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.GetIngredientById(System.Int32)">
+            <summary>
+            Gets category by its id
+            </summary>
+            <param name="id">Ingredient id by which it returns correct data</param>
+            <response code="200">Ingredient with corresponding id</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.AddIngredient(NovaRecipesProject.Api.Controllers.Ingredients.Models.AddIngredientRequest)">
+            <summary>
+            Method to add new data to DB
+            </summary>
+            <param name="request"></param>
+            <response code="200">Returns category model which were made while adding new data do DB</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.UpdateIngredient(System.Int32,NovaRecipesProject.Api.Controllers.Ingredients.Models.UpdateIngredientRequest)">
+            <summary>
+            Updates category by its id and basic data
+            </summary>
+            <param name="id">Id of category model</param>
+            <param name="request">Ingredient model to update to</param>
+            <response code="200"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.DeleteIngredient(System.Int32)">
+            <summary>
+            Mehtod to delete data in DB
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Ingredients.Models.AddIngredientRequest">
+            <summary>
+            Model used in controllers;
+            Used as argument for POST methods
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Ingredients.Models.IngredientResponse">
+            <summary>
+            Model used in controllers;
+            Used as argument for GET methods
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Ingredients.Models.UpdateIngredientRequest">
+            <summary>
+            Model used in controllers;
+            Used as argument for PUT methods
+            </summary>
+        </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest">
             <summary>
             DTO for adding new data to DB

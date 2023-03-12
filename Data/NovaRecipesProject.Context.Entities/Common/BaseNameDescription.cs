@@ -15,6 +15,7 @@ namespace NovaRecipesProject.Context.Entities.Common
         /// </summary>
         [Required]
         [MaxLength(128)]
+        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public virtual string Name { get; set; } = null!;
         /// <summary>
         /// Entity's description

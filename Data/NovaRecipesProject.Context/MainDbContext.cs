@@ -18,6 +18,10 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     /// DbSet os categories entites
     /// </summary>
     public DbSet<Category> Categories { get; set; } = null!;
+    /// <summary>
+    /// DbSet of ingredients entities
+    /// </summary>
+    public DbSet<Ingredient> Ingredients { get; set; } = null!;
 
     /// <inheritdoc />
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
@@ -27,9 +31,10 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.SetupUserRelatedEntities();
-        modelBuilder.SetupRecipeEntity();
-        modelBuilder.SetupCategoryEntity();
+        modelBuilder
+            .SetupUserRelatedEntities()
+            .SetupRecipeEntity()
+            .SetupCategoryEntity();
     }
 }
 
@@ -73,6 +78,18 @@ internal static class ModelBuilderExtenstion
         modelBuilder.Entity<Category>().ToTable("category");
         modelBuilder.Entity<Category>().Property(x => x.Name).IsRequired();
         modelBuilder.Entity<Category>().Property(x => x.Name).HasMaxLength(128);
+
+        return modelBuilder;
+    }
+
+    public static ModelBuilder SetupIngredientEntity(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Ingredient>().ToTable("ingredient");
+        modelBuilder.Entity<Ingredient>().Property(x => x.Carbohydrates).IsRequired();
+        modelBuilder.Entity<Ingredient>().Property(x => x.Fat).IsRequired();
+        modelBuilder.Entity<Ingredient>().Property(x => x.Proteins).IsRequired();
+        modelBuilder.Entity<Ingredient>().Property(x => x.Weight).IsRequired();
+        modelBuilder.Entity<Ingredient>().Property(x => x.Portion).HasMaxLength(64);
 
         return modelBuilder;
     }

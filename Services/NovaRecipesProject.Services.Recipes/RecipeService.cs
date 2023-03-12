@@ -16,7 +16,7 @@ public class RecipeService : IRecipeService
 
     private readonly IDbContextFactory<MainDbContext> _dbContextFactory;
     private readonly IMapper _mapper;
-    private readonly ICacheService _cacheService;
+    private readonly ICacheService? _cacheService;
     private readonly IModelValidator<AddRecipeModel> _addRecipeModelValidator;
     private readonly IModelValidator<UpdateRecipeModel> _updateRecipeModelValidator;
 
@@ -33,7 +33,7 @@ public class RecipeService : IRecipeService
         IMapper mapper,
         IModelValidator<AddRecipeModel> addRecipeModelValidator, 
         IModelValidator<UpdateRecipeModel> updateRecipeModelValidator,
-        ICacheService cacheService
+        ICacheService? cacheService = null
         )
     {
         _dbContextFactory = dbContextFactory;
@@ -46,15 +46,18 @@ public class RecipeService : IRecipeService
     /// <inheritdoc />
     public async Task<IEnumerable<RecipeModel>> GetRecipes(int offset = 0, int limit = 10)
     {
-        try
+        if (_cacheService != null)
         {
-            var cachedData = await _cacheService.Get<IEnumerable<RecipeModel>?>(ContextCacheKey);
-            if (cachedData != null)
-                return cachedData;
-        }
-        catch
-        {
-            // ignored
+            try
+            {
+                var cachedData = await _cacheService.Get<IEnumerable<RecipeModel>?>(ContextCacheKey);
+                if (cachedData != null)
+                    return cachedData;
+            }
+            catch
+            {
+                // ignored
+            } 
         }
 
         await Task.Delay(500);
@@ -69,12 +72,15 @@ public class RecipeService : IRecipeService
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
 
-        var data = (await recipes.ToListAsync()).Select(_mapper.Map<RecipeModel>);
+        var data = 
+            (await recipes.ToListAsync())
+            .Select(_mapper.Map<RecipeModel>)
+            .ToList();
 
-        var enumeratedData = data.ToList();
-        await _cacheService.Put(ContextCacheKey, enumeratedData, TimeSpan.FromSeconds(30));
+        if (_cacheService != null)
+            await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
 
-        return enumeratedData;
+        return data;
     }
 
     /// <inheritdoc />

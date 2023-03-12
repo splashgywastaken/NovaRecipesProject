@@ -1,5 +1,9 @@
-﻿namespace NovaRecipesProject.Context.Entities;
+﻿#pragma warning disable CS1591
+namespace NovaRecipesProject.Context.Entities;
 
+/// <summary>
+/// User status for IS4
+/// </summary>
 public enum UserStatus
 {
     Active = 0,

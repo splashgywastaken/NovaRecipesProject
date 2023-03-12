@@ -21,11 +21,11 @@ namespace NovaRecipesProject.Api.Controllers.Ingredients;
 [Route("api/v{version:apiVersion}/ingredients")]
 [ApiController]
 [ApiVersion("1.0")]
-public class IngredientsController : Controller
+public class IngredientsController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ILogger<IngredientsController> _logger;
-    private readonly IIngredientService _categoryService;
+    private readonly IIngredientService _ingredientService;
 
     /// <summary>
     /// Constructor
@@ -40,27 +40,27 @@ public class IngredientsController : Controller
     {
         _mapper = mapper;
         _logger = logger;
-        _categoryService = recipeService;
+        _ingredientService = recipeService;
     }
 
     /// <summary>
-    /// Basic get categories
+    /// Basic get ingredients
     /// </summary>
     /// <param name="offset">Offset to the first element</param>
     /// <param name="limit">Count elements on the page</param>
-    /// <response code="200">List of category responses</response>
+    /// <response code="200">List of ingredients responses</response>
     [ProducesResponseType(typeof(IEnumerable<IngredientResponse>), 200)]
     [HttpGet("")]
     public async Task<IEnumerable<IngredientResponse>> GetIngredients([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        var categories = await _categoryService.GetIngredients(offset, limit);
+        var categories = await _ingredientService.GetIngredients(offset, limit);
         var response = _mapper.Map<IEnumerable<IngredientResponse>>(categories);
 
         return response;
     }
 
     /// <summary>
-    /// Gets category by its id
+    /// Gets ingredient by its id
     /// </summary>
     /// <param name="id">Ingredient id by which it returns correct data</param>
     /// <response code="200">Ingredient with corresponding id</response>
@@ -68,7 +68,7 @@ public class IngredientsController : Controller
     [HttpGet("{id:int}")]
     public async Task<IngredientResponse> GetIngredientById([FromRoute] int id)
     {
-        var category = await _categoryService.GetIngredientById(id);
+        var category = await _ingredientService.GetIngredientById(id);
         var response = _mapper.Map<IngredientResponse>(category);
 
         return response;
@@ -78,42 +78,42 @@ public class IngredientsController : Controller
     /// Method to add new data to DB
     /// </summary>
     /// <param name="request"></param>
-    /// <response code="200">Returns category model which were made while adding new data do DB</response>
+    /// <response code="200">Returns ingredient model which were made while adding new data do DB</response>
     [ProducesResponseType(typeof(IngredientResponse), 200)]
     [HttpPost("")]
     public async Task<IngredientResponse> AddIngredient([FromBody] AddIngredientRequest request)
     {
         var model = _mapper.Map<AddIngredientModel>(request);
-        var category = await _categoryService.AddIngredient(model);
+        var category = await _ingredientService.AddIngredient(model);
         var response = _mapper.Map<IngredientResponse>(category);
 
         return response;
     }
 
     /// <summary>
-    /// Updates category by its id and basic data
+    /// Updates ingredient by its id and basic data
     /// </summary>
-    /// <param name="id">Id of category model</param>
+    /// <param name="id">Id of ingredient model</param>
     /// <param name="request">Ingredient model to update to</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateIngredient([FromRoute] int id, [FromBody] UpdateIngredientRequest request)
     {
         var model = _mapper.Map<UpdateIngredientModel>(request);
-        await _categoryService.UpdateIngredient(id, model);
+        await _ingredientService.UpdateIngredient(id, model);
 
         return Ok();
     }
 
     /// <summary>
-    /// Mehtod to delete data in DB
+    /// Method to delete data in DB
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteIngredient([FromRoute] int id)
     {
-        await _categoryService.DeleteIngredient(id);
+        await _ingredientService.DeleteIngredient(id);
 
         return Ok();
     }

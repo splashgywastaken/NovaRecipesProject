@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NovaRecipesProject.Context;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230312193206_RecipeParagraphEntity")]
+    partial class RecipeParagraphEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +153,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.HasIndex("Uid")
                         .IsUnique();
 
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("category", (string)null);
                 });
 
             modelBuilder.Entity("NovaRecipesProject.Context.Entities.Ingredient", b =>
@@ -253,7 +256,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.HasIndex("Uid")
                         .IsUnique();
 
-                    b.ToTable("recipeParagraphs", (string)null);
+                    b.ToTable("recipeParagraph", (string)null);
                 });
 
             modelBuilder.Entity("NovaRecipesProject.Context.Entities.User", b =>

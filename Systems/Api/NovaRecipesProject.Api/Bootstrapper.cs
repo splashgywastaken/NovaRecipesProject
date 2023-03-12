@@ -2,6 +2,7 @@
 using NovaRecipesProject.Services.Cache;
 using NovaRecipesProject.Services.Categories;
 using NovaRecipesProject.Services.Ingredients;
+using NovaRecipesProject.Services.RecipeParagraphs;
 using NovaRecipesProject.Services.Recipes;
 using NovaRecipesProject.Services.UserAccount;
 
@@ -32,6 +33,7 @@ public static class Bootstrapper
             .AddRecipeService()
             .AddCategoryService()
             .AddIngredientService()
+            .AddRecipeParagraphService()
             .AddUserAccountService()
             ;
 

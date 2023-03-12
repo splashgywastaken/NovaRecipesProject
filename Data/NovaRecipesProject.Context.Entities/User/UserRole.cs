@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Identity;
 
+/// <inheritdoc />
 public class UserRole : IdentityRole<Guid>
 {
 }

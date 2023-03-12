@@ -22,6 +22,10 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     /// DbSet of ingredients entities
     /// </summary>
     public DbSet<Ingredient> Ingredients { get; set; } = null!;
+    /// <summary>
+    /// DbSet of recipe paragraphs entities
+    /// </summary>
+    public DbSet<RecipeParagraph> RecipeParagraphs { get; set; } = null!;
 
     /// <inheritdoc />
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
@@ -34,7 +38,8 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
         modelBuilder
             .SetupUserRelatedEntities()
             .SetupRecipeEntity()
-            .SetupCategoryEntity();
+            .SetupCategoryEntity()
+            .SetupRecipeParagraphEntity();
     }
 }
 
@@ -73,23 +78,47 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
+    /// <summary>
+    /// Setting up entity to hold category data in DB
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    /// <returns></returns>
     public static ModelBuilder SetupCategoryEntity(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>().ToTable("category");
+        modelBuilder.Entity<Category>().ToTable("categories");
         modelBuilder.Entity<Category>().Property(x => x.Name).IsRequired();
         modelBuilder.Entity<Category>().Property(x => x.Name).HasMaxLength(128);
 
         return modelBuilder;
     }
 
+    /// <summary>
+    /// Setting up entity to hold ingredient data in DB
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    /// <returns></returns>
     public static ModelBuilder SetupIngredientEntity(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Ingredient>().ToTable("ingredient");
+        modelBuilder.Entity<Ingredient>().ToTable("ingredients");
         modelBuilder.Entity<Ingredient>().Property(x => x.Carbohydrates).IsRequired();
         modelBuilder.Entity<Ingredient>().Property(x => x.Fat).IsRequired();
         modelBuilder.Entity<Ingredient>().Property(x => x.Proteins).IsRequired();
         modelBuilder.Entity<Ingredient>().Property(x => x.Weight).IsRequired();
         modelBuilder.Entity<Ingredient>().Property(x => x.Portion).HasMaxLength(64);
+
+        return modelBuilder;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    /// <returns></returns>
+    public static ModelBuilder SetupRecipeParagraphEntity(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<RecipeParagraph>().ToTable("recipeParagraphs");
+        modelBuilder.Entity<RecipeParagraph>().Property(x => x.Name).IsRequired();
+        modelBuilder.Entity<RecipeParagraph>().Property(x => x.Name).HasMaxLength(128);
 
         return modelBuilder;
     }

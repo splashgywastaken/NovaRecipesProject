@@ -16,6 +16,7 @@ COPY ["Services/NovaRecipes.Services.Cache/NovaRecipes.Services.Cache.csproj", "
 COPY ["Shared/NovaRecipesProject.Common/NovaRecipesProject.Common.csproj", "Shared/NovaRecipesProject.Common/"]
 COPY ["Services/NovaRecipesProject.Services.Categories/NovaRecipesProject.Services.Categories.csproj", "Services/NovaRecipesProject.Services.Categories/"]
 COPY ["Services/NovaRecipesProject.Services.Ingredients/NovaRecipesProject.Services.Ingredients.csproj", "Services/NovaRecipesProject.Services.Ingredients/"]
+COPY ["Services/NovaRecipesProject.Services.RecipeParagraphs/NovaRecipesProject.Services.RecipeParagraphs.csproj", "Services/NovaRecipesProject.Services.RecipeParagraphs/"]
 COPY ["Services/NovaRecipesProject.Services.Recipes/NovaRecipesProject.Services.Recipes.csproj", "Services/NovaRecipesProject.Services.Recipes/"]
 COPY ["Services/NovaRecipesProject.Services.Settings/NovaRecipesProject.Services.Settings.csproj", "Services/NovaRecipesProject.Services.Settings/"]
 COPY ["Services/NovaRecipesProject.Services.UserAccount/NovaRecipesProject.Services.UserAccount.csproj", "Services/NovaRecipesProject.Services.UserAccount/"]

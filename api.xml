@@ -1,148 +1,201 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>NovaRecipesProject.Services.Categories</name>
+        <name>NovaRecipesProject.Context</name>
     </assembly>
     <members>
-        <member name="T:NovaRecipesProject.Services.Categories.Bootstrapper">
+        <member name="T:NovaRecipesProject.Context.Bootstrapper">
             <summary>
-            Bootsrtapper for adding new Category related services
+            Startup class for application's db context
             </summary>
         </member>
-        <member name="M:NovaRecipesProject.Services.Categories.Bootstrapper.AddCategoryService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:NovaRecipesProject.Context.Bootstrapper.AddAppDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Main method which adds new service to IServiceCollection
+            Register db context
             </summary>
-            <param name="services"></param>
+        </member>
+        <member name="T:NovaRecipesProject.Context.Factories.DbContextFactory">
+            <summary>
+            Class for factory responsible for creating DbContext
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Context.Factories.DbContextFactory.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{NovaRecipesProject.Context.MainDbContext})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Context.Factories.DbContextFactory.Create">
+            <summary>
+            Create method (for creating)
+            </summary>
             <returns></returns>
         </member>
-        <member name="T:NovaRecipesProject.Services.Categories.CategoryService">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.CategoryService.#ctor(Microsoft.EntityFrameworkCore.IDbContextFactory{NovaRecipesProject.Context.MainDbContext},AutoMapper.IMapper,NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Categories.Models.AddCategoryModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Categories.Models.UpdateCategoryModel},NovaRecipesProject.Services.Cache.ICacheService)">
+        <member name="T:NovaRecipesProject.Context.Factories.DbContextOptionsFactory">
             <summary>
-            Constructor for this class
-            </summary>
-            <param name="dbContextFactory"></param>
-            <param name="mapper"></param>
-            <param name="addCategoryModelValidator"></param>
-            <param name="updateCategoryModelValidator"></param>
-            <param name="cacheService"></param>
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.CategoryService.GetCategories(System.Int32,System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.CategoryService.GetCategoryById(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.CategoryService.AddCategory(NovaRecipesProject.Services.Categories.Models.AddCategoryModel)">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.CategoryService.UpdateCategory(System.Int32,NovaRecipesProject.Services.Categories.Models.UpdateCategoryModel)">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.CategoryService.DeleteCategory(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="T:NovaRecipesProject.Services.Categories.ICategoryService">
-            <summary>
-            Categories's service with main methods to use with DB
+            Factory to configure db context
             </summary>
         </member>
-        <member name="M:NovaRecipesProject.Services.Categories.ICategoryService.GetCategories(System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Context.Factories.DbContextOptionsFactory.Create(System.String,NovaRecipesProject.Context.Settings.DbType)">
             <summary>
-            Method to get basic categories list
+            Static method used to create DB context for application
             </summary>
-            <param name="offset">Sets offset for data it got</param>
-            <param name="limit">Sets limit for number of data to return</param>
-            <returns>Returns list of CategoryModel</returns>
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.ICategoryService.GetCategoryById(System.Int32)">
-            <summary>
-            Method to get category by some Id
-            </summary>
-            <param name="id">Id of a category</param>
-            <returns>Exact category with given Id, or error related to what occured in proccess</returns>
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.ICategoryService.AddCategory(NovaRecipesProject.Services.Categories.Models.AddCategoryModel)">
-            <summary>
-            Uses argument to add new category to a DB
-            </summary>
-            <param name="model">Model which is used to add new data to DB</param>
-            <returns>Returns added category data</returns>
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.ICategoryService.UpdateCategory(System.Int32,NovaRecipesProject.Services.Categories.Models.UpdateCategoryModel)">
-            <summary>
-            Method used to update data in DB
-            </summary>
-            <param name="id">Id of exact DB entry to update</param>
-            <param name="model">Model, which data will be used to update an entry in DB</param>
+            <param name="connectionString">
+            Connection string for DB
+            </param>
+            <param name="dbType"></param>
             <returns></returns>
         </member>
-        <member name="M:NovaRecipesProject.Services.Categories.ICategoryService.DeleteCategory(System.Int32)">
+        <member name="M:NovaRecipesProject.Context.Factories.DbContextOptionsFactory.Configure(System.String,NovaRecipesProject.Context.Settings.DbType)">
             <summary>
-            Method used to delete entry from DB
+            Static method used to configure DB context
             </summary>
-            <param name="id">Id of an entry to delete</param>
+            <param name="connectionString"></param>
+            <param name="dbType"></param>
             <returns></returns>
         </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.AddCategoryModel">
+        <member name="M:NovaRecipesProject.Context.Factories.DbContextOptionsFactory.ConfigurePostgreSql(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder@,System.String)">
             <summary>
-            Model for adding new category 
+            Method used to simplify Configure method in switch block
+            Configures PostgreSQL for current DbContextOptionsBuilder
+            </summary>
+            <param name="builder">
+            Param used to configure DB in
+            </param>
+            <param name="connectionString">
+            Simply connection string for DB
+            </param>
+        </member>
+        <member name="M:NovaRecipesProject.Context.Factories.DbContextOptionsFactory.ConfigureMssql(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder@,System.String)">
+            <summary>
+            Method used to simplify Configure method in switch block
+            Configures MSSQL for current DbContextOptionsBuilder
+            </summary>
+            <param name="builder">
+            Param used to configure DB in
+            </param>
+            <param name="connectionString">
+            Simply connection string for DB
+            </param>
+        </member>
+        <member name="T:NovaRecipesProject.Context.Factories.DesignTimeDbContextFactory">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Context.Factories.DesignTimeDbContextFactory.CreateDbContext(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="T:NovaRecipesProject.Context.MainDbContext">
+            <summary>
+            Main db context of this app
             </summary>
         </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.AddCategoryModelProfile">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.Models.AddCategoryModelProfile.#ctor">
-            <inheritdoc />
-        </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.AddCategoryModelValidator">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.Models.AddCategoryModelValidator.#ctor">
-            <inheritdoc />
-        </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.CategoryModel">
+        <member name="P:NovaRecipesProject.Context.MainDbContext.Recipes">
             <summary>
-            Basic model to use in category's service
+            DbSet of recipes entities, nothing less or more to say here
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Services.Categories.Models.CategoryModel.Id">
+        <member name="P:NovaRecipesProject.Context.MainDbContext.Categories">
             <summary>
-            Category's Id
+            DbSet os categories entites
             </summary>
         </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.CategoryModelValidator">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.Models.CategoryModelValidator.#ctor">
+        <member name="P:NovaRecipesProject.Context.MainDbContext.Ingredients">
             <summary>
-            Constructor to initialize all things
+            DbSet of ingredients entities
             </summary>
         </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.CategoryModelProfile">
-            <inheritdoc />
-        </member>
-        <member name="M:NovaRecipesProject.Services.Categories.Models.CategoryModelProfile.#ctor">
-            <inheritdoc />
-        </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.UpdateCategoryModel">
+        <member name="P:NovaRecipesProject.Context.MainDbContext.RecipeParagraphs">
             <summary>
-            Model used to update data in categories
+            DbSet of recipe paragraphs entities
             </summary>
         </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.UpdateCategoryModelProfile">
+        <member name="M:NovaRecipesProject.Context.MainDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{NovaRecipesProject.Context.MainDbContext})">
             <inheritdoc />
         </member>
-        <member name="M:NovaRecipesProject.Services.Categories.Models.UpdateCategoryModelProfile.#ctor">
+        <member name="M:NovaRecipesProject.Context.MainDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:NovaRecipesProject.Services.Categories.Models.UpdateCategoryModelValidator">
-            <inheritdoc />
+        <member name="T:NovaRecipesProject.Context.ModelBuilderExtenstion">
+            <summary>
+            Extension class that will hold all methods used to configure ModelBuilder in OnModelCreating method in MainDbContext class
+            </summary>
         </member>
-        <member name="M:NovaRecipesProject.Services.Categories.Models.UpdateCategoryModelValidator.#ctor">
-            <inheritdoc />
+        <member name="M:NovaRecipesProject.Context.ModelBuilderExtenstion.SetupUserRelatedEntities(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Setting up entity to hold user account data in DB
+            </summary>
+            <param name="modelBuilder">Model builder himself</param>
+        </member>
+        <member name="M:NovaRecipesProject.Context.ModelBuilderExtenstion.SetupRecipeEntity(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Setting up entity to hold recipe data in DB
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Context.ModelBuilderExtenstion.SetupCategoryEntity(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Setting up entity to hold category data in DB
+            </summary>
+            <param name="modelBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Context.ModelBuilderExtenstion.SetupIngredientEntity(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Setting up entity to hold ingredient data in DB
+            </summary>
+            <param name="modelBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Context.ModelBuilderExtenstion.SetupRecipeParagraphEntity(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Context.Settings.DbSettings">
+            <summary>
+            DbSettings class used in setup for application
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Context.Settings.DbSettings.Type">
+            <summary>
+            DbType to decide which Dn to use
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Context.Settings.DbSettings.ConnectionString">
+            <summary>
+            Connection string for DB to connect to 
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Context.Settings.DbType">
+            <summary>
+            DbTypes description for settings
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Context.Setup.DbInitializer">
+            <summary>
+            Class for initializing DB
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Context.Setup.DbInitializer.Execute(System.IServiceProvider)">
+            <summary>
+            Main execute method which does all the things
+            </summary>
+            <param name="serviceProvider"></param>
+        </member>
+        <member name="T:NovaRecipesProject.Context.Setup.DbSeeder">
+            <summary>
+            Class that is used to populate DB with Data
+            </summary>
+        </member>
+        <member name="M:NovaRecipesProject.Context.Setup.DbSeeder.Execute(System.IServiceProvider,System.Boolean,System.Boolean)">
+            <summary>
+            Basic method for launching all other methods of DbSeeder
+            </summary>
+            <param name="serviceProvider"></param>
+            <param name="addDemoData"></param>
+            <param name="addAdmin"></param>
         </member>
     </members>
 </doc>

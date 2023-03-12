@@ -107,7 +107,7 @@ public class CategoriesController : ControllerBase
     }
 
     /// <summary>
-    /// Mehtod to delete data in DB
+    /// Method to delete data in DB
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

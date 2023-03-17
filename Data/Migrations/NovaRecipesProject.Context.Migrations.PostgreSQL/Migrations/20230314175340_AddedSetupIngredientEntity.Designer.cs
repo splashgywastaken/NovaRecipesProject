@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NovaRecipesProject.Context;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230314175340_AddedSetupIngredientEntity")]
+    partial class AddedSetupIngredientEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,15 +218,10 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<int>("RecipeUserId")
-                        .HasColumnType("integer");
-
                     b.Property<Guid>("Uid")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipeUserId");
 
                     b.HasIndex("Uid")
                         .IsUnique();
@@ -281,12 +279,6 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
-
-                    b.Property<int>("EntryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EntryId"));
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -416,23 +408,6 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Recipe", b =>
-                {
-                    b.HasOne("NovaRecipesProject.Context.Entities.User", "User")
-                        .WithMany("Recipes")
-                        .HasForeignKey("RecipeUserId")
-                        .HasPrincipalKey("EntryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.User", b =>
-                {
-                    b.Navigation("Recipes");
                 });
 #pragma warning restore 612, 618
         }

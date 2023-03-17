@@ -1,10 +1,17 @@
 ﻿namespace NovaRecipesProject.Context.Entities;
 
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 /// <inheritdoc />
 public class User : IdentityUser<Guid>
 {
+    /// <summary>
+    /// User's Id for relationships setup
+    /// </summary>
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int EntryId { get; set; }
     /// <summary>
     /// Full name
     /// </summary>
@@ -13,4 +20,9 @@ public class User : IdentityUser<Guid>
     /// UserStatus 
     /// </summary>
     public UserStatus Status { get; set; }
+    /// <summary>
+    /// User's list of recipes
+    /// </summary>
+    // ReSharper disable once CollectionNeverUpdated.Global
+    public List<Recipe>? Recipes { get; set; }
 }

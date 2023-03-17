@@ -14,6 +14,15 @@ public interface IRecipeService
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of RecipeModel</returns>
     Task<IEnumerable<RecipeModel>> GetRecipes(int offset = 0, int limit = 10);
+
+    /// <summary>
+    /// Method to get list of recipes of exact user
+    /// </summary>
+    /// <param name="userId">User's id</param>
+    /// <param name="offset">Sets offset for data it got</param>
+    /// <param name="limit">Sets limit for number of data to return</param>
+    /// <returns></returns>
+    Task<IEnumerable<RecipeModel>> GetUserRecipes(int userId, int offset = 0, int limit = 10);
     /// <summary>
     /// Method to get recipe by some Id
     /// </summary>
@@ -26,6 +35,15 @@ public interface IRecipeService
     /// <param name="model">Model which is used to add new data to DB</param>
     /// <returns>Returns added recipe data</returns>
     Task<RecipeModel> AddRecipe(AddRecipeModel model);
+
+    /// <summary>
+    /// Uses argument ot add new recipe to a DB,
+    /// also uses data about current logged in user to add new recipe to all of his others
+    /// </summary>
+    /// <param name="userId">User Id to add recipe to</param>
+    /// <param name="model">Basic data about recipe</param>
+    /// <returns></returns>
+    Task<RecipeModel> AddRecipeWithUser(int userId, AddRecipeModel model);
     /// <summary>
     /// Method used to update data in DB
     /// </summary>

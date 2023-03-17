@@ -7,8 +7,6 @@ using NovaRecipesProject.Services.Recipes.Models;
 
 namespace NovaRecipesProject.Api.Controllers.Recipes;
 
-// TODO: Fix mapping errors
-
 /// <summary>
 /// Recipes controller
 /// </summary>
@@ -57,6 +55,23 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
+    /// Basic get recipes for some user
+    /// </summary>
+    /// <param name="userId">User's id to get data for</param>
+    /// <param name="offset">Offset to the first element</param>
+    /// <param name="limit">Count elements on the page</param>
+    /// <response code="200">List of recipe responses</response>
+    [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
+    [HttpGet("user/{userId:int}")]
+    public async Task<IEnumerable<RecipeResponse>> GetUserRecipes([FromRoute] int userId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    {
+        var recipes = await _recipeService.GetUserRecipes(userId, offset, limit);
+        var response = _mapper.Map<IEnumerable<RecipeResponse>>(recipes);
+
+        return response;
+    }
+
+    /// <summary>
     /// Gets recipe by its id
     /// </summary>
     /// <param name="id">Recipe id by which it returns correct data</param>
@@ -82,6 +97,23 @@ public class RecipesController : ControllerBase
     {
         var model = _mapper.Map<AddRecipeModel>(request);
         var recipe = await _recipeService.AddRecipe(model);
+        var response = _mapper.Map<RecipeResponse>(recipe);
+
+        return response;
+    }
+
+    /// <summary>
+    /// Method to add new data to DB
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="request"></param>
+    /// <response code="200">Returns recipe model which were made while adding new data do DB</response>
+    [ProducesResponseType(typeof(RecipeResponse), 200)]
+    [HttpPost("user/{userId:int}")]
+    public async Task<RecipeResponse> AddRecipeWithUser([FromRoute] int userId, [FromBody] AddRecipeRequest request)
+    {
+        var model = _mapper.Map<AddRecipeModel>(request);
+        var recipe = await _recipeService.AddRecipeWithUser(userId, model);
         var response = _mapper.Map<RecipeResponse>(recipe);
 
         return response;

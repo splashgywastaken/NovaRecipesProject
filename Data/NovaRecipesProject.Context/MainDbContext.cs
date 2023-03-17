@@ -1,4 +1,5 @@
-﻿using NovaRecipesProject.Context.Entities;
+﻿using System.Runtime.CompilerServices;
+using NovaRecipesProject.Context.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -36,10 +37,16 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
         base.OnModelCreating(modelBuilder);
 
         modelBuilder
+            // Entities setup
             .SetupUserRelatedEntities()
             .SetupRecipeEntity()
             .SetupCategoryEntity()
-            .SetupRecipeParagraphEntity();
+            .SetupIngredientEntity()
+            .SetupRecipeParagraphEntity()
+            // Relationships setup
+            .SetupUser1ToRecipesNRelationShip()
+            ;
+        // Add-Migration AddedSetupUser1ToRecipesNRelationShip -args PostgreSQL
     }
 }
 
@@ -119,6 +126,18 @@ internal static class ModelBuilderExtenstion
         modelBuilder.Entity<RecipeParagraph>().ToTable("recipeParagraphs");
         modelBuilder.Entity<RecipeParagraph>().Property(x => x.Name).IsRequired();
         modelBuilder.Entity<RecipeParagraph>().Property(x => x.Name).HasMaxLength(128);
+
+        return modelBuilder;
+    }
+
+    public static ModelBuilder SetupUser1ToRecipesNRelationShip(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>()
+            .HasMany(x => x.Recipes)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.RecipeUserId)
+            .HasPrincipalKey(x => x.EntryId)
+            ;
 
         return modelBuilder;
     }

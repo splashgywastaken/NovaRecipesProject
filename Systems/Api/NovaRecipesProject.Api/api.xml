@@ -493,6 +493,15 @@
             <param name="limit">Count elements on the page</param>
             <response code="200">List of recipe responses</response>
         </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetUserRecipes(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Basic get recipes for some user
+            </summary>
+            <param name="userId">User's id to get data for</param>
+            <param name="offset">Offset to the first element</param>
+            <param name="limit">Count elements on the page</param>
+            <response code="200">List of recipe responses</response>
+        </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipeById(System.Int32)">
             <summary>
             Gets recipe by its id
@@ -504,6 +513,14 @@
             <summary>
             Method to add new data to DB
             </summary>
+            <param name="request"></param>
+            <response code="200">Returns recipe model which were made while adding new data do DB</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddRecipeWithUser(System.Int32,NovaRecipesProject.Api.Controllers.Recipes.Models.AddRecipeRequest)">
+            <summary>
+            Method to add new data to DB
+            </summary>
+            <param name="userId"></param>
             <param name="request"></param>
             <response code="200">Returns recipe model which were made while adding new data do DB</response>
         </member>

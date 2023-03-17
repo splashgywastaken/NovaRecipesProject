@@ -7,5 +7,12 @@ namespace NovaRecipesProject.Context.Entities;
 /// </summary>
 public class Recipe : BaseNameDescription
 {
-    
+    /// <summary>
+    /// Id of a user that created this recipe
+    /// </summary>
+    public int RecipeUserId { get; set; }
+    /// <summary>
+    /// User's entity
+    /// </summary>
+    public User User { get; set; } = null!;
 }

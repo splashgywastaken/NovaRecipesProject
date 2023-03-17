@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NovaRecipesProject.Context;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230316134618_AddedSetupUser1ToRecipesNRelationShip")]
+    partial class AddedSetupUser1ToRecipesNRelationShip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,18 +218,18 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<int>("RecipeUserId")
-                        .HasColumnType("integer");
-
                     b.Property<Guid>("Uid")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("RecipeUserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("Uid")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("recipes", (string)null);
                 });
@@ -422,7 +425,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                 {
                     b.HasOne("NovaRecipesProject.Context.Entities.User", "User")
                         .WithMany("Recipes")
-                        .HasForeignKey("RecipeUserId")
+                        .HasForeignKey("UserId")
                         .HasPrincipalKey("EntryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

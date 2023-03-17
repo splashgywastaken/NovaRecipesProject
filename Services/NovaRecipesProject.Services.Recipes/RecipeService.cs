@@ -84,6 +84,47 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
+    public async Task<IEnumerable<RecipeModel>> GetUserRecipes(int userId, int offset = 0, int limit = 10)
+    {
+        if (_cacheService != null)
+        {
+            try
+            {
+                var cachedData = await _cacheService.Get<IEnumerable<RecipeModel>?>(ContextCacheKey);
+                if (cachedData != null)
+                    return cachedData;
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        await Task.Delay(500);
+
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var recipes = context
+            .Recipes
+            .Where(x => x.RecipeUserId == userId)
+            .AsQueryable();
+
+        recipes = recipes
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
+
+        var data =
+            (await recipes.ToListAsync())
+            .Select(_mapper.Map<RecipeModel>)
+            .ToList();
+
+        if (_cacheService != null)
+            await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
+
+        return data;
+    }
+
+    /// <inheritdoc />
     public async Task<RecipeModel> GetRecipeById(int id)
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync();
@@ -105,6 +146,27 @@ public class RecipeService : IRecipeService
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 
         var recipe = _mapper.Map<Recipe>(model);
+        await context.Recipes.AddAsync(recipe);
+        await context.SaveChangesAsync();
+
+        return _mapper.Map<RecipeModel>(recipe);
+    }
+
+    /// <inheritdoc />
+    public async Task<RecipeModel> AddRecipeWithUser(int userId, AddRecipeModel model)
+    {
+        _addRecipeModelValidator.Check(model);
+
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        // Checking if that user even exists in the first place:
+        var user = await context.Users.FirstOrDefaultAsync(x => x.EntryId.Equals(userId));
+        ProcessException.ThrowIf(() => user is null, $"The user (id: {userId}) was not found");
+
+        // Forming data about entity
+        var recipe = _mapper.Map<Recipe>(model);
+        recipe.RecipeUserId = userId;
+
         await context.Recipes.AddAsync(recipe);
         await context.SaveChangesAsync();
 

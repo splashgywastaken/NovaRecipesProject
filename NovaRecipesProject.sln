@@ -51,6 +51,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.RecipeParagraphs", "Services\NovaRecipesProject.Services.RecipeParagraphs\NovaRecipesProject.Services.RecipeParagraphs.csproj", "{2F884517-A2BA-4080-B011-8AA9C725D86E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BAE9C69F-AE4D-45F7-B407-15E8BB0C924F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Systems", "Systems", "{F4DE4630-15C5-46F4-B895-75968838A474}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{52496318-CC47-4588-9787-153766BD4954}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controllers", "Controllers", "{3595B7DD-E2E6-4C47-88D4-4569DA2E2AC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Tests.Api.RecipesControllerTests", "Tests\Systems\Api\Controllers\NovaRecipesProject.Tests.Api.RecipesController\NovaRecipesProject.Tests.Api.RecipesControllerTests.csproj", "{C649B8C6-F42E-44C5-8C57-084756FB1471}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +135,10 @@ Global
 		{2F884517-A2BA-4080-B011-8AA9C725D86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F884517-A2BA-4080-B011-8AA9C725D86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F884517-A2BA-4080-B011-8AA9C725D86E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C649B8C6-F42E-44C5-8C57-084756FB1471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C649B8C6-F42E-44C5-8C57-084756FB1471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C649B8C6-F42E-44C5-8C57-084756FB1471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C649B8C6-F42E-44C5-8C57-084756FB1471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +163,10 @@ Global
 		{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{1DF6D165-B202-43A7-9AD6-C784FF8ABAD4} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{2F884517-A2BA-4080-B011-8AA9C725D86E} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
+		{F4DE4630-15C5-46F4-B895-75968838A474} = {BAE9C69F-AE4D-45F7-B407-15E8BB0C924F}
+		{52496318-CC47-4588-9787-153766BD4954} = {F4DE4630-15C5-46F4-B895-75968838A474}
+		{3595B7DD-E2E6-4C47-88D4-4569DA2E2AC5} = {52496318-CC47-4588-9787-153766BD4954}
+		{C649B8C6-F42E-44C5-8C57-084756FB1471} = {3595B7DD-E2E6-4C47-88D4-4569DA2E2AC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {923486EB-E594-49ED-9246-C7BBAA6025EB}

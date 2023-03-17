@@ -11,6 +11,10 @@ namespace NovaRecipesProject.Services.Recipes.Models;
 public class RecipeModel : BaseNameDescriptionModel
 {
     /// <summary>
+    /// Id of user with this recipe
+    /// </summary>
+    public int RecipeUserId { get; set; }
+    /// <summary>
     /// Recipe's Id
     /// </summary>
     public int Id { get; set; }

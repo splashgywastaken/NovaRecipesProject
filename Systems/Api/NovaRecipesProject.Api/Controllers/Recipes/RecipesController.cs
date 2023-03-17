@@ -31,7 +31,7 @@ public class RecipesController : ControllerBase
     /// <param name="mapper"></param>
     /// <param name="logger"></param>
     /// <param name="recipeService"></param>
-    public RecipesController(IMapper mapper, ILogger<RecipesController> logger, IRecipeService recipeService)
+    public RecipesController(IRecipeService recipeService, IMapper mapper, ILogger<RecipesController> logger)
     {
         _mapper = mapper;
         _logger = logger;

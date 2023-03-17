@@ -477,7 +477,7 @@
             <response code="403"></response>
             <response code="404"></response>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Recipes.RecipesController},NovaRecipesProject.Services.Recipes.IRecipeService)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.#ctor(NovaRecipesProject.Services.Recipes.IRecipeService,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Recipes.RecipesController})">
             <summary>
             Constructor
             </summary>

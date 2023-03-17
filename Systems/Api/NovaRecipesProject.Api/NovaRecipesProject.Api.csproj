@@ -62,7 +62,6 @@
 	
   <ItemGroup>
 	<Folder Include="Configuration\" />
-	<Folder Include="Controllers\Categories\Models\" />
 	<Folder Include="Controllers\RecipeParagraphs\Models\" />
 	<Folder Include="Controllers\Recipes\" />
 	<Folder Include="Controllers\Accounts\" />

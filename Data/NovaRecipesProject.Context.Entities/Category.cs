@@ -7,5 +7,8 @@ namespace NovaRecipesProject.Context.Entities;
 /// </summary>
 public class Category : BaseNameDescription
 {
-
+    /// <summary>
+    /// Recipes that are linked to that category
+    /// </summary>
+    public ICollection<Recipe>? Recipes { get; set; } = null;
 }

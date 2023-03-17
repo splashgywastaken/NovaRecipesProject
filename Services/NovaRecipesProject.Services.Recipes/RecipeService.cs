@@ -6,6 +6,7 @@ using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Cache;
 using NovaRecipesProject.Services.Recipes.Models;
+using StackExchange.Redis;
 
 namespace NovaRecipesProject.Services.Recipes;
 
@@ -180,13 +181,25 @@ public class RecipeService : IRecipeService
 
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 
-        var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        var recipe = await context
+            .Recipes
+            .Include(x => x.Categories)
+            .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
         // Copying data to make it so that data in "recipe" variable wont be changed in the outer scope
         var recipeCopy = recipe;
         ProcessException.ThrowIf(() => recipeCopy is null, $"The recipe (id: {id}) was not found");
 
         recipe = _mapper.Map(model, recipe);
+
+        // Getting all category Id's from model
+        var categoryIds = model.CategoryIds!.Select(x => x.Id);
+        // Getting all needed categories from context
+        var categories = context
+            .Categories
+            .Where(c => categoryIds.Contains(c.Id)).ToList();
+        // Applying changes
+        recipe!.Categories = categories;
 
         context.Recipes.Update(recipe!);
         await context.SaveChangesAsync();

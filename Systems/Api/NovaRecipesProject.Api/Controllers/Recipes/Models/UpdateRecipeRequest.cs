@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FluentValidation;
+using NovaRecipesProject.Api.Controllers.Categories.Models;
 using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Services.Recipes.Models;
 
@@ -10,6 +10,10 @@ namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
 /// </summary>
 public class UpdateRecipeRequest : BaseNameDescriptionModel
 {
+    /// <summary>
+    /// Recipe's categories
+    /// </summary>
+    public ICollection<UpdateRecipeCategoryRequest>? CategoryIds { get; set; }
 }
 
 /// <inheritdoc />

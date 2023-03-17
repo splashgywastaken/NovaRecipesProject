@@ -283,6 +283,29 @@
         <member name="M:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateCategoryRequestProfile.#ctor">
             <inheritdoc />
         </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateRecipeCategoryRequest">
+            <summary>
+            Model used for recipe's updates
+            Model is very light
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateRecipeCategoryRequest.Id">
+            <summary>
+            Category's Id
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateRecipeCategoryProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateRecipeCategoryProfile.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateRecipeCategoryModelValidator">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.Models.UpdateRecipeCategoryModelValidator.#ctor">
+            <inheritdoc />
+        </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController">
             <summary>
             Ingredient controller
@@ -458,6 +481,11 @@
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest">
             <summary>
             Simple model to use as arg in requests in book controller
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequest.CategoryIds">
+            <summary>
+            Recipe's categories
             </summary>
         </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Recipes.Models.UpdateRecipeRequestProfile">

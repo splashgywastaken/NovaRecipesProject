@@ -45,6 +45,7 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
             .SetupRecipeParagraphEntity()
             // Relationships setup
             .SetupUser1ToRecipesNRelationShip()
+            .SetupRecipesNToCategoriesNRelationship()
             ;
         // Add-Migration AddedSetupUser1ToRecipesNRelationShip -args PostgreSQL
     }
@@ -137,6 +138,17 @@ internal static class ModelBuilderExtenstion
             .WithOne(x => x.User)
             .HasForeignKey(x => x.RecipeUserId)
             .HasPrincipalKey(x => x.EntryId)
+            ;
+
+        return modelBuilder;
+    }
+
+    public static ModelBuilder SetupRecipesNToCategoriesNRelationship(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Recipe>()
+            .HasMany(x => x.Categories)
+            .WithMany(x => x.Recipes)
+            .UsingEntity(j => j.ToTable("RecipeCategories"))
             ;
 
         return modelBuilder;

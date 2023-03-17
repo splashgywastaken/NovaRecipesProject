@@ -15,4 +15,8 @@ public class Recipe : BaseNameDescription
     /// User's entity
     /// </summary>
     public User User { get; set; } = null!;
+    /// <summary>
+    /// Recipe's categories to ease search through all recipes
+    /// </summary>
+    public ICollection<Category>? Categories { get; set; }
 }

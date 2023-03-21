@@ -20,7 +20,7 @@ namespace NovaRecipesProject.Api.Controllers.Ingredients;
 [Produces("application/json")]
 [Route("api/v{version:apiVersion}/ingredients")]
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("0.1")]
 public class IngredientsController : ControllerBase
 {
     private readonly IMapper _mapper;

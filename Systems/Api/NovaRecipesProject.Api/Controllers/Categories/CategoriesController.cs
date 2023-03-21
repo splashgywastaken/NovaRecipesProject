@@ -21,7 +21,7 @@ namespace NovaRecipesProject.Api.Controllers.Categories;
 [Produces("application/json")]
 [Route("api/v{version:apiVersion}/categories")]
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("0.1")]
 public class CategoriesController : ControllerBase
 {
     private readonly IMapper _mapper;

@@ -10,7 +10,7 @@ using Services.UserAccount;
 /// </summary>
 [Route("api/v{version:apiVersion}/accounts")]
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("0.1")]
 public class AccountsController
 {
     private readonly IMapper _mapper;

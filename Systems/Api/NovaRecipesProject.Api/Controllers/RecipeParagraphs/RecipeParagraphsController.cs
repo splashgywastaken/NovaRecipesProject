@@ -7,6 +7,8 @@ using NovaRecipesProject.Services.RecipeParagraphs;
 
 namespace NovaRecipesProject.Api.Controllers.RecipeParagraphs;
 
+// TODO: начать использовать версионирование и разбить методы для контроллера на разные версии
+
 /// <summary>
 /// Recipe paragraph controller
 /// </summary>
@@ -18,7 +20,7 @@ namespace NovaRecipesProject.Api.Controllers.RecipeParagraphs;
 [Produces("application/json")]
 [Route("api/v{version:apiVersion}/recipeParagraphs")]
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("0.1")]
 public class RecipeParagraphsController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -87,6 +89,8 @@ public class RecipeParagraphsController : ControllerBase
 
         return response;
     }
+
+    // TODO: добавить новый метод для добавления параграфа рецепта
 
     /// <summary>
     /// Updates RecipeParagraph by its id and basic data

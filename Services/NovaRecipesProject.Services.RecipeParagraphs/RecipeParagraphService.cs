@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NovaRecipesProject.Common.Exceptions;
+using NovaRecipesProject.Common.Extensions;
 using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
@@ -72,8 +73,7 @@ public class RecipeParagraphService : IRecipeParagraphService
 
         recipeParagraphs = recipeParagraphs
             .Where(x => x.RecipeId == recipeId)
-            .Skip(Math.Max(offset, 0))
-            .Take(Math.Max(0, Math.Min(limit, 1000)));
+            .SkipAndTake(offset, limit);
 
         var data =
             (await recipeParagraphs.ToListAsync())

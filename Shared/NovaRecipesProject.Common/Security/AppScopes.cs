@@ -1,5 +1,8 @@
 ﻿namespace NovaRecipesProject.Common.Security;
 
+/// <summary>
+/// Class with API's scopes to use in identity
+/// </summary>
 public static class AppScopes
 {
     /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace NovaRecipesProject.Services.UserAccount;
 
+/// <summary>
+/// Main service for working with user's data
+/// </summary>
 public interface IUserAccountService
 {
     /// <summary>

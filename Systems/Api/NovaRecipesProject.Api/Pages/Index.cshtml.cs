@@ -25,7 +25,7 @@ public class IndexModel : PageModel
     /// Data about version
     /// </summary>
     [BindProperty]
-    public string Version => Assembly.GetExecutingAssembly().GetAssemblyVersion();
+    public string Version => Assembly.GetExecutingAssembly().GetAssemblyVersion()!;
 
     /// <summary>
     /// Just hello message, nothing more

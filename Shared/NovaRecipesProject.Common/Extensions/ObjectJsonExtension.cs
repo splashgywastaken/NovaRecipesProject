@@ -6,17 +6,30 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
+/// <summary>
+/// Extension class for object json
+/// </summary>
 public static class ObjectJsonExtension
 {
+    /// <summary>
+    /// Sets default settings for JsonSerializerSettings:
+    /// adds as converter JsonTrimmingConverter, StringEnumConverter(camelCaseText: true)
+    /// </summary>
+    /// <param name="settings"></param>
+    /// <returns></returns>
     public static JsonSerializerSettings SetDefaultSettings(this JsonSerializerSettings settings)
     {
         settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         settings.Converters.Add(new JsonTrimmingConverter());
-        settings.Converters.Add(new StringEnumConverter(camelCaseText: true));
+        settings.Converters.Add(new StringEnumConverter(typeof(CamelCaseNamingStrategy)));
 
         return settings;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public static JsonSerializerSettings DefaultJsonSerializerSettings()
     {
         return new JsonSerializerSettings().SetDefaultSettings();

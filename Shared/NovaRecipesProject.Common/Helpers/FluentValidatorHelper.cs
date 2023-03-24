@@ -5,8 +5,15 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
+/// <summary>
+/// Extension methods for Validator registration
+/// </summary>
 public static class ValidatorsRegisterHelper
 {
+    /// <summary>
+    /// Registers Validator in IServiceCollection
+    /// </summary>
+    /// <param name="services"></param>
     public static void Register(IServiceCollection services)
     {
         var validators = from type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())

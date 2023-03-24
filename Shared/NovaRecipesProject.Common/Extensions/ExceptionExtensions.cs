@@ -4,6 +4,9 @@ using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace NovaRecipesProject.Common.Extensions;
 
+/// <summary>
+/// Extension class for error response
+/// </summary>
 public static class ErrorResponseExtensions
 {
     /// <summary>

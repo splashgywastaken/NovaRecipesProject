@@ -6,19 +6,31 @@ using Common.Validator;
 using Context.Entities;
 using Microsoft.AspNetCore.Identity;
 
+/// <inheritdoc />
 public class UserAccountService : IUserAccountService
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
     private readonly IModelValidator<RegisterUserAccountModel> _registerUserAccountModelValidator;
 
-    public UserAccountService(IMapper mapper, UserManager<User> userManager, IModelValidator<RegisterUserAccountModel> registerUserAccountModelValidator)
+    /// <summary>
+    /// Main constructor
+    /// </summary>
+    /// <param name="mapper"></param>
+    /// <param name="userManager"></param>
+    /// <param name="registerUserAccountModelValidator"></param>
+    public UserAccountService(
+        IMapper mapper,
+        UserManager<User> userManager, 
+        IModelValidator<RegisterUserAccountModel> registerUserAccountModelValidator
+        )
     {
         _mapper = mapper;
         _userManager = userManager;
         _registerUserAccountModelValidator = registerUserAccountModelValidator;
     }
 
+    /// <inheritdoc />
     public async Task<UserAccountModel> Create(RegisterUserAccountModel model)
     {
         _registerUserAccountModelValidator.Check(model);

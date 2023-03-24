@@ -1,8 +1,8 @@
 ﻿#pragma warning disable CS1591
 using AutoMapper;
+using FluentValidation;
 using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Services.RecipeParagraphs.Models;
-using NovaRecipesProject.Services.Recipes.Models;
 
 namespace NovaRecipesProject.Api.Controllers.RecipeParagraphs.Models;
 
@@ -13,6 +13,23 @@ public class AddRecipeParagraphRequest : BaseNameDescriptionRequest
 {
     public int OrderNumber { get; set; }
 }
+
+public class AddRecipeParagraphRequestValidator : AbstractValidator<AddRecipeParagraphRequest>
+{
+    public AddRecipeParagraphRequestValidator()
+    {
+        RuleFor(x => x.Name)
+            .MaximumLength(64)
+            .WithMessage("Recipe paragraph name is too long");
+        RuleFor(x => x.Description)
+            .MaximumLength(2000)
+            .WithMessage("Recipe paragraph description is too long");
+        RuleFor(x => x.OrderNumber)
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("Recipe paragraph number of order (orderNumber) can't be negative");
+    }
+}
+
 
 public class AddRecipeParagraphRequestProfile : Profile
 {

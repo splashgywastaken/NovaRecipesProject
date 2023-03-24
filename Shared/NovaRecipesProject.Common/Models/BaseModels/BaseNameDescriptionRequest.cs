@@ -21,7 +21,7 @@ public class BaseNameDescriptionRequest
 /// <summary>
 /// Base validator for all others validators (who include this model) to use
 /// </summary>
-public class BaseNameDescriptionRequestValidator<T> : AbstractValidator<T> where T : BaseNameDescriptionModel
+public class BaseNameDescriptionRequestValidator<T> : AbstractValidator<T> where T : BaseNameDescriptionRequest
 {
     /// <inheritdoc />
     protected BaseNameDescriptionRequestValidator()

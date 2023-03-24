@@ -7,8 +7,6 @@ using NovaRecipesProject.Services.RecipeParagraphs;
 
 namespace NovaRecipesProject.Api.Controllers.RecipeParagraphs;
 
-// TODO: начать использовать версионирование и разбить методы для контроллера на разные версии
-
 /// <summary>
 /// Recipe paragraph controller
 /// </summary>
@@ -44,17 +42,23 @@ public class RecipeParagraphsController : ControllerBase
     }
 
     /// <summary>
-    /// Basic get RecipeParagraph
+    /// Gets all recipe paragraphs of a certain recipe using its Id
     /// </summary>
-    /// <param name="offset">Offset to the first element</param>
-    /// <param name="limit">Count elements on the page</param>
-    /// <response code="200">List of RecipeParagraph responses</response>
+    /// <param name="recipeId"></param>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <returns>List of RecipeParagraphResponse ordered by order number value</returns>
     [ProducesResponseType(typeof(IEnumerable<RecipeParagraphResponse>), 200)]
-    [HttpGet("")]
-    public async Task<IEnumerable<RecipeParagraphResponse>> GetRecipeParagraphs([FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    [HttpGet("recipe/{recipeId:int}")]
+    public async Task<IEnumerable<RecipeParagraphResponse>> GetRecipesParagraphs(
+        [FromRoute] int recipeId,
+        [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10
+    )
     {
-        var categories = await _recipeParagraphService.GetRecipeParagraphs(offset, limit);
-        var response = _mapper.Map<IEnumerable<RecipeParagraphResponse>>(categories);
+        var recipeParagraphsByRecipesId = 
+            await _recipeParagraphService.GetRecipeParagraphsByRecipesId(recipeId, offset, limit);
+        var response = _mapper.Map<IEnumerable<RecipeParagraphResponse>>(recipeParagraphsByRecipesId);
 
         return response;
     }
@@ -68,8 +72,8 @@ public class RecipeParagraphsController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<RecipeParagraphResponse> GetRecipeParagraphById([FromRoute] int id)
     {
-        var category = await _recipeParagraphService.GetRecipeParagraphById(id);
-        var response = _mapper.Map<RecipeParagraphResponse>(category);
+        var recipeParagraphById = await _recipeParagraphService.GetRecipeParagraphById(id);
+        var response = _mapper.Map<RecipeParagraphResponse>(recipeParagraphById);
 
         return response;
     }
@@ -77,20 +81,35 @@ public class RecipeParagraphsController : ControllerBase
     /// <summary>
     /// Method to add new data to DB
     /// </summary>
-    /// <param name="request"></param>
+    /// <param name="recipeId">Recipe's id to link to</param>
+    /// <param name="request">Request model to use</param>
     /// <response code="200">Returns RecipeParagraph model which were made while adding new data do DB</response>
     [ProducesResponseType(typeof(RecipeParagraphResponse), 200)]
-    [HttpPost("")]
-    public async Task<RecipeParagraphResponse> AddRecipeParagraph([FromBody] AddRecipeParagraphRequest request)
+    [HttpPost("recipe/{recipeId:int}")]
+    public async Task<RecipeParagraphResponse> AddRecipeParagraph(
+        [FromRoute] int recipeId,
+        [FromBody] AddRecipeParagraphRequest request
+        )
     {
         var model = _mapper.Map<AddRecipeParagraphModel>(request);
-        var category = await _recipeParagraphService.AddRecipeParagraph(model);
-        var response = _mapper.Map<RecipeParagraphResponse>(category);
+        var addRecipeParagraph = await _recipeParagraphService.AddRecipeParagraph(recipeId, model);
+        var response = _mapper.Map<RecipeParagraphResponse>(addRecipeParagraph);
 
         return response;
     }
 
-    // TODO: добавить новый метод для добавления параграфа рецепта
+    /// <summary>
+    /// Updates recipe paragraph order number
+    /// </summary>
+    /// <param name="orderNumber">Value to change entry's OrderNumber value to</param>
+    /// <param name="id">RecipeParagraph model id to update</param>
+    /// <response code="200"></response>
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> ChangeRecipeParagraphOrderNumber([FromQuery] int orderNumber, [FromRoute] int id)
+    {
+        await _recipeParagraphService.ChangeRecipeParagraphOrderNumber(orderNumber, id);
+        return Ok();
+    }
 
     /// <summary>
     /// Updates RecipeParagraph by its id and basic data

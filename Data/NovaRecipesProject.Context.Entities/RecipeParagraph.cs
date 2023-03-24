@@ -11,4 +11,12 @@ public class RecipeParagraph : BaseNameDescription
     /// Value used to describe order of current paragraph in recipe
     /// </summary>
     public int OrderNumber { get; set; }
+    /// <summary>
+    /// Value used for many-to-one relationship
+    /// </summary>
+    public int RecipeId { get; set; }
+    /// <summary>
+    /// Recipe itself
+    /// </summary>
+    public virtual Recipe Recipe { get; set; } = null!;
 }

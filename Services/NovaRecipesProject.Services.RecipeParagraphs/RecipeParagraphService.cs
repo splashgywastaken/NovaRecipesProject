@@ -42,9 +42,13 @@ public class RecipeParagraphService : IRecipeParagraphService
         _updateIngredientModelValidator = updateIngredientModelValidator;
         _cacheService = cacheService;
     }
-
+   
     /// <inheritdoc />
-    public async Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphs(int offset = 0, int limit = 10)
+    public async Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesId(
+        int recipeId, 
+        int offset = 0,
+        int limit = 10
+        )
     {
         if (_cacheService != null)
         {
@@ -52,29 +56,29 @@ public class RecipeParagraphService : IRecipeParagraphService
             {
                 var cachedData = await _cacheService.Get<IEnumerable<RecipeParagraphModel>?>(ContextCacheKey);
                 if (cachedData != null)
-                    return cachedData;
+                    return cachedData.OrderBy(x => x.OrderNumber);
             }
             catch
             {
-                // ignored
+                // Ignored
             }
         }
-
-        await Task.Delay(500);
 
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 
         var recipeParagraphs = context
             .RecipeParagraphs
-        .AsQueryable();
+            .AsQueryable();
 
         recipeParagraphs = recipeParagraphs
+            .Where(x => x.RecipeId == recipeId)
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
 
         var data =
             (await recipeParagraphs.ToListAsync())
             .Select(_mapper.Map<RecipeParagraphModel>)
+            .OrderBy(x => x.OrderNumber)
             .ToList();
 
         if (_cacheService != null)
@@ -98,13 +102,15 @@ public class RecipeParagraphService : IRecipeParagraphService
     }
 
     /// <inheritdoc />
-    public async Task<RecipeParagraphModel> AddRecipeParagraph(AddRecipeParagraphModel model)
+    public async Task<RecipeParagraphModel> AddRecipeParagraph(int recipeId, AddRecipeParagraphModel model)
     {
         _addIngredientModelValidator.Check(model);
 
         await using var context = await _dbContextFactory.CreateDbContextAsync();
-        
+
         var recipeParagraph = _mapper.Map<RecipeParagraph>(model);
+        // Adding link to recipe in DB
+        recipeParagraph.RecipeId = recipeId;
         await context.RecipeParagraphs.AddAsync(recipeParagraph);
         await context.SaveChangesAsync();
 
@@ -118,15 +124,39 @@ public class RecipeParagraphService : IRecipeParagraphService
 
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 
-        var recipeParagraph = await context.RecipeParagraphs.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        var recipeParagraph = await context
+            .RecipeParagraphs
+            .Include(x => x.RecipeId)
+            .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
         // Copying data to make it so that data in "ingredient" variable wont be changed in the outer scope
         var recipeParagraphCopy = recipeParagraph;
         ProcessException.ThrowIf(() => recipeParagraphCopy is null, $"The recipe paragraph (id: {id}) was not found");
 
         recipeParagraph = _mapper.Map(model, recipeParagraph);
+        // Making sure that relationship was not updated
+        recipeParagraph!.RecipeId = recipeParagraphCopy!.RecipeId;
 
-        context.RecipeParagraphs.Update(recipeParagraph!);
+        context.RecipeParagraphs.Update(recipeParagraph);
+        await context.SaveChangesAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task ChangeRecipeParagraphOrderNumber(int orderNumber, int id)
+    {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        // Getting all data about recipeParagraph
+        var recipeParagraphToUpdate = await context
+            .RecipeParagraphs
+            .Include(x => x.RecipeId)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        ProcessException.ThrowIf(() => recipeParagraphToUpdate is null, $"The recipe paragraph (id: {id}) was not found");
+
+        // Applying changes and saving them
+        recipeParagraphToUpdate!.OrderNumber = orderNumber;
+        context.RecipeParagraphs.Update(recipeParagraphToUpdate);
         await context.SaveChangesAsync();
     }
 

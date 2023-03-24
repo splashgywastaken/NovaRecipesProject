@@ -8,24 +8,26 @@ namespace NovaRecipesProject.Services.RecipeParagraphs;
 public interface IRecipeParagraphService
 {
     /// <summary>
-    /// Method to get basic ingredients list
+    /// Method 
     /// </summary>
+    /// <param name="recipeId">Recipe's id</param>
     /// <param name="offset">Sets offset for data it got</param>
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of RecipeParagraphModel</returns>
-    Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphs(int offset = 0, int limit = 10);
+    Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesId(int recipeId, int offset = 0, int limit = 10);
     /// <summary>
-    /// Method to get ingredient by some Id
+    /// Method to get recipe paragraph by some Id
     /// </summary>
-    /// <param name="id">Id of a ingredient</param>
-    /// <returns>Exact ingredient with given Id, or error related to what occured in proccess</returns>
+    /// <param name="id">Id of a recipe paragraph</param>
+    /// <returns>Exact recipe paragraph with given Id, or error related to what occured in proccess</returns>
     Task<RecipeParagraphModel> GetRecipeParagraphById(int id);
     /// <summary>
-    /// Uses argument to add new ingredient to a DB
+    /// Uses argument to add new recipe paragraph to a DB
     /// </summary>
+    /// <param name="recipeId">Id of recipe</param>
     /// <param name="model">Model which is used to add new data to DB</param>
-    /// <returns>Returns added ingredient data</returns>
-    Task<RecipeParagraphModel> AddRecipeParagraph(AddRecipeParagraphModel model);
+    /// <returns>Returns added recipe paragraph data</returns>
+    Task<RecipeParagraphModel> AddRecipeParagraph(int recipeId, AddRecipeParagraphModel model);
     /// <summary>
     /// Method used to update data in DB
     /// </summary>
@@ -33,6 +35,13 @@ public interface IRecipeParagraphService
     /// <param name="model">Model, which data will be used to update an entry in DB</param>
     /// <returns></returns>
     Task UpdateRecipeParagraph(int id, UpdateRecipeParagraphModel model);
+    /// <summary>
+    /// Method used to update data of a recipe in DB, where it updates only orderNumber value
+    /// </summary>
+    /// <param name="orderNumber">Order number to update to</param>
+    /// <param name="id">Id of a recipe paragraph to update</param>
+    /// <returns></returns>
+    Task ChangeRecipeParagraphOrderNumber(int orderNumber, int id);
     /// <summary>
     /// Method used to delete entry from DB
     /// </summary>

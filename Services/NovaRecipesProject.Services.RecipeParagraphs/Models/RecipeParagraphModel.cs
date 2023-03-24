@@ -13,6 +13,7 @@ namespace NovaRecipesProject.Services.RecipeParagraphs.Models;
 public class RecipeParagraphModel : BaseNameDescriptionModel
 {
     public int Id { get; set; }
+    public int RecipeId { get; set; }
     public int OrderNumber { get; set; }
 }
 

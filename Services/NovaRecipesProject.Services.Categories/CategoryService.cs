@@ -52,16 +52,23 @@ public class CategoryService : ICategoryService
             try
             {
                 var cachedData = await _cacheService.Get<IEnumerable<CategoryModel>?>(ContextCacheKey);
+                // If there are some cached data
                 if (cachedData != null)
-                    return cachedData;
+                {
+                    // Enumerating cachedData to evade multiple enumerations
+                    var enumeratedCachedData = cachedData.ToList();
+                    // If there are less or equal stored cached data than what the limit is 
+                    if (enumeratedCachedData.Count <= limit)
+                    {
+                        return enumeratedCachedData;
+                    }
+                }
             }
             catch
             {
-                // ignored
+                // Ignored
             }
         }
-
-        await Task.Delay(500);
 
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 

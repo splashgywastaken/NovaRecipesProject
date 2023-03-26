@@ -56,8 +56,17 @@ public class RecipeParagraphService : IRecipeParagraphService
             try
             {
                 var cachedData = await _cacheService.Get<IEnumerable<RecipeParagraphModel>?>(ContextCacheKey);
+                // If there are some cached data
                 if (cachedData != null)
-                    return cachedData.OrderBy(x => x.OrderNumber);
+                {
+                    // Enumerating cachedData to evade multiple enumerations
+                    var enumeratedCachedData = cachedData.ToList();
+                    // If there are less or equal stored cached data than what the limit is 
+                    if (enumeratedCachedData.Count <= limit)
+                    {
+                        return enumeratedCachedData.OrderBy(x => x.OrderNumber);
+                    }
+                }
             }
             catch
             {

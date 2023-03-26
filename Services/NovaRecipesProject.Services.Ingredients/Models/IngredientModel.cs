@@ -17,6 +17,8 @@ public class IngredientModel : BaseNameDescriptionModel
     public float Carbohydrates { get; set; }
     public float Proteins { get; set; }
     public float Fat { get; set; }
+    public float Weight { get; set; }
+    public string Portion { get; set; } = null!;
 }
 
 /// <summary>
@@ -37,6 +39,9 @@ public class IngredientModelValidator : BaseNameDescriptionModelValidator<Ingred
         RuleFor(x => x.Fat)
             .GreaterThanOrEqualTo(0.0f).WithMessage("Fat value should be between 0 and 100")
             .LessThanOrEqualTo(100.0f).WithMessage("Fat value should be between 0 and 100");
+
+        RuleFor(x => x.Weight)
+            .GreaterThanOrEqualTo(0.0f).WithMessage("Weight value should not be negative");
     }
 }
 

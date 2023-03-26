@@ -25,8 +25,4 @@ public class Recipe : BaseNameDescription
     /// Recipe's main text data used to describe recipe
     /// </summary>
     public List<RecipeParagraph> RecipeParagraphs { get; set; } = null!;
-    /// <summary>
-    /// Entity for connections
-    /// </summary>
-    public List<RecipeIngredient> RecipeIngredients { get; set; } = null!;
 }

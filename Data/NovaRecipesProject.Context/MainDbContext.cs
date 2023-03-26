@@ -3,7 +3,6 @@ using NovaRecipesProject.Context.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace NovaRecipesProject.Context;
 
@@ -28,10 +27,6 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     /// DbSet of recipe paragraphs entities
     /// </summary>
     public DbSet<RecipeParagraph> RecipeParagraphs { get; set; } = null!;
-    /// <summary>
-    /// DbSet of join entity for recipes and ingredients
-    /// </summary>
-    public DbSet<RecipeIngredient> RecipeIngredients { get; set; } = null!;
 
     /// <inheritdoc />
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
@@ -48,13 +43,12 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
             .SetupCategoryEntity()
             .SetupIngredientEntity()
             .SetupRecipeParagraphEntity()
-            .SetupRecipeIngredientsEntity()
             // Relationships setup
             .SetupUser1ToRecipesNRelationShip()
             .SetupRecipesNToCategoriesNRelationship()
             .SetupRecipes1ToRecipeParagraphsNRelationship()
-            //.SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity()
             ;
+        // Add-Migration AddedSetupUser1ToRecipesNRelationShip -args PostgreSQL
     }
 }
 
@@ -118,6 +112,8 @@ internal static class ModelBuilderExtenstion
         modelBuilder.Entity<Ingredient>().Property(x => x.Carbohydrates).IsRequired();
         modelBuilder.Entity<Ingredient>().Property(x => x.Fat).IsRequired();
         modelBuilder.Entity<Ingredient>().Property(x => x.Proteins).IsRequired();
+        modelBuilder.Entity<Ingredient>().Property(x => x.Weight).IsRequired();
+        modelBuilder.Entity<Ingredient>().Property(x => x.Portion).HasMaxLength(64);
 
         return modelBuilder;
     }
@@ -132,15 +128,6 @@ internal static class ModelBuilderExtenstion
         modelBuilder.Entity<RecipeParagraph>().ToTable("recipeParagraphs");
         modelBuilder.Entity<RecipeParagraph>().Property(x => x.Name).IsRequired();
         modelBuilder.Entity<RecipeParagraph>().Property(x => x.Name).HasMaxLength(128);
-
-        return modelBuilder;
-    }
-
-    public static ModelBuilder SetupRecipeIngredientsEntity(this ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<RecipeIngredient>().ToTable("recipeIngredients");
-        modelBuilder.Entity<RecipeIngredient>().Property(x => x.Weight).IsRequired();
-        modelBuilder.Entity<RecipeIngredient>().Property(x => x.Portion).HasMaxLength(16);
 
         return modelBuilder;
     }
@@ -175,23 +162,6 @@ internal static class ModelBuilderExtenstion
             .WithOne(x => x.Recipe)
             .HasForeignKey(x => x.RecipeId)
             .HasPrincipalKey(x => x.Id)
-            ;
-
-        return modelBuilder;
-    }
-
-    public static ModelBuilder SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity(this ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<RecipeIngredient>()
-            .HasOne(ri => ri.Recipe)
-            .WithMany(r => r.RecipeIngredients)
-            .HasForeignKey(ri => ri.RecipeId)
-            ;
-
-        modelBuilder.Entity<RecipeIngredient>()
-            .HasOne(ri => ri.Ingredient)
-            .WithMany(i => i.RecipeIngredients)
-            .HasForeignKey(ri => ri.IngredientId)
             ;
 
         return modelBuilder;

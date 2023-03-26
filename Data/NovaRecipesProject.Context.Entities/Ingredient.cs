@@ -20,7 +20,11 @@ public class Ingredient : BaseNameDescription
     /// </summary>
     public float Fat { get; set; }
     /// <summary>
-    /// List of entities used for connection
+    /// Weight of added to recipe product 
     /// </summary>
-    public List<RecipeIngredient> RecipeIngredients { get; set; } = null!;
+    public float Weight { get; set; }
+    /// <summary>
+    /// Mock implementation of description of portion (later will be changed to additional class with prerecorded values)
+    /// </summary>
+    public string Portion { get; set; } = null!;
 }

@@ -191,11 +191,19 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
+                    b.Property<string>("Portion")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
                     b.Property<float>("Proteins")
                         .HasColumnType("real");
 
                     b.Property<Guid>("Uid")
                         .HasColumnType("uuid");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -236,43 +244,6 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                         .IsUnique();
 
                     b.ToTable("recipes", (string)null);
-                });
-
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeIngredient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IngredientId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Portion")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("Uid")
-                        .HasColumnType("uuid");
-
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IngredientId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasIndex("Uid")
-                        .IsUnique();
-
-                    b.ToTable("recipeIngredients", (string)null);
                 });
 
             modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeParagraph", b =>
@@ -494,25 +465,6 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeIngredient", b =>
-                {
-                    b.HasOne("NovaRecipesProject.Context.Entities.Ingredient", "Ingredient")
-                        .WithMany("RecipeIngredients")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NovaRecipesProject.Context.Entities.Recipe", "Recipe")
-                        .WithMany("RecipeIngredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Recipe");
-                });
-
             modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeParagraph", b =>
                 {
                     b.HasOne("NovaRecipesProject.Context.Entities.Recipe", "Recipe")
@@ -524,15 +476,8 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Ingredient", b =>
-                {
-                    b.Navigation("RecipeIngredients");
-                });
-
             modelBuilder.Entity("NovaRecipesProject.Context.Entities.Recipe", b =>
                 {
-                    b.Navigation("RecipeIngredients");
-
                     b.Navigation("RecipeParagraphs");
                 });
 

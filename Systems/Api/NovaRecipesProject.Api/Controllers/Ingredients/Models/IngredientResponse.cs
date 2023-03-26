@@ -16,6 +16,8 @@ public class IngredientResponse : BaseNameDescriptionModel
     public float Carbohydrates { get; set; }
     public float Proteins { get; set; }
     public float Fat { get; set; }
+    public float Weight { get; set; }
+    public string Portion { get; set; } = null!;
 }
 
 public class IngredientResponseProfile : Profile

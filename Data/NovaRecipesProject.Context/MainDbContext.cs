@@ -53,7 +53,7 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
             .SetupUser1ToRecipesNRelationShip()
             .SetupRecipesNToCategoriesNRelationship()
             .SetupRecipes1ToRecipeParagraphsNRelationship()
-            //.SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity()
+            .SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity()
             ;
     }
 }

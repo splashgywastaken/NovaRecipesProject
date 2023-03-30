@@ -67,7 +67,7 @@ internal static class ModelBuilderExtenstion
     /// Setting up entity to hold user account data in DB
     /// </summary>
     /// <param name="modelBuilder">Model builder himself</param>
-    public static ModelBuilder SetupUserRelatedEntities(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupUserRelatedEntities(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().ToTable("users");
         modelBuilder.Entity<UserRole>().ToTable("user_roles");
@@ -84,7 +84,7 @@ internal static class ModelBuilderExtenstion
     /// Setting up entity to hold recipe data in DB
     /// </summary>
     /// <param name="modelBuilder"></param>
-    public static ModelBuilder SetupRecipeEntity(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupRecipeEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>().ToTable("recipes");
         modelBuilder.Entity<Recipe>().Property(x => x.Name).IsRequired();
@@ -98,7 +98,7 @@ internal static class ModelBuilderExtenstion
     /// </summary>
     /// <param name="modelBuilder"></param>
     /// <returns></returns>
-    public static ModelBuilder SetupCategoryEntity(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupCategoryEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>().ToTable("categories");
         modelBuilder.Entity<Category>().Property(x => x.Name).IsRequired();
@@ -112,7 +112,7 @@ internal static class ModelBuilderExtenstion
     /// </summary>
     /// <param name="modelBuilder"></param>
     /// <returns></returns>
-    public static ModelBuilder SetupIngredientEntity(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupIngredientEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Ingredient>().ToTable("ingredients");
         modelBuilder.Entity<Ingredient>().Property(x => x.Carbohydrates).IsRequired();
@@ -127,7 +127,7 @@ internal static class ModelBuilderExtenstion
     /// </summary>
     /// <param name="modelBuilder"></param>
     /// <returns></returns>
-    public static ModelBuilder SetupRecipeParagraphEntity(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupRecipeParagraphEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<RecipeParagraph>().ToTable("recipeParagraphs");
         modelBuilder.Entity<RecipeParagraph>().Property(x => x.Name).IsRequired();
@@ -136,7 +136,7 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
-    public static ModelBuilder SetupRecipeIngredientsEntity(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupRecipeIngredientsEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<RecipeIngredient>().ToTable("recipeIngredients");
         modelBuilder.Entity<RecipeIngredient>().Property(x => x.Weight).IsRequired();
@@ -145,7 +145,7 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
-    public static ModelBuilder SetupUser1ToRecipesNRelationShip(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupUser1ToRecipesNRelationShip(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>()
             .HasMany(x => x.Recipes)
@@ -157,7 +157,7 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
-    public static ModelBuilder SetupRecipesNToCategoriesNRelationship(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupRecipesNToCategoriesNRelationship(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>()
             .HasMany(x => x.Categories)
@@ -168,7 +168,7 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
-    public static ModelBuilder SetupRecipes1ToRecipeParagraphsNRelationship(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupRecipes1ToRecipeParagraphsNRelationship(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>()
             .HasMany(x => x.RecipeParagraphs)
@@ -180,7 +180,7 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
-    public static ModelBuilder SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity(this ModelBuilder modelBuilder)
+    internal static ModelBuilder SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<RecipeIngredient>()
             .HasOne(ri => ri.Recipe)

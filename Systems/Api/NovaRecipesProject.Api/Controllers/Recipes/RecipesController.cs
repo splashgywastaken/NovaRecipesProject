@@ -41,7 +41,7 @@ public class RecipesController : ControllerBase
 
     #region GetMethods
     /// <summary>
-    /// Basic get recipes 
+    /// Basic get recipes. Used to get list of recipes to use them then in other methods
     /// </summary>
     /// <param name="offset">Offset to the first element</param>
     /// <param name="limit">Count elements on the page</param>
@@ -89,16 +89,16 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
-    /// Gets recipe by its id
+    /// Gets recipe by its id most of it's data
     /// </summary>
     /// <param name="id">Recipe id by which it returns correct data</param>
     /// <response code="200">Recipe with corresponding id</response>
-    [ProducesResponseType(typeof(RecipeResponse), 200)]
+    [ProducesResponseType(typeof(WholeRecipeResponse), 200)]
     [HttpGet("{id:int}")]
-    public async Task<RecipeResponse> GetRecipeById([FromRoute] int id)
+    public async Task<WholeRecipeResponse> GetRecipeById([FromRoute] int id)
     {
         var recipe = await _recipeService.GetRecipeById(id);
-        var response = _mapper.Map<RecipeResponse>(recipe);
+        var response = _mapper.Map<WholeRecipeResponse>(recipe);
 
         return response;
     }

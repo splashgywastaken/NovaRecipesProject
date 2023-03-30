@@ -33,8 +33,8 @@ public interface IRecipeService
     /// Method to get recipe by some Id
     /// </summary>
     /// <param name="id">Id of a recipe</param>
-    /// <returns>Exact recipe with given Id, or error related to what occured in proccess</returns>
-    Task<RecipeModel> GetRecipeById(int id);
+    /// <returns>Exact recipe with given Id and most of its data, or error related to what occured in proccess</returns>
+    Task<WholeRecipeModel> GetRecipeById(int id);
     /// <summary>
     /// Uses argument to add new recipe to a DB
     /// </summary>

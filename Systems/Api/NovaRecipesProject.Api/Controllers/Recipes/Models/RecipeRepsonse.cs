@@ -26,3 +26,13 @@ public class RecipeResponseProfile : Profile
         CreateMap<RecipeModel, RecipeResponse>();
     }
 }
+
+/// <inheritdoc />
+public class RecipeResponseValidator : BaseNameDescriptionModelValidator<RecipeResponse>
+{
+    /// <inheritdoc />
+    public RecipeResponseValidator()
+    {
+
+    }
+}

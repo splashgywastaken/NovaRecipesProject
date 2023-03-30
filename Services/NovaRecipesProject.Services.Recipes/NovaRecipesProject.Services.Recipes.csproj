@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />
     <ProjectReference Include="..\NovaRecipes.Services.Cache\NovaRecipes.Services.Cache.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj" />
+    <ProjectReference Include="..\NovaRecipesProject.Services.RecipeParagraphs\NovaRecipesProject.Services.RecipeParagraphs.csproj" />
   </ItemGroup>
 
 </Project>

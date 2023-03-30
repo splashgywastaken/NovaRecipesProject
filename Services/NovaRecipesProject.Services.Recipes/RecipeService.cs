@@ -172,7 +172,7 @@ public class RecipeService : IRecipeService
                         return enumeratedCachedData;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Ignored
             }
@@ -198,15 +198,40 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
-    public async Task<RecipeModel> GetRecipeById(int id)
+    public async Task<WholeRecipeModel> GetRecipeById(int id)
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 
+        // Getting recipe with it's categories and paragraphs
         var recipe = await context
             .Recipes
+            .Include(x => x.Categories)
+            .Include(x => x.RecipeParagraphs)
             .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
-        var data = _mapper.Map<RecipeModel>(recipe);
+        ProcessException.ThrowIf(() => recipe is null, $"Recipe was not found (id: {id})");
+
+        // Sort categories
+        if (recipe!.Categories is not null)
+        {
+            recipe!.Categories = recipe!
+                .Categories
+                .OrderBy(x => x.Id)
+                .ToList();
+        }
+        // Sort recipe's paragraphs
+        recipe.RecipeParagraphs = recipe
+            .RecipeParagraphs
+            .OrderBy(x => x.OrderNumber)
+            .ToList();
+        
+        var ingredients = 
+            (await GetRecipesIngredients(id))
+            .OrderBy(x => x.IngredientId)
+            .ToList();
+
+        var data = _mapper.Map<WholeRecipeModel>(recipe);
+        data.RecipeIngredients = ingredients;
 
         return data;
     }

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using NovaRecipesProject.Common.Models.BaseModels;
-using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Recipes.Models;
 
 namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
 
 /// <summary>
-/// Recipe response model which will be used in controllers
+/// Basic recipe response model which will be used in controllers
 /// </summary>
 public class RecipeResponse : BaseNameDescriptionModel
 {

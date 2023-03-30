@@ -14,7 +14,6 @@ public interface IRecipeService
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of RecipeModel</returns>
     Task<IEnumerable<RecipeModel>> GetRecipes(int offset = 0, int limit = 10);
-
     /// <summary>
     /// Method to get list of recipes of exact user
     /// </summary>
@@ -23,6 +22,13 @@ public interface IRecipeService
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns></returns>
     Task<IEnumerable<RecipeModel>> GetUserRecipes(int userId, int offset = 0, int limit = 10);
+    /// <summary>
+    /// Method to get list of recipe's ingredients.
+    /// </summary>
+    /// <param name="recipeId">recipe id to get list of ingredients from</param>
+    /// <returns>Returns <c>IEnumerable</c> of <c>RecipeIngredientModel</c> which
+    /// describes main information about recipe's ingredients</returns>
+    Task<IEnumerable<RecipeIngredientModel>> GetRecipesIngredients(int recipeId);
     /// <summary>
     /// Method to get recipe by some Id
     /// </summary>
@@ -35,7 +41,6 @@ public interface IRecipeService
     /// <param name="model">Model which is used to add new data to DB</param>
     /// <returns>Returns added recipe data</returns>
     Task<RecipeModel> AddRecipe(AddRecipeModel model);
-
     /// <summary>
     /// Uses argument ot add new recipe to a DB,
     /// also uses data about current logged in user to add new recipe to all of his others
@@ -45,6 +50,12 @@ public interface IRecipeService
     /// <returns></returns>
     Task<RecipeModel> AddRecipeWithUser(int userId, AddRecipeModel model);
     /// <summary>
+    /// Creates new entry for join table, basically adds ingredient to a recipe
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns>Model with </returns>
+    Task<RecipeIngredientModel> AddIngredientToRecipe(AddRecipeIngredientModel model);
+    /// <summary>
     /// Method used to update data in DB
     /// </summary>
     /// <param name="id">Id of exact DB entry to update</param>
@@ -52,9 +63,26 @@ public interface IRecipeService
     /// <returns></returns>
     Task UpdateRecipe(int id, UpdateRecipeModel model);
     /// <summary>
+    /// Method used to update entry for RecipeInggredient in DB,
+    /// could update any property of RecipeIngredient but RecipeId and IngredientId
+    /// </summary>
+    /// <param name="recipeId">recipe's id</param>
+    /// <param name="ingredientId">ingredient's id</param>
+    /// <param name="model">Model which data is used to update entry in DB</param>
+    /// <returns></returns>
+    Task UpdateRecipeIngredient(int recipeId, int ingredientId, UpdateRecipeIngredientModel model);
+    /// <summary>
     /// Method used to delete entry from DB
     /// </summary>
     /// <param name="id">Id of an entry to delete</param>
     /// <returns></returns>
     Task DeleteRecipe(int id);
+
+    /// <summary>
+    /// Deletes entry in RecipeIngredient table in DB
+    /// </summary>
+    /// <param name="recipeId">Recipe id to search through recipes with</param>
+    /// <param name="ingredientId">Ingredient id to search through recipes with</param>
+    /// <returns></returns>
+    Task DeleteRecipeIngredient(int recipeId, int ingredientId);
 }

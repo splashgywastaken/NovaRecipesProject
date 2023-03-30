@@ -61,6 +61,14 @@
             <param name="model">Basic data about recipe</param>
             <returns></returns>
         </member>
+        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.AddIngredientToRecipe(System.Int32,NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModel)">
+            <summary>
+            Creates new entry for join table, basically adds ingredient to a recipe
+            </summary>
+            <param name="recipeId"></param>
+            <param name="model"></param>
+            <returns>Model with </returns>
+        </member>
         <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.UpdateRecipe(System.Int32,NovaRecipesProject.Services.Recipes.Models.UpdateRecipeModel)">
             <summary>
             Method used to update data in DB
@@ -75,6 +83,29 @@
             </summary>
             <param name="id">Id of an entry to delete</param>
             <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModel">
+            <summary>
+            Model for adding new ingredient to a recipe
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModelProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModelProfile.#ctor">
+            <summary>
+            Mapper definitions:
+            here property IngredientId skipped beacause it is used only to get data about recipe from DB.
+            And add new entry for RecipeIngredient
+            </summary> 
+        </member>
+        <member name="T:NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModelValidator">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModelValidator.#ctor">
+            <summary>
+            Validator description, yet its declaring anything for portion, becuase currently portion is a placeholder
+            </summary>
         </member>
         <member name="T:NovaRecipesProject.Services.Recipes.Models.AddRecipeModel">
             <summary>
@@ -91,6 +122,37 @@
             <inheritdoc />
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.Models.AddRecipeModelValidator.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="T:NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModel">
+            <summary>
+            All possible data about ingredient in recipe
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModel.IngredientId">
+            <summary>
+            Id of ingredient to later work with on frontend
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModel.Carbohydrates">
+            <summary>
+            Basic nutrition data
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModel.Proteins">
+            <summary>
+            Basic nutrition data
+            </summary>
+        </member>
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModel.Fat">
+            <summary>
+            Basic nutrition data
+            </summary>
+        </member>
+        <member name="T:NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModelProfile">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModelProfile.#ctor">
             <inheritdoc />
         </member>
         <member name="T:NovaRecipesProject.Services.Recipes.Models.RecipeModel">
@@ -151,7 +213,7 @@
         <member name="T:NovaRecipesProject.Services.Recipes.RecipeService">
             <inheritdoc />
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.#ctor(Microsoft.EntityFrameworkCore.IDbContextFactory{NovaRecipesProject.Context.MainDbContext},AutoMapper.IMapper,NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.AddRecipeModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.UpdateRecipeModel},NovaRecipesProject.Services.Cache.ICacheService)">
+        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.#ctor(Microsoft.EntityFrameworkCore.IDbContextFactory{NovaRecipesProject.Context.MainDbContext},AutoMapper.IMapper,NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.AddRecipeModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.UpdateRecipeModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModel},NovaRecipesProject.Services.Cache.ICacheService)">
             <summary>
             Constructor for this class
             </summary>
@@ -159,6 +221,7 @@
             <param name="mapper"></param>
             <param name="addRecipeModelValidator"></param>
             <param name="updateRecipeModelValidator"></param>
+            <param name="addRecipeIngredientModelValidator"></param>
             <param name="cacheService"></param>
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipes(System.Int32,System.Int32)">
@@ -174,6 +237,9 @@
             <inheritdoc />
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.AddRecipeWithUser(System.Int32,NovaRecipesProject.Services.Recipes.Models.AddRecipeModel)">
+            <inheritdoc />
+        </member>
+        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.AddIngredientToRecipe(System.Int32,NovaRecipesProject.Services.Recipes.Models.AddRecipeIngredientModel)">
             <inheritdoc />
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.UpdateRecipe(System.Int32,NovaRecipesProject.Services.Recipes.Models.UpdateRecipeModel)">

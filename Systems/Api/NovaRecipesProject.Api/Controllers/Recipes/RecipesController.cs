@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Runtime.CompilerServices;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Api.Controllers.Recipes.Models;
 using NovaRecipesProject.Common.Responses;
@@ -38,6 +39,7 @@ public class RecipesController : ControllerBase
         _recipeService = recipeService;
     }
 
+    #region GetMethods
     /// <summary>
     /// Basic get recipes 
     /// </summary>
@@ -72,6 +74,21 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
+    /// Gets all data about recipes ingredients
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(RecipeIngredientResponse), 200)]
+    [HttpGet("{recipeId:int}/ingredients")]
+    public async Task<IEnumerable<RecipeIngredientResponse>> GetRecipesIngredients([FromRoute] int recipeId)
+    {
+        var ingredients = await _recipeService.GetRecipesIngredients(recipeId);
+        var response = _mapper.Map<IEnumerable<RecipeIngredientResponse>>(ingredients);
+
+        return response;
+    }
+
+    /// <summary>
     /// Gets recipe by its id
     /// </summary>
     /// <param name="id">Recipe id by which it returns correct data</param>
@@ -85,7 +102,9 @@ public class RecipesController : ControllerBase
 
         return response;
     }
+    #endregion
 
+    #region AddMethods
     /// <summary>
     /// Method to add new data to DB
     /// </summary>
@@ -118,24 +137,70 @@ public class RecipesController : ControllerBase
 
         return response;
     }
+    
+    /// <summary>
+    /// Links ingredient to recipe from already existing one's
+    /// </summary>
+    /// <param name="recipeId">Recipe to ingredient add to</param>
+    /// <param name="request">Data about ingredient in recipe</param>
+    /// <returns>Recipe's ingredient that it added to recipe with weight, portion and nutrition data</returns>
+    [ProducesResponseType(typeof(RecipeIngredientResponse), 200)]
+    [HttpPost("{recipeId:int}/ingredients")]
+    public async Task<RecipeIngredientResponse> AddIngredientToRecipe(
+        [FromRoute] int recipeId,
+        [FromBody] AddRecipeIngredientRequest request
+        )
+    {
+        var model = _mapper.Map<AddRecipeIngredientModel>(request);
+        model.RecipeId = recipeId;
+        var recipeIngredient = await _recipeService.AddIngredientToRecipe(model);
+        var response = _mapper.Map<RecipeIngredientResponse>(recipeIngredient);
 
+        return response;
+    }
+    #endregion
+
+    #region UpdateMethods
     /// <summary>
     /// Updates recipe by its id and basic data
     /// </summary>
     /// <param name="id">Id of recipe model</param>
-    /// <param name="updateRecipeRequest">Recipe model to update to</param>
+    /// <param name="request">Recipe model to update to</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateRecipe([FromRoute] int id, [FromBody] UpdateRecipeRequest updateRecipeRequest)
+    public async Task<IActionResult> UpdateRecipe([FromRoute] int id, [FromBody] UpdateRecipeRequest request)
     {
-        var model = _mapper.Map<UpdateRecipeModel>(updateRecipeRequest);
+        var model = _mapper.Map<UpdateRecipeModel>(request);
         await _recipeService.UpdateRecipe(id, model);
 
         return Ok();
     }
 
     /// <summary>
-    /// Mehtod to delete data in DB
+    /// Updates only RecipeIngredient entry in DB.
+    /// Can change weight and portion
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="ingredientId"></param>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPut("{recipeId:int}/ingredients/{ingredientId:int}")]
+    public async Task<IActionResult> UpdateRecipeIngredient(
+        [FromRoute] int recipeId,
+        [FromRoute] int ingredientId,
+        [FromBody] UpdateRecipeIngredientRequest request
+    )
+    {
+        var model = _mapper.Map<UpdateRecipeIngredientModel>(request);
+        await _recipeService.UpdateRecipeIngredient(recipeId, ingredientId, model);
+
+        return Ok();
+    }
+    #endregion
+
+    #region DeleteMethods
+    /// <summary>
+    /// Method to delete data in DB
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -146,4 +211,19 @@ public class RecipesController : ControllerBase
 
         return Ok();
     }
+
+    /// <summary>
+    /// Method used to delete connection between some recipe and ingredient
+    /// </summary>
+    /// <param name="recipeId">Recipe id to search through recipes with</param>
+    /// <param name="ingredientId">Ingredient id to search through recipes with</param>
+    /// <returns></returns>
+    [HttpDelete("{recipeId:int}/ingredients/{ingredientId:int}")]
+    public async Task<IActionResult> DeleteRecipeIngredient([FromRoute] int recipeId, [FromRoute] int ingredientId)
+    {
+        await _recipeService.DeleteRecipeIngredient(recipeId, ingredientId);
+
+        return Ok();
+    }
+    #endregion
 }

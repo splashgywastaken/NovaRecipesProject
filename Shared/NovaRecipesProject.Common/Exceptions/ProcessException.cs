@@ -22,7 +22,7 @@ public class ProcessException : Exception
     {
     }
 
-    private ProcessException(string message) : base(message)
+    private ProcessException(string message) : base(message, new Exception(message))
     {
     }
 

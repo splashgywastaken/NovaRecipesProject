@@ -10,7 +10,7 @@ namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
 /// <summary>
 /// DTO model for recipe 
 /// </summary>
-public class WholeRecipeResponse : BaseNameDescription
+public class WholeRecipeResponse : BaseNameDescriptionModel
 {
     /// <summary>
     /// List of recipe's paragraphs, sorted by order number

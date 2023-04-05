@@ -15,7 +15,7 @@ public static class Bootstrapper
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <returns></returns>
-    public static IServiceCollection AddApiSpecialSettings(this IServiceCollection services, IConfiguration configuration = null)
+    public static IServiceCollection AddApiSpecialSettings(this IServiceCollection services, IConfiguration? configuration = null)
     {
         var settings = Settings.Load<ApiSpecialSettings>("ApiSpecial", configuration);
         services.AddSingleton(settings);

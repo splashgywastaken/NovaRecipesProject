@@ -1,10 +1,13 @@
 ﻿using NovaRecipesProject.Api.Settings;
+using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.Cache;
 using NovaRecipesProject.Services.Categories;
+using NovaRecipesProject.Services.EmailSender;
 using NovaRecipesProject.Services.Ingredients;
 using NovaRecipesProject.Services.RecipeParagraphs;
 using NovaRecipesProject.Services.Recipes;
 using NovaRecipesProject.Services.UserAccount;
+using NovaRecipesProject.Services.RabbitMq;
 
 namespace NovaRecipesProject.Api;
 
@@ -29,6 +32,9 @@ public static class Bootstrapper
             .AddSwaggerSettings()
             .AddApiSpecialSettings()
             .AddCache()
+            .AddEmailSender()
+            .AddActions()
+            .AddRabbitMq()
             // Controller-related services
             .AddRecipeService()
             .AddCategoryService()

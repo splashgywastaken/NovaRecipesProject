@@ -1,4 +1,7 @@
-﻿namespace NovaRecipesProject.Services.UserAccount;
+﻿using NovaRecipesProject.Services.Actions;
+using NovaRecipesProject.Services.EmailSender.Models;
+
+namespace NovaRecipesProject.Services.UserAccount;
 
 using AutoMapper;
 using Common.Exceptions;
@@ -12,6 +15,7 @@ public class UserAccountService : IUserAccountService
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
     private readonly IModelValidator<RegisterUserAccountModel> _registerUserAccountModelValidator;
+    private readonly IAction _action;
 
     /// <summary>
     /// Main constructor
@@ -19,15 +23,18 @@ public class UserAccountService : IUserAccountService
     /// <param name="mapper"></param>
     /// <param name="userManager"></param>
     /// <param name="registerUserAccountModelValidator"></param>
+    /// <param name="action"></param>
     public UserAccountService(
         IMapper mapper,
         UserManager<User> userManager, 
-        IModelValidator<RegisterUserAccountModel> registerUserAccountModelValidator
+        IModelValidator<RegisterUserAccountModel> registerUserAccountModelValidator,
+        IAction action
         )
     {
         _mapper = mapper;
         _userManager = userManager;
         _registerUserAccountModelValidator = registerUserAccountModelValidator;
+        _action = action;
     }
 
     /// <inheritdoc />
@@ -57,6 +64,12 @@ public class UserAccountService : IUserAccountService
         if (!result.Succeeded)
             throw new ProcessException("401", $"Creating user account is wrong. {string.Join(", ", result.Errors.Select(s => s.Description))}");
 
+        await _action.SendEmail(new EmailModel
+        {
+            Email = model.Email,
+            Subject = "NovaRecipes notification",
+            Message = "You are registered"
+        });
 
         // Returning the created user
         return _mapper.Map<UserAccountModel>(user);

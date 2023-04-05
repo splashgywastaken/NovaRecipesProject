@@ -7,8 +7,12 @@ services:
     image: postgres:14.1
 
 # Misc services
+  # Redis
   novarecipesproject_redis:
     image: redis
+  # RabbitMQ
+  novarecipesproject_rabbitmq:
+    image: rabbitmq:management
 
 # Solution WEBAPI projects
   novarecipesproject_api:
@@ -28,4 +32,26 @@ services:
     depends_on:
       - novarecipesproject_postgresql
       - novarecipesproject_redis
+      - novarecipesproject_api
+
+  novarecipesproject_emailsenderworker_1:
+    image: ${DOCKER_REGISTRY-}novarecipesprojectemailsenderworker
+    build:
+      context: .
+      dockerfile: Systems/Workers/NovaRecipesProject.EmailSenderWorker/Dockerfile
+    depends_on:
+      - novarecipesproject_postgresql
+      - novarecipesproject_redis
+      - novarecipesproject_rabbitmq
+      - novarecipesproject_api
+
+  novarecipesproject_emailsenderworker_2:
+    image: ${DOCKER_REGISTRY-}novarecipesprojectemailsenderworker
+    build:
+      context: .
+      dockerfile: Systems/Workers/NovaRecipesProject.EmailSenderWorker/Dockerfile
+    depends_on:
+      - novarecipesproject_postgresql
+      - novarecipesproject_redis
+      - novarecipesproject_rabbitmq
       - novarecipesproject_api

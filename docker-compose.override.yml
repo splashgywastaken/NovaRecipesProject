@@ -32,7 +32,20 @@ services:
     env_file:
       - env.identity
 
+  novarecipesproject_emailsenderworker_1:
+    networks:
+      - shared_novarecipesproject_net
+    env_file:
+      - env.emailsenderworker
+
+  novarecipesproject_emailsenderworker_2:
+    networks:
+      - shared_novarecipesproject_net
+    env_file:
+      - env.emailsenderworker
+
 # Misc services
+  # Redis
   novarecipesproject_redis:
     ports:
       - "6379:6379"
@@ -40,6 +53,16 @@ services:
       - shared_novarecipesproject_net
     volumes:
       - ~/.docker-conf/redis/data/:/data    
+  # RabbitMQ
+  novarecipesproject_rabbitmq:
+    ports:
+      - "5672:5672"
+      - "5673:5673"
+      - "15672:15672"
+    networks:
+      - shared_novarecipesproject_net
+    volumes:
+      - ./.rabbitmq:/var/lib/rabbitmq
 
 # Other configuration
 networks:

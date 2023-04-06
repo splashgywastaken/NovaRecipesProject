@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using NovaRecipesProject.Services.Recipes.Models;
+using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 
-namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
+namespace NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeIngredientModels;
 
 /// <summary>
 /// DTO used to update data for recipe's ingredients

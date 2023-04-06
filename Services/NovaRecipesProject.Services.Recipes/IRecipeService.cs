@@ -1,4 +1,6 @@
-﻿using NovaRecipesProject.Services.Recipes.Models;
+﻿using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
+using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
+using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 
 namespace NovaRecipesProject.Services.Recipes;
 
@@ -22,6 +24,14 @@ public interface IRecipeService
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns></returns>
     Task<IEnumerable<RecipeModel>> GetUserRecipes(int userId, int offset = 0, int limit = 10);
+    /// <summary>
+    /// Method used to get comments of certain recipe
+    /// </summary>
+    /// <param name="recipeId">recipe's Id</param>
+    /// <param name="offset">offset for data</param>
+    /// <param name="limit">limit for data</param>
+    /// <returns>List of comments for certain recipe ordered by CreatedDateTime value</returns>
+    Task<IEnumerable<RecipeCommentModel>> GetRecipeComments(int recipeId, int offset = 0, int limit = 10);
     /// <summary>
     /// Method to get list of recipe's ingredients.
     /// </summary>
@@ -56,6 +66,13 @@ public interface IRecipeService
     /// <returns>Model with </returns>
     Task<RecipeIngredientModel> AddIngredientToRecipe(AddRecipeIngredientModel model);
     /// <summary>
+    /// Creates new entry for recipeComments table for certain recipe
+    /// </summary>
+    /// <param name="recipeId">Id of recipe to add comment to</param>
+    /// <param name="model">data of comment</param>
+    /// <returns></returns>
+    Task<RecipeCommentModel> AddCommentToRecipe(int recipeId, AddRecipeCommentModel model);
+    /// <summary>
     /// Method used to update data in DB
     /// </summary>
     /// <param name="id">Id of exact DB entry to update</param>
@@ -71,13 +88,21 @@ public interface IRecipeService
     /// <param name="model">Model which data is used to update entry in DB</param>
     /// <returns></returns>
     Task UpdateRecipeIngredient(int recipeId, int ingredientId, UpdateRecipeIngredientModel model);
+
+    /// <summary>
+    /// Method used to update data in comment for certain recipe
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <param name="recipeId"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    Task UpdateRecipeComment(int commentId, int recipeId, UpdateRecipeCommentModel model);
     /// <summary>
     /// Method used to delete entry from DB
     /// </summary>
     /// <param name="id">Id of an entry to delete</param>
     /// <returns></returns>
     Task DeleteRecipe(int id);
-
     /// <summary>
     /// Deletes entry in RecipeIngredient table in DB
     /// </summary>
@@ -85,4 +110,12 @@ public interface IRecipeService
     /// <param name="ingredientId">Ingredient id to search through recipes with</param>
     /// <returns></returns>
     Task DeleteRecipeIngredient(int recipeId, int ingredientId);
+
+    /// <summary>
+    /// Deletes comment for certain recipe
+    /// </summary>
+    /// <param name="commentId"></param>
+    /// <param name="recipeId"></param>
+    /// <returns></returns>
+    Task DeleteRecipeComment(int commentId, int recipeId);
 }

@@ -51,17 +51,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.RecipeParagraphs", "Services\NovaRecipesProject.Services.RecipeParagraphs\NovaRecipesProject.Services.RecipeParagraphs.csproj", "{2F884517-A2BA-4080-B011-8AA9C725D86E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.RabbitMq", "Services\NovaRecipesProject.Services.RabbitMq\NovaRecipesProject.Services.RabbitMq.csproj", "{EB502D87-D36A-44CF-A57A-78CE541AC906}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.RabbitMq", "Services\NovaRecipesProject.Services.RabbitMq\NovaRecipesProject.Services.RabbitMq.csproj", "{EB502D87-D36A-44CF-A57A-78CE541AC906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.Actions", "Services\NovaRecipesProject.Services.Actions\NovaRecipesProject.Services.Actions.csproj", "{63FB7C55-5703-4A71-A5EE-91BE5D9BF7FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Actions", "Services\NovaRecipesProject.Services.Actions\NovaRecipesProject.Services.Actions.csproj", "{63FB7C55-5703-4A71-A5EE-91BE5D9BF7FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Services.EmailSender", "Services\NovaRecipesProject.Services.EmailSender\NovaRecipesProject.Services.EmailSender.csproj", "{E7D0CD33-051F-4FEE-82C7-41AC744A104B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.EmailSender", "Services\NovaRecipesProject.Services.EmailSender\NovaRecipesProject.Services.EmailSender.csproj", "{E7D0CD33-051F-4FEE-82C7-41AC744A104B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.Consts", "Shared\NovaRecipesProject.Consts\NovaRecipesProject.Consts.csproj", "{82A74956-E76D-4D3C-812D-09A306FFC4CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Consts", "Shared\NovaRecipesProject.Consts\NovaRecipesProject.Consts.csproj", "{82A74956-E76D-4D3C-812D-09A306FFC4CE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{C4441DAD-4225-4F23-8829-8F0052812721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.EmailSenderWorker", "Systems\Workers\NovaRecipesProject.EmailSenderWorker\NovaRecipesProject.EmailSenderWorker.csproj", "{2DAAB5BC-F182-4D02-BE8E-CD3E61F65150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.EmailSenderWorker", "Systems\Workers\NovaRecipesProject.EmailSenderWorker\NovaRecipesProject.EmailSenderWorker.csproj", "{2DAAB5BC-F182-4D02-BE8E-CD3E61F65150}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

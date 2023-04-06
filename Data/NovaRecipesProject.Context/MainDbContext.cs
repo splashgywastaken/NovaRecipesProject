@@ -1,9 +1,7 @@
-﻿using System.Runtime.CompilerServices;
-using NovaRecipesProject.Context.Entities;
+﻿using NovaRecipesProject.Context.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace NovaRecipesProject.Context;
 
@@ -32,6 +30,10 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     /// DbSet of join entity for recipes and ingredients
     /// </summary>
     public DbSet<RecipeIngredient> RecipeIngredients { get; set; } = null!;
+    /// <summary>
+    /// DbSet of comments for bottom recipe's page
+    /// </summary>
+    public DbSet<RecipeComment> RecipeComments { get; set; } = null!;
 
     /// <inheritdoc />
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
@@ -49,11 +51,13 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
             .SetupIngredientEntity()
             .SetupRecipeParagraphEntity()
             .SetupRecipeIngredientsEntity()
+            .SetupRecipeCommentsEntity()
             // Relationships setup
             .SetupUser1ToRecipesNRelationShip()
             .SetupRecipesNToCategoriesNRelationship()
             .SetupRecipes1ToRecipeParagraphsNRelationship()
             .SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity()
+            .SetupRecipe1ToRecipeCommentsNRelationship()
             ;
     }
 }
@@ -123,7 +127,7 @@ internal static class ModelBuilderExtenstion
     }
 
     /// <summary>
-    /// 
+    /// Setting up entity to hold data for recipe's paragraphs (aka text of recipe divided into sections)
     /// </summary>
     /// <param name="modelBuilder"></param>
     /// <returns></returns>
@@ -136,6 +140,11 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
+    /// <summary>
+    /// Setting up entity to hold data for recipe's ingredients (aka joins for recipe and ingredients table)
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    /// <returns></returns>
     internal static ModelBuilder SetupRecipeIngredientsEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<RecipeIngredient>().ToTable("recipeIngredients");
@@ -145,6 +154,24 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
+    /// <summary>
+    /// Setting up entity to hold data for recipe's comments (comments in the bottom of recipe page)
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    /// <returns></returns>
+    internal static ModelBuilder SetupRecipeCommentsEntity(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<RecipeComment>().ToTable("recipeComments");
+        modelBuilder.Entity<RecipeComment>().Property(x => x.CreatedDateTime).HasDefaultValueSql("now()");
+
+        return modelBuilder;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    /// <returns></returns>
     internal static ModelBuilder SetupUser1ToRecipesNRelationShip(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>()
@@ -192,6 +219,18 @@ internal static class ModelBuilderExtenstion
             .HasOne(ri => ri.Ingredient)
             .WithMany(i => i.RecipeIngredients)
             .HasForeignKey(ri => ri.IngredientId)
+            ;
+
+        return modelBuilder;
+    }
+
+    internal static ModelBuilder SetupRecipe1ToRecipeCommentsNRelationship(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<RecipeComment>()
+            .HasOne(rc => rc.Recipe)
+            .WithMany(r => r.RecipeComments)
+            .HasForeignKey(rc => rc.RecipeId)
+            .HasPrincipalKey(r => r.Id)
             ;
 
         return modelBuilder;

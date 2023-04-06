@@ -66,6 +66,7 @@
 	<Folder Include="Configuration\" />
 	<Folder Include="Controllers\RecipeParagraphs\Models\" />
 	<Folder Include="Controllers\Accounts\" />
+	<Folder Include="Controllers\Recipes\Models\RecipeCommentModels\" />
 	<Folder Include="wwwroot\" />
 	<Folder Include="Pages\" />
   </ItemGroup>

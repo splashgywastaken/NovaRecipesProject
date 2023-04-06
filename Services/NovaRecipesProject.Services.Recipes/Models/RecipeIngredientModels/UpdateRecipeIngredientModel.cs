@@ -2,7 +2,7 @@
 using FluentValidation;
 using NovaRecipesProject.Context.Entities;
 
-namespace NovaRecipesProject.Services.Recipes.Models;
+namespace NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 
 /// <summary>
 /// DTO model to map to entity model and validate data 

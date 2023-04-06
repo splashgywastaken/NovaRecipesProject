@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using NovaRecipesProject.Api.Controllers.Categories.Models;
 using NovaRecipesProject.Common.Models.BaseModels;
-using NovaRecipesProject.Services.Recipes.Models;
+using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 
-namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
+namespace NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels;
 
 /// <summary>
 /// Simple model to use as arg in requests in book controller

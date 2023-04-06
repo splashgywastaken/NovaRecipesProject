@@ -3,7 +3,7 @@ using FluentValidation;
 using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Context.Entities;
 
-namespace NovaRecipesProject.Services.Recipes.Models;
+namespace NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 
 /// <summary>
 /// Basic model to use in recipe's service

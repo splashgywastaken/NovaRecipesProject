@@ -1,8 +1,8 @@
-﻿namespace NovaRecipesProject.API.Controllers.Models;
-
-using AutoMapper;
-using Services.UserAccount;
+﻿using AutoMapper;
 using FluentValidation;
+using NovaRecipesProject.Services.UserAccount;
+
+namespace NovaRecipesProject.Api.Controllers.Accounts.Models;
 
 /// <summary>
 /// Model used for registring new users

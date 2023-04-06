@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using NovaRecipesProject.Services.Recipes.Models;
+using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 
-namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
+namespace NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeIngredientModels;
 
 /// <summary>
 /// Model used in recipes to also get weight and protion type
 /// </summary>
 public class RecipeIngredientResponse
-{ 
+{
     /// <summary>
     /// Id of ingredient to later work with on frontend
     /// </summary>
@@ -55,7 +55,7 @@ public class RecipeIngredientResponseProfile : Profile
         CreateMap<RecipeIngredientModel, RecipeIngredientResponse>()
             .ForMember(
                 dest => dest.TotalCarbohydrates,
-                opt => 
+                opt =>
                     opt.MapFrom(x => x.Carbohydrates * x.Weight / 100))
             .ForMember(
                 dest => dest.TotalFat,

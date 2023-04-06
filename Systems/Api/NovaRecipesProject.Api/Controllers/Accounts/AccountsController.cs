@@ -1,8 +1,9 @@
-﻿namespace NovaRecipesProject.Api.Controllers.Accounts;
+﻿using NovaRecipesProject.Api.Controllers.Accounts.Models;
+
+namespace NovaRecipesProject.Api.Controllers.Accounts;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NovaRecipesProject.API.Controllers.Models;
 using Services.UserAccount;
 
 /// <summary>

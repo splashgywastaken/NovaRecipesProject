@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using NovaRecipesProject.Context.Entities;
 
-namespace NovaRecipesProject.Services.Recipes.Models;
+namespace NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 
 /// <summary>
 /// All possible data about ingredient in recipe

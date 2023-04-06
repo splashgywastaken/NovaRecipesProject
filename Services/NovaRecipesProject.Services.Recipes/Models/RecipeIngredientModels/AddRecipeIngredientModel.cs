@@ -2,7 +2,7 @@
 using FluentValidation;
 using NovaRecipesProject.Context.Entities;
 
-namespace NovaRecipesProject.Services.Recipes.Models;
+namespace NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 
 /// <summary>
 /// Model for adding new ingredient to a recipe

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using NovaRecipesProject.Api.Controllers.Categories.Models;
 using NovaRecipesProject.Api.Controllers.RecipeParagraphs.Models;
+using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeIngredientModels;
 using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Context.Entities.Common;
-using NovaRecipesProject.Services.Recipes.Models;
+using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 
-namespace NovaRecipesProject.Api.Controllers.Recipes.Models;
+namespace NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels;
 
 /// <summary>
 /// DTO model for recipe 

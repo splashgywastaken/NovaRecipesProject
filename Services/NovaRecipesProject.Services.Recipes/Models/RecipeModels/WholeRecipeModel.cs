@@ -4,8 +4,9 @@ using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Categories.Models;
 using NovaRecipesProject.Services.RecipeParagraphs.Models;
+using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 
-namespace NovaRecipesProject.Services.Recipes.Models;
+namespace NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 
 /// <summary>
 /// 

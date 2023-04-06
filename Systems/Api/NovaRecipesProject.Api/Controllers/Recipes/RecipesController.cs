@@ -1,10 +1,15 @@
 ﻿using System.Runtime.CompilerServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NovaRecipesProject.Api.Controllers.Recipes.Models;
+using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels;
+using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeIngredientModels;
+using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels;
 using NovaRecipesProject.Common.Responses;
+using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.Recipes;
-using NovaRecipesProject.Services.Recipes.Models;
+using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
+using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
+using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 
 namespace NovaRecipesProject.Api.Controllers.Recipes;
 
@@ -78,12 +83,33 @@ public class RecipesController : ControllerBase
     /// </summary>
     /// <param name="recipeId"></param>
     /// <returns></returns>
-    [ProducesResponseType(typeof(RecipeIngredientResponse), 200)]
+    [ProducesResponseType(typeof(IEnumerable<RecipeIngredientResponse>), 200)]
     [HttpGet("{recipeId:int}/ingredients")]
     public async Task<IEnumerable<RecipeIngredientResponse>> GetRecipesIngredients([FromRoute] int recipeId)
     {
         var ingredients = await _recipeService.GetRecipesIngredients(recipeId);
         var response = _mapper.Map<IEnumerable<RecipeIngredientResponse>>(ingredients);
+
+        return response;
+    }
+
+    /// <summary>
+    /// Gets all comments of certain recipe 
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(IEnumerable<RecipeCommentResponse>), 200)]
+    [HttpGet("{recipeId:int}/comments")]
+    public async Task<IEnumerable<RecipeCommentResponse>> GetRecipeComments(
+        [FromRoute] int recipeId, 
+        [FromQuery] int offset = 0, 
+        [FromQuery] int limit = 10
+        )
+    {
+        var recipeComments = await _recipeService.GetRecipeComments(recipeId, offset, limit);
+        var response = _mapper.Map<IEnumerable<RecipeCommentResponse>>(recipeComments);
 
         return response;
     }
@@ -158,6 +184,26 @@ public class RecipesController : ControllerBase
 
         return response;
     }
+
+    /// <summary>
+    /// Adds new entry for recipe's comment
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(RecipeCommentResponse), 200)]
+    [HttpPost("{recipeId:int}/comments")]
+    public async Task<RecipeCommentResponse> AddCommentToRecipe(
+        [FromRoute] int recipeId,
+        [FromBody] AddRecipeCommentRequest request
+    )
+    {
+        var model = _mapper.Map<AddRecipeCommentModel>(request);
+        var recipeComment = await _recipeService.AddCommentToRecipe(recipeId, model);
+        var response = _mapper.Map<RecipeCommentResponse>(recipeComment);
+
+        return response;
+    }
     #endregion
 
     #region UpdateMethods
@@ -168,7 +214,10 @@ public class RecipesController : ControllerBase
     /// <param name="request">Recipe model to update to</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateRecipe([FromRoute] int id, [FromBody] UpdateRecipeRequest request)
+    public async Task<IActionResult> UpdateRecipe(
+        [FromRoute] int id,
+        [FromBody] UpdateRecipeRequest request
+        )
     {
         var model = _mapper.Map<UpdateRecipeModel>(request);
         await _recipeService.UpdateRecipe(id, model);
@@ -193,6 +242,26 @@ public class RecipesController : ControllerBase
     {
         var model = _mapper.Map<UpdateRecipeIngredientModel>(request);
         await _recipeService.UpdateRecipeIngredient(recipeId, ingredientId, model);
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// Updates certain comment from recipe
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="commentId"></param>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPut("{recipeId:int}/comments/{commentId:int}")]
+    public async Task<IActionResult> UpdateRecipeComment(
+        [FromRoute] int recipeId,
+        [FromRoute] int commentId,
+        [FromBody] UpdateRecipeCommentRequest request
+    )
+    {
+        var model = _mapper.Map<UpdateRecipeCommentModel>(request);
+        await _recipeService.UpdateRecipeComment(commentId, recipeId, model);
 
         return Ok();
     }
@@ -222,6 +291,17 @@ public class RecipesController : ControllerBase
     public async Task<IActionResult> DeleteRecipeIngredient([FromRoute] int recipeId, [FromRoute] int ingredientId)
     {
         await _recipeService.DeleteRecipeIngredient(recipeId, ingredientId);
+
+        return Ok();
+    }
+
+    [HttpDelete("{recipeId:int}/comments/{commentId:int}")]
+    public async Task<IActionResult> DeleteCommentFromIngredient(
+        [FromRoute] int recipeId,
+        [FromRoute] int commentId
+    )
+    {
+        await _recipeService.DeleteRecipeComment(commentId, recipeId);
 
         return Ok();
     }

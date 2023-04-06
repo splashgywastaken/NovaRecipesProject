@@ -1,7 +1,7 @@
-﻿namespace NovaRecipesProject.API.Controllers.Models;
+﻿using AutoMapper;
+using NovaRecipesProject.Services.UserAccount;
 
-using AutoMapper;
-using Services.UserAccount;
+namespace NovaRecipesProject.Api.Controllers.Accounts.Models;
 
 /// <summary>
 /// Model that controllers returns as the result of their actions

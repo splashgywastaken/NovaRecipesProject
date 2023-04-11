@@ -1,4 +1,5 @@
-﻿using NovaRecipesProject.Context.Entities;
+﻿using System.Runtime.CompilerServices;
+using NovaRecipesProject.Context.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,10 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     /// DbSet of comments for bottom recipe's page
     /// </summary>
     public DbSet<RecipeComment> RecipeComments { get; set; } = null!;
+    /// <summary>
+    /// DbSet of email confirmation requests used to work with user's account to confirm user's email
+    /// </summary>
+    public DbSet<EmailConfirmationRequest> EmailConfirmationRequests { get; set; } = null!;
 
     /// <inheritdoc />
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
@@ -42,7 +47,7 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
+        
         modelBuilder
             // Entities setup
             .SetupUserRelatedEntities()
@@ -51,7 +56,11 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
             .SetupIngredientEntity()
             .SetupRecipeParagraphEntity()
             .SetupRecipeIngredientsEntity()
+            // In next two methods I used "now()" to get current date,
+            // which means that this works only for PostgreSQL
+            // to make it work with other DBMS you need to implement usage of dbcontext settings
             .SetupRecipeCommentsEntity()
+            .SetupEmailConfirmationRequests()
             // Relationships setup
             .SetupUser1ToRecipesNRelationShip()
             .SetupRecipesNToCategoriesNRelationship()
@@ -162,8 +171,20 @@ internal static class ModelBuilderExtenstion
     internal static ModelBuilder SetupRecipeCommentsEntity(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<RecipeComment>().ToTable("recipeComments");
-        modelBuilder.Entity<RecipeComment>().Property(x => x.CreatedDateTime).HasDefaultValueSql("now()");
+        modelBuilder.Entity<RecipeComment>()
+            .Property(x => x.CreatedDateTime)
+            .HasDefaultValueSql("now()");
 
+        return modelBuilder;
+    }
+
+    internal static ModelBuilder SetupEmailConfirmationRequests(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<EmailConfirmationRequest>().ToTable("emailConfirmationRequests");
+        modelBuilder.Entity<EmailConfirmationRequest>()
+            .Property(x => x.RequestCreationDataTime)
+            .HasDefaultValueSql("now()");
+        
         return modelBuilder;
     }
 

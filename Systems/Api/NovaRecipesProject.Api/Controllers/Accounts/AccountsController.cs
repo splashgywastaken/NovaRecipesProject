@@ -1,4 +1,6 @@
-﻿using NovaRecipesProject.Api.Controllers.Accounts.Models;
+﻿using System.Reflection.Metadata.Ecma335;
+using Microsoft.Identity.Client;
+using NovaRecipesProject.Api.Controllers.Accounts.Models;
 
 namespace NovaRecipesProject.Api.Controllers.Accounts;
 
@@ -12,7 +14,7 @@ using Services.UserAccount;
 [Route("api/v{version:apiVersion}/accounts")]
 [ApiController]
 [ApiVersion("0.1")]
-public class AccountsController
+public class AccountsController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ILogger<AccountsController> _logger;
@@ -44,5 +46,28 @@ public class AccountsController
         var response = _mapper.Map<UserAccountResponse>(user);
 
         return response;
+    }
+
+    /// <summary>
+    /// Method to use for email confirmation for user
+    /// User should be logged in current session for method to add new request
+    /// Also user should not have his email already sent for confirmation
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("request-confirm-email")]
+    public async Task<IActionResult> RequestEmailConfirmation([FromQuery] string email)
+    {
+        return await _userAccountService.RequestEmailConfirmation(email);
+    }
+
+    /// <summary>
+    /// Method used to confirm email for some user using Id for user's email request confirmation entry in DB
+    /// </summary>
+    /// <param name="confirmationId"></param>
+    /// <returns></returns>
+    [HttpPut("confirm-email/{confirmationId:int}")]
+    public async Task<IActionResult> ConfirmEmail([FromRoute] int confirmationId)
+    {
+        return await _userAccountService.ConfirmEmail(confirmationId);
     }
 }

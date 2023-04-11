@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Data\NovaRecipesProject.Context.Entities\NovaRecipesProject.Context.Entities.csproj" />
     <ProjectReference Include="..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
     <ProjectReference Include="..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />
+    <ProjectReference Include="..\..\Shared\NovaRecipesProject.Consts\NovaRecipesProject.Consts.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Services.Actions\NovaRecipesProject.Services.Actions.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Services.EmailSender\NovaRecipesProject.Services.EmailSender.csproj" />
   </ItemGroup>

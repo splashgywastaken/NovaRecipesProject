@@ -1,5 +1,8 @@
-﻿using NovaRecipesProject.Services.Actions;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Mvc;
+using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.EmailSender.Models;
+using Npgsql;
 
 namespace NovaRecipesProject.Services.UserAccount;
 
@@ -8,6 +11,8 @@ using Common.Exceptions;
 using Common.Validator;
 using Context.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using NovaRecipesProject.Context;
 
 /// <inheritdoc />
 public class UserAccountService : IUserAccountService
@@ -16,6 +21,7 @@ public class UserAccountService : IUserAccountService
     private readonly UserManager<User> _userManager;
     private readonly IModelValidator<RegisterUserAccountModel> _registerUserAccountModelValidator;
     private readonly IAction _action;
+    private readonly IDbContextFactory<MainDbContext> _dbContextFactory;
 
     /// <summary>
     /// Main constructor
@@ -24,17 +30,20 @@ public class UserAccountService : IUserAccountService
     /// <param name="userManager"></param>
     /// <param name="registerUserAccountModelValidator"></param>
     /// <param name="action"></param>
+    /// <param name="dbContextFactory"></param>
     public UserAccountService(
         IMapper mapper,
         UserManager<User> userManager, 
         IModelValidator<RegisterUserAccountModel> registerUserAccountModelValidator,
-        IAction action
+        IAction action,
+        IDbContextFactory<MainDbContext> dbContextFactory
         )
     {
         _mapper = mapper;
         _userManager = userManager;
         _registerUserAccountModelValidator = registerUserAccountModelValidator;
         _action = action;
+        _dbContextFactory = dbContextFactory;
     }
 
     /// <inheritdoc />
@@ -55,7 +64,7 @@ public class UserAccountService : IUserAccountService
             UserName = model.Email, // login = email
             Email = model.Email,
             // TODO: as for now leave it like this, later you will need to implement real email confirmation
-            EmailConfirmed = true,
+            EmailConfirmed = false,
             PhoneNumber = null,
             PhoneNumberConfirmed = false
         };
@@ -73,5 +82,78 @@ public class UserAccountService : IUserAccountService
 
         // Returning the created user
         return _mapper.Map<UserAccountModel>(user);
+    }
+
+    /// <inheritdoc />
+    public async Task<IActionResult> RequestEmailConfirmation(string email)
+    {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+        
+        var user = await _userManager
+            .Users
+            .FirstOrDefaultAsync(x => x.Email == email);
+
+        ProcessException.ThrowIf(() => user is null, $"User (email: {email}) was not found");
+
+        // If email is already confirmed
+        if (user!.EmailConfirmed) return new OkObjectResult("Email is confirmed");
+
+        var confirmationRequest = await context
+            .EmailConfirmationRequests
+            .FirstOrDefaultAsync(x => x.Email == email);
+
+        // If confirmationRequest exists
+        if (confirmationRequest is not null)
+        {
+            return new OkObjectResult("Request is already exists");
+        }
+
+        // If there is nothing for current user's confirmation request and email is not confirmed
+        // than adding new entry for request in DB
+        var data = new EmailConfirmationRequest
+        {
+            Email = email
+        };
+
+        await context.EmailConfirmationRequests.AddAsync(data);
+        await context.SaveChangesAsync();
+
+        // TODO: Send email
+
+        return new OkObjectResult("Email confirmation request created");
+    }
+
+    /// <inheritdoc />
+    public async Task<IActionResult> ConfirmEmail(int confirmationId)
+    {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var request = await context
+            .EmailConfirmationRequests
+            .FirstOrDefaultAsync(x => x.Id == confirmationId);
+
+        ProcessException
+            .ThrowIf(
+                () => request is null,
+                $"Email confirmation request (id: {confirmationId}) was not found"
+                );
+
+        var user = await _userManager
+            .Users
+            .FirstOrDefaultAsync(x => x.Email == request!.Email);
+
+        ProcessException
+            .ThrowIf(
+                () => user is null,
+                $"User from email confirmation request (email: {user!.Email}) was not found"
+                );
+
+        await _userManager.ConfirmEmailAsync(user, request!.Email);
+        context.EmailConfirmationRequests.Remove(request);
+        await context.SaveChangesAsync();
+
+        // TODO: Send email
+
+        return new OkObjectResult("Email was confirmed");
     }
 }

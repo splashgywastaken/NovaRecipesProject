@@ -191,6 +191,21 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Accounts.AccountsController.RequestEmailConfirmation(System.String)">
+            <summary>
+            Method to use for email confirmation for user
+            User should be logged in current session for method to add new request
+            Also user should not have his email already sent for confirmation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Accounts.AccountsController.ConfirmEmail(System.Int32)">
+            <summary>
+            Method used to confirm email for some user using Id for user's email request confirmation entry in DB
+            </summary>
+            <param name="confirmationId"></param>
+            <returns></returns>
+        </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Accounts.Models.RegisterUserAccountRequest">
             <summary>
             Model used for registring new users

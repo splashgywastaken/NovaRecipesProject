@@ -148,8 +148,13 @@ public class UserAccountService : IUserAccountService
                 $"User from email confirmation request (email: {user!.Email}) was not found"
                 );
 
-        await _userManager.ConfirmEmailAsync(user, request!.Email);
-        context.EmailConfirmationRequests.Remove(request);
+        // Setting email confirmed as true
+        user.EmailConfirmed = true;
+        context.Users.Update(user);
+        await context.SaveChangesAsync();
+
+        // Removing email confirmation request
+        context.EmailConfirmationRequests.Remove(request!);
         await context.SaveChangesAsync();
 
         // TODO: Send email

@@ -210,7 +210,7 @@ internal static class ModelBuilderExtenstion
         modelBuilder.Entity<Recipe>()
             .HasMany(x => x.Categories)
             .WithMany(x => x.Recipes)
-            .UsingEntity(j => j.ToTable("RecipeCategories"))
+            .UsingEntity(j => j.ToTable("recipeCategories"))
             ;
 
         return modelBuilder;

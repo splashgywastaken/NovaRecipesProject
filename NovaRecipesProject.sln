@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Categories", "Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj", "{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipes.Services.Cache", "Services\NovaRecipes.Services.Cache\NovaRecipes.Services.Cache.csproj", "{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Cache", "Services\NovaRecipes.Services.Cache\NovaRecipesProject.Services.Cache.csproj", "{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Ingredients", "Services\NovaRecipesProject.Services.Ingredients\NovaRecipesProject.Services.Ingredients.csproj", "{1DF6D165-B202-43A7-9AD6-C784FF8ABAD4}"
 EndProject

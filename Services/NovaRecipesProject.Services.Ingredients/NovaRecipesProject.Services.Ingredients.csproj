@@ -21,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
     <ProjectReference Include="..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />
-    <ProjectReference Include="..\NovaRecipes.Services.Cache\NovaRecipes.Services.Cache.csproj" />
+    <ProjectReference Include="..\NovaRecipes.Services.Cache\NovaRecipesProject.Services.Cache.csproj" />
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ COPY ["Data/NovaRecipesProject.Context.Entities/NovaRecipesProject.Context.Entit
 COPY ["Data/NovaRecipesProject.Context/NovaRecipesProject.Context.csproj", "Data/NovaRecipesProject.Context/"]
 COPY ["Shared/NovaRecipesProject.Settings/NovaRecipesProject.Settings.csproj", "Shared/NovaRecipesProject.Settings/"]
 COPY ["Data/Migrations/NovaRecipesProject.Context.Migrations.PostgreSQL/NovaRecipesProject.Context.Migrations.PostgreSQL.csproj", "Data/Migrations/NovaRecipesProject.Context.Migrations.PostgreSQL/"]
-COPY ["Services/NovaRecipes.Services.Cache/NovaRecipes.Services.Cache.csproj", "Services/NovaRecipes.Services.Cache/"]
+COPY ["Services/NovaRecipes.Services.Cache/NovaRecipesProject.Services.Cache.csproj", "Services/NovaRecipes.Services.Cache/"]
 COPY ["Shared/NovaRecipesProject.Common/NovaRecipesProject.Common.csproj", "Shared/NovaRecipesProject.Common/"]
 COPY ["Services/NovaRecipesProject.Services.Actions/NovaRecipesProject.Services.Actions.csproj", "Services/NovaRecipesProject.Services.Actions/"]
 COPY ["Services/NovaRecipesProject.Services.EmailSender/NovaRecipesProject.Services.EmailSender.csproj", "Services/NovaRecipesProject.Services.EmailSender/"]

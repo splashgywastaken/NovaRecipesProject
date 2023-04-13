@@ -1,8 +1,24 @@
 ﻿namespace NovaRecipesProject.Services.EmailSender.Models;
 
+/// <summary>
+/// DTO model used for sending emails
+/// </summary>
 public class EmailModel
 {
-    public string Email { get; set; }
-    public string Subject { get; set; }
-    public string Message { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Email { get; set; } = null!;
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Subject { get; set; } = null!;
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Message { get; set; } = null!;
+    /// <summary>
+    /// 
+    /// </summary>
+    public string From { get; set; } = null!;
 }

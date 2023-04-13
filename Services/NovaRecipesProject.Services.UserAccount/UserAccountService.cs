@@ -7,6 +7,7 @@ using Npgsql;
 namespace NovaRecipesProject.Services.UserAccount;
 
 using AutoMapper;
+using Azure.Core;
 using Common.Exceptions;
 using Common.Validator;
 using Context.Entities;
@@ -77,7 +78,8 @@ public class UserAccountService : IUserAccountService
         {
             Email = model.Email,
             Subject = "NovaRecipes notification",
-            Message = "You are registered"
+            Message = "You are registered",
+            From = "nickdur@yandex.ru"
         });
 
         // Returning the created user
@@ -115,10 +117,19 @@ public class UserAccountService : IUserAccountService
             Email = email
         };
 
-        await context.EmailConfirmationRequests.AddAsync(data);
+        var request = (await context.EmailConfirmationRequests.AddAsync(data)).Entity;
         await context.SaveChangesAsync();
 
         // TODO: Send email
+        // TODO: change this so that there will be real domain, not what is used in debug project version
+        await _action.SendEmail(new EmailModel
+        {
+            Email = email,
+            Subject = "Email confirmation",
+            Message = $"Please, confirm email using this link: " +
+                      $"http://localhost/10000/account/confirm-email/{request.Id}",
+            From = "nickdur@yandex.ru"
+        });
 
         return new OkObjectResult("Email confirmation request created");
     }
@@ -158,6 +169,13 @@ public class UserAccountService : IUserAccountService
         await context.SaveChangesAsync();
 
         // TODO: Send email
+        await _action.SendEmail(new EmailModel
+        {
+            Email = request!.Email,
+            Subject = "Email confirmation",
+            Message = "Email was confirmed successfully",
+            From = "nickdur@yandex.ru"
+        });
 
         return new OkObjectResult("Email was confirmed");
     }

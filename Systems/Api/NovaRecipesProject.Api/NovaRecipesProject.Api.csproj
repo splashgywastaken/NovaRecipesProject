@@ -49,7 +49,7 @@
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.MSSQL\NovaRecipesProject.Context.Migrations.MSSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.PostgreSQL\NovaRecipesProject.Context.Migrations.PostgreSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
-    <ProjectReference Include="..\..\..\Services\NovaRecipes.Services.Cache\NovaRecipes.Services.Cache.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipes.Services.Cache\NovaRecipesProject.Services.Cache.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Actions\NovaRecipesProject.Services.Actions.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Ingredients\NovaRecipesProject.Services.Ingredients.csproj" />

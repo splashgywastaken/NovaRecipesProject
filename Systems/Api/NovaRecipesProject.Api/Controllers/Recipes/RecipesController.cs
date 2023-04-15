@@ -134,22 +134,6 @@ public class RecipesController : ControllerBase
     /// <summary>
     /// Method to add new data to DB
     /// </summary>
-    /// <param name="request"></param>
-    /// <response code="200">Returns recipe model which were made while adding new data do DB</response>
-    [ProducesResponseType(typeof(RecipeResponse), 200)]
-    [HttpPost("")]
-    public async Task<RecipeResponse> AddRecipe([FromBody] AddRecipeRequest request)
-    {
-        var model = _mapper.Map<AddRecipeModel>(request);
-        var recipe = await _recipeService.AddRecipe(model);
-        var response = _mapper.Map<RecipeResponse>(recipe);
-
-        return response;
-    }
-
-    /// <summary>
-    /// Method to add new data to DB
-    /// </summary>
     /// <param name="userId"></param>
     /// <param name="request"></param>
     /// <response code="200">Returns recipe model which were made while adding new data do DB</response>

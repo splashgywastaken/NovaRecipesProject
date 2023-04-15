@@ -1,13 +1,9 @@
-﻿using NovaRecipesProject.Services.EmailSender.Models;
+﻿using NovaRecipesProject.Consts;
+using NovaRecipesProject.Services.EmailSender;
+using NovaRecipesProject.Services.EmailSender.Models;
+using NovaRecipesProject.Services.RabbitMq;
 
-namespace NovaRecipesProject.Worker;
-
-using Consts;
-using Services.EmailSender;
-using Services.RabbitMq;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
+namespace NovaRecipesProject.RecipeInfoSenderWorker.TaskExecutor;
 
 public class TaskExecutor : ITaskExecutor
 {
@@ -40,17 +36,17 @@ public class TaskExecutor : ITaskExecutor
         }
         catch (Exception e)
         {
-            _logger.LogError($"Error: {RabbitMqTaskQueueNames.SendUserAccountEmail}: {e.Message}");
+            _logger.LogError($"Error: {RabbitMqTaskQueueNames.SendRecipesInfoEmail}: {e.Message}");
             throw;
         }
     }
 
     public void Start()
     {
-        _rabbitMq.Subscribe<EmailModel>(RabbitMqTaskQueueNames.SendUserAccountEmail, async data
+        _rabbitMq.Subscribe<EmailModel>(RabbitMqTaskQueueNames.SendRecipesInfoEmail, async data
             => await Execute<IEmailSender>(async service =>
             {
-                _logger.LogDebug($"RABBITMQ::: {RabbitMqTaskQueueNames.SendUserAccountEmail}: {data.Email} {data.Message}");
+                _logger.LogDebug($"RABBITMQ::: {RabbitMqTaskQueueNames.SendRecipesInfoEmail}: {data.Email} {data.Message}");
                 await service.SendAsync(data);
             }));
     }

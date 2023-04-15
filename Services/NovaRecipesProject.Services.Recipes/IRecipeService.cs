@@ -46,12 +46,6 @@ public interface IRecipeService
     /// <returns>Exact recipe with given Id and most of its data, or error related to what occured in proccess</returns>
     Task<WholeRecipeModel> GetRecipeById(int id);
     /// <summary>
-    /// Uses argument to add new recipe to a DB
-    /// </summary>
-    /// <param name="model">Model which is used to add new data to DB</param>
-    /// <returns>Returns added recipe data</returns>
-    Task<RecipeModel> AddRecipe(AddRecipeModel model);
-    /// <summary>
     /// Uses argument ot add new recipe to a DB,
     /// also uses data about current logged in user to add new recipe to all of his others
     /// </summary>

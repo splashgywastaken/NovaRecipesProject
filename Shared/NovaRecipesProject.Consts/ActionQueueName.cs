@@ -6,7 +6,12 @@
 public static class RabbitMqTaskQueueNames
 {
     /// <summary>
-    /// Const used for send email actions
+    /// Queue name for sending emails about user's account actions such as registering,
+    /// requesting confirmation and confirming email
     /// </summary>
-    public const string SendEmail = "NOVA_RECIPES_PROJECT_SEND_EMAIL";
+    public const string SendUserAccountEmail = "NOVA_RECIPES_PROJECT_SEND_USER_ACCOUNT_EMAIL";
+    /// <summary>
+    /// Queue name for sending email about recipes info and all stuff related to them
+    /// </summary>
+    public const string SendRecipesInfoEmail = "NOVA_RECIPES_PROJECT_SEND_RECIPES_INFO_EMAIL";
 }

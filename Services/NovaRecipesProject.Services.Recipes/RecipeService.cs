@@ -6,9 +6,13 @@ using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Cache;
+using NovaRecipesProject.Services.EmailSender.Models;
 using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
+using NovaRecipesProject.Services.RecipesSubscriptions;
+using NovaRecipesProject.Services.RecipesSubscriptions.Models;
+using StackExchange.Redis;
 
 namespace NovaRecipesProject.Services.Recipes;
 
@@ -20,6 +24,7 @@ public class RecipeService : IRecipeService
     private readonly IDbContextFactory<MainDbContext> _dbContextFactory;
     private readonly IMapper _mapper;
     private readonly ICacheService? _cacheService;
+    private readonly IRecipeSubscriptionsService _recipeSubscriptionsService;
     private readonly IModelValidator<AddRecipeModel> _addRecipeModelValidator;
     private readonly IModelValidator<UpdateRecipeModel> _updateRecipeModelValidator;
     private readonly IModelValidator<UpdateRecipeIngredientModel> _updateRecipeIngredientModelValidator;
@@ -32,6 +37,7 @@ public class RecipeService : IRecipeService
     /// </summary>
     /// <param name="dbContextFactory"></param>
     /// <param name="mapper"></param>
+    /// <param name="recipeSubscriptionsService"></param>
     /// <param name="addRecipeModelValidator"></param>
     /// <param name="updateRecipeModelValidator"></param>
     /// <param name="addRecipeIngredientModelValidator"></param>
@@ -42,6 +48,7 @@ public class RecipeService : IRecipeService
     public RecipeService(
         IDbContextFactory<MainDbContext> dbContextFactory,
         IMapper mapper,
+        IRecipeSubscriptionsService recipeSubscriptionsService,
         IModelValidator<AddRecipeModel> addRecipeModelValidator, 
         IModelValidator<UpdateRecipeModel> updateRecipeModelValidator,
         IModelValidator<AddRecipeIngredientModel> addRecipeIngredientModelValidator, 
@@ -53,6 +60,7 @@ public class RecipeService : IRecipeService
     {
         _dbContextFactory = dbContextFactory;
         _mapper = mapper;
+        _recipeSubscriptionsService = recipeSubscriptionsService;
         _addRecipeModelValidator = addRecipeModelValidator;
         _updateRecipeModelValidator = updateRecipeModelValidator;
         _addRecipeIngredientModelValidator = addRecipeIngredientModelValidator;
@@ -290,20 +298,6 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
-    public async Task<RecipeModel> AddRecipe(AddRecipeModel model)
-    {
-        _addRecipeModelValidator.Check(model);
-
-        await using var context = await _dbContextFactory.CreateDbContextAsync();
-
-        var recipe = _mapper.Map<Recipe>(model);
-        await context.Recipes.AddAsync(recipe);
-        await context.SaveChangesAsync();
-
-        return _mapper.Map<RecipeModel>(recipe);
-    }
-
-    /// <inheritdoc />
     public async Task<RecipeModel> AddRecipeWithUser(int userId, AddRecipeModel model)
     {
         _addRecipeModelValidator.Check(model);
@@ -320,6 +314,16 @@ public class RecipeService : IRecipeService
 
         await context.Recipes.AddAsync(recipe);
         await context.SaveChangesAsync();
+
+        var recipeEmailData = new RecipeBaseData
+        {
+            Id = recipe.Id,
+            Name = recipe.Name,
+            Description = recipe.Description
+        };
+
+        await _recipeSubscriptionsService
+            .NotifySubscribersAboutNewRecipe(recipe.RecipeUserId, recipeEmailData);
 
         return _mapper.Map<RecipeModel>(recipe);
     }

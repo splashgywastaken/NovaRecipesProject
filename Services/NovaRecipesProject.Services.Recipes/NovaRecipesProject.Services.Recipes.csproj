@@ -17,9 +17,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
     <ProjectReference Include="..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />
-    <ProjectReference Include="..\NovaRecipes.Services.Cache\NovaRecipesProject.Services.Cache.csproj" />
+    <ProjectReference Include="..\NovaRecipesProject.Services.Cache\NovaRecipesProject.Services.Cache.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj" />
     <ProjectReference Include="..\NovaRecipesProject.Services.RecipeParagraphs\NovaRecipesProject.Services.RecipeParagraphs.csproj" />
+    <ProjectReference Include="..\NovaRecipesProject.Services.RecipesSubscriptions\NovaRecipesProject.Services.RecipesSubscriptions.csproj" />
   </ItemGroup>
 
 </Project>

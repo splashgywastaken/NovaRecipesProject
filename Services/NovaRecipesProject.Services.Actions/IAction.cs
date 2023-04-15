@@ -10,9 +10,15 @@ using System.Threading.Tasks;
 public interface IAction
 {
     /// <summary>
-    /// Action used to send email with EmailSender service
+    /// Action used to send email with EmailSender service in SendUserAccountEmail queue
     /// </summary>
     /// <param name="email"></param>
     /// <returns></returns>
     Task SendEmail(EmailModel email);
+    /// <summary>
+    /// Action used to send email with EmailSender service in SendRecipesInfoEmail queue
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    Task SendRecipeInfoEmail(EmailModel email);
 }

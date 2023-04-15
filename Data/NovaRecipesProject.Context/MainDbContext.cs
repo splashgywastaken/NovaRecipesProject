@@ -39,6 +39,10 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
     /// DbSet of email confirmation requests used to work with user's account to confirm user's email
     /// </summary>
     public DbSet<EmailConfirmationRequest> EmailConfirmationRequests { get; set; } = null!;
+    /// <summary>
+    /// DbSet of subscriptions of some user for some author
+    /// </summary>
+    public DbSet<RecipesSubscription> RecipesSubscriptions { get; set; } = null!;
 
     /// <inheritdoc />
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
@@ -61,12 +65,14 @@ public class MainDbContext : IdentityDbContext<User, UserRole, Guid>
             // to make it work with other DBMS you need to implement usage of dbcontext settings
             .SetupRecipeCommentsEntity()
             .SetupEmailConfirmationRequests()
+            .SetupRecipesSubscription()
             // Relationships setup
             .SetupUser1ToRecipesNRelationShip()
             .SetupRecipesNToCategoriesNRelationship()
             .SetupRecipes1ToRecipeParagraphsNRelationship()
             .SetupRecipesNToIngredientsNRelationshipWithRecipeIngredientsEntity()
             .SetupRecipe1ToRecipeCommentsNRelationship()
+            .SetupRecipesSubscriptionNtoNRelationship()
             ;
     }
 }
@@ -188,6 +194,16 @@ internal static class ModelBuilderExtenstion
         return modelBuilder;
     }
 
+    internal static ModelBuilder SetupRecipesSubscription(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<RecipesSubscription>().ToTable("userRecipesSubscription");
+        modelBuilder.Entity<RecipesSubscription>()
+            .HasIndex(s => new {s.SubscriberId, s.AuthorId})
+            .IsUnique();
+
+        return modelBuilder;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -253,6 +269,25 @@ internal static class ModelBuilderExtenstion
             .HasForeignKey(rc => rc.RecipeId)
             .HasPrincipalKey(r => r.Id)
             ;
+
+        return modelBuilder;
+    }
+
+    internal static ModelBuilder SetupRecipesSubscriptionNtoNRelationship(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<RecipesSubscription>()
+            .HasOne(rs => rs.Subscriber)
+            .WithMany(u => u.RecipesSubscriptions)
+            .HasForeignKey(rs => rs.SubscriberId)
+            .HasPrincipalKey(u => u.EntryId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<RecipesSubscription>()
+            .HasOne(rs => rs.Author)
+            .WithMany()
+            .HasForeignKey(rs => rs.AuthorId)
+            .HasPrincipalKey(u => u.EntryId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         return modelBuilder;
     }

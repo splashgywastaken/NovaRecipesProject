@@ -9,6 +9,7 @@ using NovaRecipesProject.Services.RecipeParagraphs;
 using NovaRecipesProject.Services.Recipes;
 using NovaRecipesProject.Services.UserAccount;
 using NovaRecipesProject.Services.RabbitMq;
+using NovaRecipesProject.Services.RecipesSubscriptions;
 
 namespace NovaRecipesProject.Api;
 
@@ -42,6 +43,7 @@ public static class Bootstrapper
             .AddIngredientService()
             .AddRecipeParagraphService()
             .AddUserAccountService()
+            .AddRecipeSubscriptionsService()
             ;
 
         return services;

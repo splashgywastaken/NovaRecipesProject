@@ -44,6 +44,18 @@ services:
     env_file:
       - env.emailsenderworker
 
+  novarecipesproject_recipeinfosenderworker_1:
+    networks:
+      - shared_novarecipesproject_net
+    env_file:
+      - env.recipeinfosenderworker
+
+  novarecipesproject_recipeinfosenderworker_2:
+    networks:
+      - shared_novarecipesproject_net
+    env_file:
+      - env.recipeinfosenderworker
+
 # Misc services
   # Redis
   novarecipesproject_redis:

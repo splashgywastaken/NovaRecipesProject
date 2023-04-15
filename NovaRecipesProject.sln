@@ -45,8 +45,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Categories", "Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj", "{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Cache", "Services\NovaRecipes.Services.Cache\NovaRecipesProject.Services.Cache.csproj", "{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Ingredients", "Services\NovaRecipesProject.Services.Ingredients\NovaRecipesProject.Services.Ingredients.csproj", "{1DF6D165-B202-43A7-9AD6-C784FF8ABAD4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.RecipeParagraphs", "Services\NovaRecipesProject.Services.RecipeParagraphs\NovaRecipesProject.Services.RecipeParagraphs.csproj", "{2F884517-A2BA-4080-B011-8AA9C725D86E}"
@@ -62,6 +60,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{C4441DAD-4225-4F23-8829-8F0052812721}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.EmailSenderWorker", "Systems\Workers\NovaRecipesProject.EmailSenderWorker\NovaRecipesProject.EmailSenderWorker.csproj", "{2DAAB5BC-F182-4D02-BE8E-CD3E61F65150}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Cache", "Services\NovaRecipesProject.Services.Cache\NovaRecipesProject.Services.Cache.csproj", "{C3726280-B97D-4498-98E0-DC1F49C35705}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.RecipesSubscriptions", "Services\NovaRecipesProject.Services.RecipesSubscriptions\NovaRecipesProject.Services.RecipesSubscriptions.csproj", "{A7E65ED0-B822-499D-874D-FFA081B9083C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.RecipeInfoSenderWorker", "Systems\Workers\NovaRecipesProject.RecipeInfoSenderWorker\NovaRecipesProject.RecipeInfoSenderWorker.csproj", "{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,10 +129,6 @@ Global
 		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1DF6D165-B202-43A7-9AD6-C784FF8ABAD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1DF6D165-B202-43A7-9AD6-C784FF8ABAD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DF6D165-B202-43A7-9AD6-C784FF8ABAD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -157,6 +157,18 @@ Global
 		{2DAAB5BC-F182-4D02-BE8E-CD3E61F65150}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DAAB5BC-F182-4D02-BE8E-CD3E61F65150}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DAAB5BC-F182-4D02-BE8E-CD3E61F65150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3726280-B97D-4498-98E0-DC1F49C35705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3726280-B97D-4498-98E0-DC1F49C35705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3726280-B97D-4498-98E0-DC1F49C35705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3726280-B97D-4498-98E0-DC1F49C35705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7E65ED0-B822-499D-874D-FFA081B9083C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E65ED0-B822-499D-874D-FFA081B9083C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E65ED0-B822-499D-874D-FFA081B9083C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E65ED0-B822-499D-874D-FFA081B9083C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,7 +190,6 @@ Global
 		{746C8EF6-6800-4B14-8BFE-9A100DADAFFE} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{D3D2DAFC-C24A-48C6-B8F9-DF61E8475DB8} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{4AE2CF81-D16B-4AAB-978E-52BB4FA36F66} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
-		{FAFB9BB3-CCF8-44C7-B1AF-7AAC1640F8EE} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{1DF6D165-B202-43A7-9AD6-C784FF8ABAD4} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{2F884517-A2BA-4080-B011-8AA9C725D86E} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{EB502D87-D36A-44CF-A57A-78CE541AC906} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
@@ -187,6 +198,9 @@ Global
 		{82A74956-E76D-4D3C-812D-09A306FFC4CE} = {F5479285-E545-4CDC-82C4-D03DC58BD9E2}
 		{C4441DAD-4225-4F23-8829-8F0052812721} = {0C0EF47D-C334-4402-A389-364160B173F6}
 		{2DAAB5BC-F182-4D02-BE8E-CD3E61F65150} = {C4441DAD-4225-4F23-8829-8F0052812721}
+		{C3726280-B97D-4498-98E0-DC1F49C35705} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
+		{A7E65ED0-B822-499D-874D-FFA081B9083C} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
+		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB} = {C4441DAD-4225-4F23-8829-8F0052812721}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {923486EB-E594-49ED-9246-C7BBAA6025EB}

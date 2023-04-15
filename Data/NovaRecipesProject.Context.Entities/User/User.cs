@@ -25,4 +25,8 @@ public class User : IdentityUser<Guid>
     /// </summary>
     // ReSharper disable once CollectionNeverUpdated.Global
     public List<Recipe>? Recipes { get; set; }
+    /// <summary>
+    /// User's list for recipes subscriptions, used for email mailing
+    /// </summary>
+    public List<RecipesSubscription>? RecipesSubscriptions { get; set; }
 }

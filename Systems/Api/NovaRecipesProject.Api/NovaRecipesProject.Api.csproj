@@ -49,12 +49,13 @@
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.MSSQL\NovaRecipesProject.Context.Migrations.MSSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\Migrations\NovaRecipesProject.Context.Migrations.PostgreSQL\NovaRecipesProject.Context.Migrations.PostgreSQL.csproj" />
     <ProjectReference Include="..\..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
-    <ProjectReference Include="..\..\..\Services\NovaRecipes.Services.Cache\NovaRecipesProject.Services.Cache.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Actions\NovaRecipesProject.Services.Actions.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Cache\NovaRecipesProject.Services.Cache.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Ingredients\NovaRecipesProject.Services.Ingredients.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.RabbitMq\NovaRecipesProject.Services.RabbitMq.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.RecipeParagraphs\NovaRecipesProject.Services.RecipeParagraphs.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.RecipesSubscriptions\NovaRecipesProject.Services.RecipesSubscriptions.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Settings\NovaRecipesProject.Services.Settings.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.UserAccount\NovaRecipesProject.Services.UserAccount.csproj" />
@@ -67,6 +68,7 @@
 	<Folder Include="Controllers\RecipeParagraphs\Models\" />
 	<Folder Include="Controllers\Accounts\" />
 	<Folder Include="Controllers\Recipes\Models\RecipeCommentModels\" />
+	<Folder Include="Controllers\Subscriptions\Recipes\" />
 	<Folder Include="wwwroot\" />
 	<Folder Include="Pages\" />
   </ItemGroup>

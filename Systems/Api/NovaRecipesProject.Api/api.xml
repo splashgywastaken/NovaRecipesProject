@@ -809,13 +809,6 @@
             <param name="id">Recipe id by which it returns correct data</param>
             <response code="200">Recipe with corresponding id</response>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddRecipe(NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels.AddRecipeRequest)">
-            <summary>
-            Method to add new data to DB
-            </summary>
-            <param name="request"></param>
-            <response code="200">Returns recipe model which were made while adding new data do DB</response>
-        </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddRecipeWithUser(System.Int32,NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels.AddRecipeRequest)">
             <summary>
             Method to add new data to DB
@@ -880,6 +873,38 @@
             </summary>
             <param name="recipeId">Recipe id to search through recipes with</param>
             <param name="ingredientId">Ingredient id to search through recipes with</param>
+            <returns></returns>
+        </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController">
+            <summary>
+            Recipes controller
+            </summary>
+            <response code="400"></response>
+            <response code="401"></response>
+            <response code="403"></response>
+            <response code="404"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController.#ctor(Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController},NovaRecipesProject.Services.RecipesSubscriptions.IRecipeSubscriptionsService)">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="recipeSubscriptionsService"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController.Subscribe(System.Int32,System.Int32)">
+            <summary>
+            Method used to subscribe for specific author
+            </summary>
+            <param name="subscriberId"></param>
+            <param name="authorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController.Unsubscribe(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="subscriberId"></param>
+            <param name="authorId"></param>
             <returns></returns>
         </member>
         <member name="T:NovaRecipesProject.Api.Middleware.ExceptionsMiddleware">

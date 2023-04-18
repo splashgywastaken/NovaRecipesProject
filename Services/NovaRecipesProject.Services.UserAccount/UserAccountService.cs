@@ -126,7 +126,7 @@ public class UserAccountService : IUserAccountService
         {
             Email = email,
             Subject = "Email confirmation",
-            Message = $"Please, confirm email using this link: " +
+            Message = "Please, confirm email using this link: " +
                       $"http://localhost/10000/account/confirm-email/{request.Id}",
             From = "nickdur@yandex.ru"
         });
@@ -159,19 +159,27 @@ public class UserAccountService : IUserAccountService
                 $"User from email confirmation request (email: {user!.Email}) was not found"
                 );
 
-        // Setting email confirmed as true
-        user.EmailConfirmed = true;
-        context.Users.Update(user);
-        await context.SaveChangesAsync();
+        // If time from creating request do not exceeds limit
+        if (request!.RequestCreationDataTime + Consts.EmailRequests.RequestExpireTime <= DateTime.Now)
+        {
+            // Setting email confirmed as true
+            user.EmailConfirmed = true;
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
+        }
+        else
+        {
+            return new BadRequestObjectResult("Request is too old to be confirmed, please renew it");
+        }
 
         // Removing email confirmation request
-        context.EmailConfirmationRequests.Remove(request!);
+        context.EmailConfirmationRequests.Remove(request);
         await context.SaveChangesAsync();
-
-        // TODO: Send email
+        
+        // Sends email
         await _action.SendEmail(new EmailModel
         {
-            Email = request!.Email,
+            Email = request.Email,
             Subject = "Email confirmation",
             Message = "Email was confirmed successfully",
             From = "nickdur@yandex.ru"

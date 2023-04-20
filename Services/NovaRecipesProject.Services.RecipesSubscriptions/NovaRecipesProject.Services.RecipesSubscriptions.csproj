@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Data\NovaRecipesProject.Context.Entities\NovaRecipesProject.Context.Entities.csproj" />
     <ProjectReference Include="..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
     <ProjectReference Include="..\..\Shared\NovaRecipesProject.Common\NovaRecipesProject.Common.csproj" />

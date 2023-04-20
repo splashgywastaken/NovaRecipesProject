@@ -535,7 +535,7 @@
             DTO model for add method
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels.AddRecipeCommentRequest.UserName">
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels.AddRecipeCommentRequest.UserId">
             <summary>
             Name of user that posted comment
             </summary>
@@ -561,7 +561,7 @@
             Comment's Id
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels.RecipeCommentResponse.UserName">
+        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels.RecipeCommentResponse.UserId">
             <summary>
             Name of user that posted comment
             </summary>
@@ -804,7 +804,7 @@
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipeById(System.Int32)">
             <summary>
-            Gets recipe by its id most of it's data
+            Returns recipe with it's categories, ingredients and paragraphs
             </summary>
             <param name="id">Recipe id by which it returns correct data</param>
             <response code="200">Recipe with corresponding id</response>
@@ -875,6 +875,38 @@
             <param name="ingredientId">Ingredient id to search through recipes with</param>
             <returns></returns>
         </member>
+        <member name="T:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController">
+            <summary>
+            Recipe comments subscription controller, used for subscribing 
+            </summary>
+            <response code="400"></response>
+            <response code="401"></response>
+            <response code="403"></response>
+            <response code="404"></response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController.#ctor(Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController},NovaRecipesProject.Services.RecipeCommentsSubscriptions.IRecipeCommentsSubscriptionsService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger"></param>
+            <param name="recipeCommentsSubscriptionsService"></param>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController.Subscribe(System.Int32,System.Int32)">
+            <summary>
+            Method used to subscribe for specific author
+            </summary>
+            <param name="subscriberId"></param>
+            <param name="recipeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController.Unsubscribe(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="subscriberId"></param>
+            <param name="recipeId"></param>
+            <returns></returns>
+        </member>
         <member name="T:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController">
             <summary>
             Recipes controller
@@ -896,7 +928,7 @@
             Method used to subscribe for specific author
             </summary>
             <param name="subscriberId"></param>
-            <param name="authorId"></param>
+            <param name="recipeId"></param>
             <returns></returns>
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController.Unsubscribe(System.Int32,System.Int32)">

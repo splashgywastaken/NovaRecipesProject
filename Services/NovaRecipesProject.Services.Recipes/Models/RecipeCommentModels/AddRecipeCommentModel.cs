@@ -10,7 +10,7 @@ namespace NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 public class AddRecipeCommentModel
 {
 #pragma warning disable CS1591
-    public string UserName { get; set; } = null!;
+    public int UserId { get; set; }
     public string Text { get; set; } = null!;
     public int RecipeId { get; set; }
 #pragma warning restore CS1591
@@ -36,9 +36,11 @@ public class AddRecipeCommentModelValidator : AbstractValidator<AddRecipeComment
     /// </summary>
     public AddRecipeCommentModelValidator()
     {
-        RuleFor(x => x.UserName)
+        RuleFor(x => x.UserId)
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("UserId can't be negative")
             .NotNull()
-            .WithMessage("UserName is required");
+            .WithMessage("UserId can't be null");
 
         RuleFor(x => x.Text)
             .MaximumLength(256)

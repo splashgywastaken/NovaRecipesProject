@@ -6,13 +6,12 @@ using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Cache;
-using NovaRecipesProject.Services.EmailSender.Models;
+using NovaRecipesProject.Services.RecipeCommentsSubscriptions;
 using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 using NovaRecipesProject.Services.RecipesSubscriptions;
 using NovaRecipesProject.Services.RecipesSubscriptions.Models;
-using StackExchange.Redis;
 
 namespace NovaRecipesProject.Services.Recipes;
 
@@ -25,6 +24,7 @@ public class RecipeService : IRecipeService
     private readonly IMapper _mapper;
     private readonly ICacheService? _cacheService;
     private readonly IRecipeSubscriptionsService _recipeSubscriptionsService;
+    private readonly IRecipeCommentsSubscriptionsService _recipeCommentsSubscriptionsService;
     private readonly IModelValidator<AddRecipeModel> _addRecipeModelValidator;
     private readonly IModelValidator<UpdateRecipeModel> _updateRecipeModelValidator;
     private readonly IModelValidator<UpdateRecipeIngredientModel> _updateRecipeIngredientModelValidator;
@@ -44,6 +44,7 @@ public class RecipeService : IRecipeService
     /// <param name="updateRecipeIngredientModelValidator"></param>
     /// <param name="updateRecipeCommentModelValidator"></param>
     /// <param name="addRecipeCommentModelValidator"></param>
+    /// <param name="recipeCommentsSubscriptionsService"></param>
     /// <param name="cacheService"></param>
     public RecipeService(
         IDbContextFactory<MainDbContext> dbContextFactory,
@@ -55,6 +56,7 @@ public class RecipeService : IRecipeService
         IModelValidator<UpdateRecipeIngredientModel> updateRecipeIngredientModelValidator,
         IModelValidator<UpdateRecipeCommentModel> updateRecipeCommentModelValidator, 
         IModelValidator<AddRecipeCommentModel> addRecipeCommentModelValidator, 
+        IRecipeCommentsSubscriptionsService recipeCommentsSubscriptionsService,
         ICacheService? cacheService = null
         )
     {
@@ -67,6 +69,7 @@ public class RecipeService : IRecipeService
         _updateRecipeIngredientModelValidator = updateRecipeIngredientModelValidator;
         _updateRecipeCommentModelValidator = updateRecipeCommentModelValidator;
         _addRecipeCommentModelValidator = addRecipeCommentModelValidator;
+        _recipeCommentsSubscriptionsService = recipeCommentsSubscriptionsService;
         _cacheService = cacheService;
     }
 
@@ -167,13 +170,13 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<RecipeCommentModel>> GetRecipeComments(int recipeId, int offset = 0, int limit = 10)
+    public async Task<IEnumerable<RecipeCommentLightModel>> GetRecipeComments(int recipeId, int offset = 0, int limit = 10)
     {
         if (_cacheService != null)
         {
             try
             {
-                var cachedData = await _cacheService.Get<IEnumerable<RecipeCommentModel>?>(ContextCacheKey);
+                var cachedData = await _cacheService.Get<IEnumerable<RecipeCommentLightModel>?>(ContextCacheKey);
                 if (cachedData != null)
                 {
                     var enumeratedData =
@@ -205,7 +208,7 @@ public class RecipeService : IRecipeService
 
         var data = 
             (await recipeComments.ToListAsync())
-            .Select(_mapper.Map<RecipeCommentModel>)
+            .Select(_mapper.Map<RecipeCommentLightModel>)
             .ToList();
 
         if (_cacheService != null)
@@ -285,7 +288,7 @@ public class RecipeService : IRecipeService
             .RecipeParagraphs
             .OrderBy(x => x.OrderNumber)
             .ToList();
-        
+
         var ingredients = 
             (await GetRecipesIngredients(id))
             .OrderBy(x => x.IngredientId)
@@ -359,7 +362,7 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
-    public async Task<RecipeCommentModel> AddCommentToRecipe(int recipeId, AddRecipeCommentModel model)
+    public async Task<RecipeCommentLightModel> AddCommentToRecipe(int recipeId, AddRecipeCommentModel model)
     {
         model.RecipeId = recipeId;
         _addRecipeCommentModelValidator.Check(model);
@@ -370,15 +373,19 @@ public class RecipeService : IRecipeService
         ProcessException.ThrowIf(() => recipe is null, $"The recipe (id: {model.RecipeId}) was not found");
 
         // The most basic check for if user exists
-        var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName);
-        ProcessException.ThrowIf(() => recipe is null, $"The user (username: {model.UserName}) was not found");
+        var user = await context.Users.FirstOrDefaultAsync(x => x.EntryId == model.UserId);
+        ProcessException.ThrowIf(() => user is null, $"The user (username: {model.UserId}) was not found");
 
         var recipeComment = _mapper.Map<RecipeComment>(model);
+        recipeComment.UserName = user!.FullName;
 
         await context.RecipeComments.AddAsync(recipeComment);
         await context.SaveChangesAsync();
 
-        var data = _mapper.Map<RecipeCommentModel>(recipeComment);
+        var data = _mapper.Map<RecipeCommentLightModel>(recipeComment);
+
+        await _recipeCommentsSubscriptionsService
+            .NotifySubscribersAboutNewComment(recipeId);
 
         return data;
     }

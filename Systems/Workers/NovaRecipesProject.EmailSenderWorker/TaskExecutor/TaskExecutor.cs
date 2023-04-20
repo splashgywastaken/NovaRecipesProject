@@ -1,6 +1,6 @@
 ﻿using NovaRecipesProject.Services.EmailSender.Models;
 
-namespace NovaRecipesProject.Worker;
+namespace NovaRecipesProject.EmailSenderWorker;
 
 using Consts;
 using Services.EmailSender;

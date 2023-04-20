@@ -1,4 +1,4 @@
-﻿namespace NovaRecipesProject.Worker;
+﻿namespace NovaRecipesProject.EmailSenderWorker;
 
 using Services.EmailSender;
 using Services.RabbitMq;

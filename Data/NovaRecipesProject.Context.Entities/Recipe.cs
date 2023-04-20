@@ -29,8 +29,13 @@ public class Recipe : BaseNameDescription
     /// Entity for connections
     /// </summary>
     public List<RecipeIngredient> RecipeIngredients { get; set; } = null!;
+
     /// <summary>
     /// List of comments related to this recipe
     /// </summary>
-    public List<RecipeComment>? RecipeComments { get; set; }
+    public List<RecipeComment>? RecipeComments { get; set; } = null!;
+    /// <summary>
+    /// List of subscribers for comment section of a recipe
+    /// </summary>
+    public List<RecipeCommentsSubscription>? RecipeCommentsSubscribers { get; set; } = null!;
 }

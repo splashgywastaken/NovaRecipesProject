@@ -1,5 +1,5 @@
 using NovaRecipesProject.Context;
-using NovaRecipesProject.Worker;
+using NovaRecipesProject.EmailSenderWorker;
 using NovaRecipesProject.Worker.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);

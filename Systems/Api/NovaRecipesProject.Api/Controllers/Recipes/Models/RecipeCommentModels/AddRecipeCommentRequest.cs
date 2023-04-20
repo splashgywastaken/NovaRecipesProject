@@ -13,7 +13,7 @@ public class AddRecipeCommentRequest
     /// <summary>
     /// Name of user that posted comment
     /// </summary>
-    public string UserName { get; set; } = null!;
+    public int UserId { get; set; }
     /// <summary>
     /// Comments text
     /// </summary>

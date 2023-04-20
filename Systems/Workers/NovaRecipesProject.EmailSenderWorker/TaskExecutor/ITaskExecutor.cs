@@ -1,4 +1,4 @@
-﻿namespace NovaRecipesProject.Worker;
+﻿namespace NovaRecipesProject.EmailSenderWorker;
 
 public interface ITaskExecutor
 {

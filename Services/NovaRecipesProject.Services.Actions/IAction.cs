@@ -21,4 +21,10 @@ public interface IAction
     /// <param name="email"></param>
     /// <returns></returns>
     Task SendRecipeInfoEmail(EmailModel email);
+    /// <summary>
+    /// Action used to send notifications about new comment to some recipe
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    public Task SendNewRecipeCommentNotification(EmailModel email);
 }

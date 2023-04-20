@@ -77,3 +77,25 @@ services:
       - novarecipesproject_redis
       - novarecipesproject_rabbitmq
       - novarecipesproject_api
+
+  novarecipesproject_newcommentssenderworker_1:
+    image: ${DOCKER_REGISTRY-}novarecipesprojectnewcommentssenderworker
+    build:
+      context: .
+      dockerfile: Systems/Workers/NovaRecipesProject.RecipeNewCommentsSenderWorker/Dockerfile
+    depends_on:
+      - novarecipesproject_postgresql
+      - novarecipesproject_redis
+      - novarecipesproject_rabbitmq
+      - novarecipesproject_api
+
+  novarecipesproject_newcommentssenderworker_2:
+    image: ${DOCKER_REGISTRY-}novarecipesprojectnewcommentssenderworker
+    build:
+      context: .
+      dockerfile: Systems/Workers/NovaRecipesProject.RecipeNewCommentsSenderWorker/Dockerfile
+    depends_on:
+      - novarecipesproject_postgresql
+      - novarecipesproject_redis
+      - novarecipesproject_rabbitmq
+      - novarecipesproject_api

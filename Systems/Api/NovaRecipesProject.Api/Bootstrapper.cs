@@ -15,6 +15,7 @@ namespace NovaRecipesProject.Api;
 
 using NovaRecipesProject.Services.Settings;
 using Microsoft.Extensions.DependencyInjection;
+using NovaRecipesProject.Services.RecipeCommentsSubscriptions;
 
 /// <summary>
 /// API services bootstrapper
@@ -44,6 +45,7 @@ public static class Bootstrapper
             .AddRecipeParagraphService()
             .AddUserAccountService()
             .AddRecipeSubscriptionsService()
+            .AddRecipeCommentsSubscriptionsService()
             ;
 
         return services;

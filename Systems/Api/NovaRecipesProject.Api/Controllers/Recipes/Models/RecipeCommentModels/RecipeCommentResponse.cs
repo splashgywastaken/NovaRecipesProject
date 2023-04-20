@@ -15,7 +15,7 @@ public class RecipeCommentResponse
     /// <summary>
     /// Name of user that posted comment
     /// </summary>
-    public string UserName { get; set; } = null!;
+    public int UserId { get; set; }
     /// <summary>
     /// Comments text
     /// </summary>
@@ -32,6 +32,6 @@ public class RecipeCommentResponseProfile : Profile
     /// <inheritdoc />
     public RecipeCommentResponseProfile()
     {
-        CreateMap<RecipeCommentModel, RecipeCommentResponse>();
+        CreateMap<RecipeCommentLightModel, RecipeCommentResponse>();
     }
 }

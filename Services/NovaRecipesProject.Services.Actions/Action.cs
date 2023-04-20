@@ -26,10 +26,14 @@ public class Action : IAction
     {
         await _rabbitMq.PushAsync(RabbitMqTaskQueueNames.SendUserAccountEmail, email);
     }
-
     /// <inheritdoc />
     public async Task SendRecipeInfoEmail(EmailModel email)
     {
         await _rabbitMq.PushAsync(RabbitMqTaskQueueNames.SendRecipesInfoEmail, email);
+    }
+    /// <inheritdoc />
+    public async Task SendNewRecipeCommentNotification(EmailModel email)
+    {
+        await _rabbitMq.PushAsync(RabbitMqTaskQueueNames.SendNewRecipeCommentNotification, email);
     }
 }

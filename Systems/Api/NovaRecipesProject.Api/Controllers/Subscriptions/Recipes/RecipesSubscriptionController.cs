@@ -42,12 +42,15 @@ public class RecipesSubscriptionController : ControllerBase
     /// Method used to subscribe for specific author
     /// </summary>
     /// <param name="subscriberId"></param>
-    /// <param name="authorId"></param>
+    /// <param name="recipeId"></param>
     /// <returns></returns>
-    [HttpPost("{subscriberId:int}/{authorId:int}")]
-    public async Task<ActionResult> Subscribe(int subscriberId, int authorId)
+    [HttpPost("")]
+    public async Task<ActionResult> Subscribe(
+        [FromQuery] int subscriberId,
+        [FromQuery] int recipeId
+        )
     {
-        await _recipeSubscriptionsService.Subscribe(subscriberId, authorId);
+        await _recipeSubscriptionsService.Subscribe(subscriberId, recipeId);
 
         return Ok();
     }
@@ -58,8 +61,11 @@ public class RecipesSubscriptionController : ControllerBase
     /// <param name="subscriberId"></param>
     /// <param name="authorId"></param>
     /// <returns></returns>
-    [HttpDelete("{subscriberId:int}/{authorId:int}")]
-    public async Task<ActionResult> Unsubscribe(int subscriberId, int authorId)
+    [HttpDelete("")]
+    public async Task<ActionResult> Unsubscribe(
+        [FromQuery] int subscriberId,
+        [FromQuery] int authorId
+        )
     {
         await _recipeSubscriptionsService.Unsubscribe(subscriberId, authorId);
 

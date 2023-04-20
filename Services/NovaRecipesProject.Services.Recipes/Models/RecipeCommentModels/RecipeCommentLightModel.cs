@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using NovaRecipesProject.Context.Entities;
-using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 
 namespace NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 
 /// <summary>
 /// DTO for recipe's comments
 /// </summary>
-public class RecipeCommentModel
+public class RecipeCommentLightModel
 {
     /// <summary>
     /// Id of the comment
@@ -38,6 +37,6 @@ public class RecipeCommentsModelProfile : Profile
     /// <inheritdoc />
     public RecipeCommentsModelProfile()
     {
-        CreateMap<RecipeComment, RecipeCommentModel>().ReverseMap();
+        CreateMap<RecipeComment, RecipeCommentLightModel>().ReverseMap();
     }
 }

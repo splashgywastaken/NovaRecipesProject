@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Context.Entities;
 

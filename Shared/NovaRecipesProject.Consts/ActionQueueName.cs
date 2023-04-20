@@ -14,4 +14,8 @@ public static class RabbitMqTaskQueueNames
     /// Queue name for sending email about recipes info and all stuff related to them
     /// </summary>
     public const string SendRecipesInfoEmail = "NOVA_RECIPES_PROJECT_SEND_RECIPES_INFO_EMAIL";
+    /// <summary>
+    /// Queue name for sending notifications about posting new comment for some recipe
+    /// </summary>
+    public const string SendNewRecipeCommentNotification = "NOVA_RECIPES_PROJECT_SEND_NEW_RECIPE_COMMENT_NOTIFICATION";
 }

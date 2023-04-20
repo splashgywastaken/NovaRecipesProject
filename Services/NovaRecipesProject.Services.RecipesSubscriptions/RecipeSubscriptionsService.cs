@@ -57,6 +57,15 @@ public class RecipeSubscriptionsService : IRecipeSubscriptionsService
             $"The user (author Id: {authorId} was not found)"
             );
 
+        var subscriptionInContext = await context
+            .RecipesSubscriptions
+            .FirstOrDefaultAsync(x => x.AuthorId == authorId && x.SubscriberId == subscriberId);
+        ProcessException.ThrowIf(
+            () => subscriptionInContext is not null,
+            $"User (subscriber Id: {subscriberId}) " +
+            $"is already subscribed for new recipes from author (author Id {authorId})"
+        );
+
         var subscription = new RecipesSubscription()
         {
             SubscriberId = subscriberId,

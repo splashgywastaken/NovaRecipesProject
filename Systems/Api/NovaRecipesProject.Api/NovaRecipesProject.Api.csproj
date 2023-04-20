@@ -54,6 +54,7 @@
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Categories\NovaRecipesProject.Services.Categories.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Ingredients\NovaRecipesProject.Services.Ingredients.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.RabbitMq\NovaRecipesProject.Services.RabbitMq.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.RecipeCommentsSubscriptions\NovaRecipesProject.Services.RecipeCommentsSubscriptions.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.RecipeParagraphs\NovaRecipesProject.Services.RecipeParagraphs.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.RecipesSubscriptions\NovaRecipesProject.Services.RecipesSubscriptions.csproj" />
     <ProjectReference Include="..\..\..\Services\NovaRecipesProject.Services.Recipes\NovaRecipesProject.Services.Recipes.csproj" />
@@ -68,6 +69,7 @@
 	<Folder Include="Controllers\RecipeParagraphs\Models\" />
 	<Folder Include="Controllers\Accounts\" />
 	<Folder Include="Controllers\Recipes\Models\RecipeCommentModels\" />
+	<Folder Include="Controllers\Subscriptions\RecipeComments\" />
 	<Folder Include="Controllers\Subscriptions\Recipes\" />
 	<Folder Include="wwwroot\" />
 	<Folder Include="Pages\" />

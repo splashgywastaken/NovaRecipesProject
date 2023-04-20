@@ -115,7 +115,7 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
-    /// Gets recipe by its id most of it's data
+    /// Returns recipe with it's categories, ingredients and paragraphs
     /// </summary>
     /// <param name="id">Recipe id by which it returns correct data</param>
     /// <response code="200">Recipe with corresponding id</response>

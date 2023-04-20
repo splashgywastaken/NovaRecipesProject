@@ -1,4 +1,6 @@
-﻿namespace NovaRecipesProject.Context.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace NovaRecipesProject.Context.Entities;
 
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,8 +27,13 @@ public class User : IdentityUser<Guid>
     /// </summary>
     // ReSharper disable once CollectionNeverUpdated.Global
     public List<Recipe>? Recipes { get; set; }
+
     /// <summary>
     /// User's list for recipes subscriptions, used for email mailing
     /// </summary>
-    public List<RecipesSubscription>? RecipesSubscriptions { get; set; }
+    public List<RecipesSubscription>? RecipesSubscriptions { get; set; } = null!;
+    /// <summary>
+    /// User's list for recipe's comments subscriptions, used for email mailing
+    /// </summary>
+    public List<RecipeCommentsSubscription>? RecipeCommentsSubscriptions { get; set; } = null!;
 }

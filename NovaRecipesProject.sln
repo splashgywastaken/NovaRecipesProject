@@ -65,7 +65,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.RecipesSubscriptions", "Services\NovaRecipesProject.Services.RecipesSubscriptions\NovaRecipesProject.Services.RecipesSubscriptions.csproj", "{A7E65ED0-B822-499D-874D-FFA081B9083C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.RecipeInfoSenderWorker", "Systems\Workers\NovaRecipesProject.RecipeInfoSenderWorker\NovaRecipesProject.RecipeInfoSenderWorker.csproj", "{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.RecipeInfoSenderWorker", "Systems\Workers\NovaRecipesProject.RecipeInfoSenderWorker\NovaRecipesProject.RecipeInfoSenderWorker.csproj", "{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.RecipeCommentsSubscriptions", "Services\NovaRecipesProject.Services.RecipeCommentsSubscriptions\NovaRecipesProject.Services.RecipeCommentsSubscriptions.csproj", "{9AB043B1-8C36-407B-A5EA-758EEA9AE197}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.RecipeNewCommentsSenderWorker", "Systems\Workers\NovaRecipesProject.RecipeNewCommentsSenderWorker\NovaRecipesProject.RecipeNewCommentsSenderWorker.csproj", "{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -169,6 +173,14 @@ Global
 		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB043B1-8C36-407B-A5EA-758EEA9AE197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB043B1-8C36-407B-A5EA-758EEA9AE197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB043B1-8C36-407B-A5EA-758EEA9AE197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB043B1-8C36-407B-A5EA-758EEA9AE197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,6 +213,8 @@ Global
 		{C3726280-B97D-4498-98E0-DC1F49C35705} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{A7E65ED0-B822-499D-874D-FFA081B9083C} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB} = {C4441DAD-4225-4F23-8829-8F0052812721}
+		{9AB043B1-8C36-407B-A5EA-758EEA9AE197} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
+		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF} = {C4441DAD-4225-4F23-8829-8F0052812721}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {923486EB-E594-49ED-9246-C7BBAA6025EB}

@@ -31,7 +31,7 @@ public interface IRecipeService
     /// <param name="offset">offset for data</param>
     /// <param name="limit">limit for data</param>
     /// <returns>List of comments for certain recipe ordered by CreatedDateTime value</returns>
-    Task<IEnumerable<RecipeCommentModel>> GetRecipeComments(int recipeId, int offset = 0, int limit = 10);
+    Task<IEnumerable<RecipeCommentLightModel>> GetRecipeComments(int recipeId, int offset = 0, int limit = 10);
     /// <summary>
     /// Method to get list of recipe's ingredients.
     /// </summary>
@@ -65,7 +65,7 @@ public interface IRecipeService
     /// <param name="recipeId">Id of recipe to add comment to</param>
     /// <param name="model">data of comment</param>
     /// <returns></returns>
-    Task<RecipeCommentModel> AddCommentToRecipe(int recipeId, AddRecipeCommentModel model);
+    Task<RecipeCommentLightModel> AddCommentToRecipe(int recipeId, AddRecipeCommentModel model);
     /// <summary>
     /// Method used to update data in DB
     /// </summary>

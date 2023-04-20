@@ -157,32 +157,32 @@
             Validator description
             </summary>
         </member>
-        <member name="T:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentModel">
+        <member name="T:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentLightModel">
             <summary>
             DTO for recipe's comments
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentModel.Id">
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentLightModel.Id">
             <summary>
             Id of the comment
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentModel.UserName">
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentLightModel.UserName">
             <summary>
             Name of user that left comment
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentModel.Text">
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentLightModel.Text">
             <summary>
             Comments text
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentModel.CreatedDateTime">
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentLightModel.CreatedDateTime">
             <summary>
             Time when comment was created
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentModel.RecipeId">
+        <member name="P:NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.RecipeCommentLightModel.RecipeId">
             <summary>
             Id of recipe to which this comment is related to 
             </summary>
@@ -409,7 +409,7 @@
         <member name="T:NovaRecipesProject.Services.Recipes.RecipeService">
             <inheritdoc />
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.#ctor(Microsoft.EntityFrameworkCore.IDbContextFactory{NovaRecipesProject.Context.MainDbContext},AutoMapper.IMapper,NovaRecipesProject.Services.RecipesSubscriptions.IRecipeSubscriptionsService,NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeModels.AddRecipeModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeModels.UpdateRecipeModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels.AddRecipeIngredientModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels.UpdateRecipeIngredientModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.UpdateRecipeCommentModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.AddRecipeCommentModel},NovaRecipesProject.Services.Cache.ICacheService)">
+        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.#ctor(Microsoft.EntityFrameworkCore.IDbContextFactory{NovaRecipesProject.Context.MainDbContext},AutoMapper.IMapper,NovaRecipesProject.Services.RecipesSubscriptions.IRecipeSubscriptionsService,NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeModels.AddRecipeModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeModels.UpdateRecipeModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels.AddRecipeIngredientModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels.UpdateRecipeIngredientModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.UpdateRecipeCommentModel},NovaRecipesProject.Common.Validator.IModelValidator{NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels.AddRecipeCommentModel},NovaRecipesProject.Services.RecipeCommentsSubscriptions.IRecipeCommentsSubscriptionsService,NovaRecipesProject.Services.Cache.ICacheService)">
             <summary>
             Constructor for this class
             </summary>
@@ -422,6 +422,7 @@
             <param name="updateRecipeIngredientModelValidator"></param>
             <param name="updateRecipeCommentModelValidator"></param>
             <param name="addRecipeCommentModelValidator"></param>
+            <param name="recipeCommentsSubscriptionsService"></param>
             <param name="cacheService"></param>
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipes(System.Int32,System.Int32)">

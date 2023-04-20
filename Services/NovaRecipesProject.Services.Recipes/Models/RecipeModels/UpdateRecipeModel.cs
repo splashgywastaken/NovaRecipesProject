@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using AutoMapper;
-using FluentValidation;
+﻿using AutoMapper;
 using NovaRecipesProject.Common.Models.BaseModels;
 using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Categories.Models;

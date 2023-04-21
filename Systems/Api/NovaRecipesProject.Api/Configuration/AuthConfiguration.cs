@@ -49,6 +49,7 @@ public static class AuthConfiguration
                 options.Authority = settings.Url;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    NameClaimType = "email",
                     ValidateIssuerSigningKey = false,
                     ValidateIssuer = false,
                     ValidateAudience = false,

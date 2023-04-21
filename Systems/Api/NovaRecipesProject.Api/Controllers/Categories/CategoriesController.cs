@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Api.Controllers.Categories.Models;
 using NovaRecipesProject.Api.Controllers.Recipes;
@@ -22,11 +23,13 @@ namespace NovaRecipesProject.Api.Controllers.Categories;
 [Route("api/v{version:apiVersion}/categories")]
 [ApiController]
 [ApiVersion("0.1")]
+[ApiVersion("0.2")]
 public class CategoriesController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ILogger<CategoriesController> _logger;
     private readonly ICategoryService _categoryService;
+    private readonly UserManager<User> _userManager;
 
     /// <summary>
     /// Constructor
@@ -34,27 +37,56 @@ public class CategoriesController : ControllerBase
     /// <param name="mapper"></param>
     /// <param name="logger"></param>
     /// <param name="recipeService"></param>
+    /// <param name="userManager"></param>
     public CategoriesController(
         IMapper mapper, 
         ILogger<CategoriesController> logger,
-        ICategoryService recipeService)
+        ICategoryService recipeService, 
+        UserManager<User> userManager
+        )
     {
         _mapper = mapper;
         _logger = logger;
         _categoryService = recipeService;
+        _userManager = userManager;
     }
 
     /// <summary>
-    /// Basic get categories
+    /// Basic [Get] categories
     /// </summary>
     /// <param name="offset">Offset to the first element</param>
     /// <param name="limit">Count elements on the page</param>
     /// <response code="200">List of category responses</response>
     [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
     [HttpGet("")]
+    [MapToApiVersion("0.1")]
     public async Task<IEnumerable<CategoryResponse>> GetCategories([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var categories = await _categoryService.GetCategories(offset, limit);
+        var response = _mapper.Map<IEnumerable<CategoryResponse>>(categories);
+
+        return response;
+    }
+
+    /// <summary>
+    /// [Get] for categories.
+    /// Caches data using user data (caches for current user in session)
+    /// </summary>
+    /// <param name="userId">User's Id for lazy implementation of caching</param>
+    /// <param name="offset">Offset to the first element</param>
+    /// <param name="limit">Count elements on the page</param>
+    /// <response code="200">List of category responses</response>
+    [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
+    [HttpGet("")]
+    [MapToApiVersion("0.2")]
+    public async Task<IEnumerable<CategoryResponse>> GetCategoriesAndCacheForCurrentUser(
+        [FromQuery] int userId,
+        [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10
+        )
+    {
+        var categories = await _categoryService
+                .GetCategoriesAndCacheForUser(userId, offset, limit);
         var response = _mapper.Map<IEnumerable<CategoryResponse>>(categories);
 
         return response;
@@ -67,6 +99,7 @@ public class CategoriesController : ControllerBase
     /// <response code="200">Category with corresponding id</response>
     [ProducesResponseType(typeof(CategoryResponse), 200)]
     [HttpGet("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<CategoryResponse> GetCategoryById([FromRoute] int id)
     {
         var category = await _categoryService.GetCategoryById(id);
@@ -82,6 +115,7 @@ public class CategoriesController : ControllerBase
     /// <response code="200">Returns category model which were made while adding new data do DB</response>
     [ProducesResponseType(typeof(CategoryResponse), 200)]
     [HttpPost("")]
+    [MapToApiVersion("0.1")]
     public async Task<CategoryResponse> AddCategory([FromBody] AddCategoryRequest request)
     {
         var model = _mapper.Map<AddCategoryModel>(request);
@@ -98,6 +132,7 @@ public class CategoriesController : ControllerBase
     /// <param name="request">Category model to update to</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryRequest request)
     {
         var model = _mapper.Map<UpdateCategoryModel>(request);
@@ -112,6 +147,7 @@ public class CategoriesController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> DeleteCategory([FromRoute] int id)
     {
         await _categoryService.DeleteCategory(id);

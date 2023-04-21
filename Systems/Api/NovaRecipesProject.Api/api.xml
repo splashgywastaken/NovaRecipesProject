@@ -273,17 +273,27 @@
             <response code="403"></response>
             <response code="404"></response>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Categories.CategoriesController},NovaRecipesProject.Services.Categories.ICategoryService)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{NovaRecipesProject.Api.Controllers.Categories.CategoriesController},NovaRecipesProject.Services.Categories.ICategoryService,Microsoft.AspNetCore.Identity.UserManager{NovaRecipesProject.Context.Entities.User})">
             <summary>
             Constructor
             </summary>
             <param name="mapper"></param>
             <param name="logger"></param>
             <param name="recipeService"></param>
+            <param name="userManager"></param>
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.GetCategories(System.Int32,System.Int32)">
             <summary>
-            Basic get categories
+            Basic [Get] categories
+            </summary>
+            <param name="offset">Offset to the first element</param>
+            <param name="limit">Count elements on the page</param>
+            <response code="200">List of category responses</response>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.GetCategoriesAndCacheForCurrentUser(System.Int32,System.Int32)">
+            <summary>
+            [Get] for categories.
+            Caches data using user data (caches for current user in session)
             </summary>
             <param name="offset">Offset to the first element</param>
             <param name="limit">Count elements on the page</param>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NovaRecipesProject.Common.Exceptions;
 using NovaRecipesProject.Common.Extensions;
+using NovaRecipesProject.Common.Tools;
 using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
@@ -92,6 +93,59 @@ public class RecipeParagraphService : IRecipeParagraphService
 
         if (_cacheService != null)
             await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
+
+        return data;
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesIdAndCacheForUser(int userId, int recipeId, int offset = 0, int limit = 10)
+    {
+        if (_cacheService != null)
+        {
+            try
+            {
+                var cachedData = await _cacheService
+                    .Get<IEnumerable<RecipeParagraphModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                // If there are some cached data
+                if (cachedData != null)
+                {
+                    // Enumerating cachedData to evade multiple enumerations
+                    var enumeratedCachedData = cachedData.ToList();
+                    // If there are less or equal stored cached data than what the limit is 
+                    if (enumeratedCachedData.Count <= limit)
+                    {
+                        return enumeratedCachedData.OrderBy(x => x.OrderNumber);
+                    }
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+        }
+
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var recipeParagraphs = context
+            .RecipeParagraphs
+            .AsQueryable();
+
+        recipeParagraphs = recipeParagraphs
+            .Where(x => x.RecipeId == recipeId)
+            .SkipAndTake(offset, limit);
+
+        var data =
+            (await recipeParagraphs.ToListAsync())
+            .Select(_mapper.Map<RecipeParagraphModel>)
+            .OrderBy(x => x.OrderNumber)
+            .ToList();
+
+        if (_cacheService != null)
+            await _cacheService.Put(
+                CachingTools.GetContextCacheKey(ContextCacheKey, userId),
+                data,
+                TimeSpan.FromSeconds(30)
+                );
 
         return data;
     }

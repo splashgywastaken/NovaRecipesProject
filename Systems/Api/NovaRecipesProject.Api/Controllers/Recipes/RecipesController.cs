@@ -25,6 +25,7 @@ namespace NovaRecipesProject.Api.Controllers.Recipes;
 [Route("api/v{version:apiVersion}/recipes")]
 [ApiController]
 [ApiVersion("0.1")]
+[ApiVersion("0.2")]
 public class RecipesController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -53,6 +54,7 @@ public class RecipesController : ControllerBase
     /// <response code="200">List of recipe responses</response>
     [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
     [HttpGet("")]
+    [MapToApiVersion("0.1")]
     public async Task<IEnumerable<RecipeResponse>> GetRecipes([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var recipes = await _recipeService.GetRecipes(offset, limit);
@@ -62,7 +64,29 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
-    /// Basic get recipes for some user
+    /// Basic get recipes. Used to get list of recipes to use them then in other methods
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="offset">Offset to the first element</param>
+    /// <param name="limit">Count elements on the page</param>
+    /// <response code="200">List of recipe responses</response>
+    [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
+    [HttpGet("")]
+    [MapToApiVersion("0.2")]
+    public async Task<IEnumerable<RecipeResponse>> GetRecipesAndCacheForCurrentUser(
+        [FromQuery] int userId,
+        [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10
+        )
+    {
+        var recipes = await _recipeService.GetRecipesAndCacheForUser(userId, offset, limit);
+        var response = _mapper.Map<IEnumerable<RecipeResponse>>(recipes);
+
+        return response;
+    }
+
+    /// <summary>
+    /// Basic get recipes for some user and cache data using user's data
     /// </summary>
     /// <param name="userId">User's id to get data for</param>
     /// <param name="offset">Offset to the first element</param>
@@ -70,6 +94,7 @@ public class RecipesController : ControllerBase
     /// <response code="200">List of recipe responses</response>
     [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
     [HttpGet("user/{userId:int}")]
+    [MapToApiVersion("0.2")]
     public async Task<IEnumerable<RecipeResponse>> GetUserRecipes([FromRoute] int userId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var recipes = await _recipeService.GetUserRecipes(userId, offset, limit);
@@ -85,9 +110,31 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [ProducesResponseType(typeof(IEnumerable<RecipeIngredientResponse>), 200)]
     [HttpGet("{recipeId:int}/ingredients")]
+    [MapToApiVersion("0.1")]
     public async Task<IEnumerable<RecipeIngredientResponse>> GetRecipesIngredients([FromRoute] int recipeId)
     {
         var ingredients = await _recipeService.GetRecipesIngredients(recipeId);
+        var response = _mapper.Map<IEnumerable<RecipeIngredientResponse>>(ingredients);
+
+        return response;
+    }
+
+    /// <summary>
+    /// Gets all data about recipes ingredients and caches data for current user
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="recipeId"></param>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(IEnumerable<RecipeIngredientResponse>), 200)]
+    [HttpGet("{recipeId:int}/ingredients")]
+    [MapToApiVersion("0.2")]
+    public async Task<IEnumerable<RecipeIngredientResponse>> GetRecipesIngredientsAndCacheForCurrentUser(
+        [FromQuery] int userId,
+        [FromRoute] int recipeId
+        )
+    {
+        var ingredients = await _recipeService
+            .GetRecipesIngredientsAndCacheForUser(userId, recipeId);
         var response = _mapper.Map<IEnumerable<RecipeIngredientResponse>>(ingredients);
 
         return response;
@@ -102,6 +149,7 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [ProducesResponseType(typeof(IEnumerable<RecipeCommentResponse>), 200)]
     [HttpGet("{recipeId:int}/comments")]
+    [MapToApiVersion("0.1")]
     public async Task<IEnumerable<RecipeCommentResponse>> GetRecipeComments(
         [FromRoute] int recipeId, 
         [FromQuery] int offset = 0, 
@@ -115,12 +163,38 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
+    /// Gets all comments of certain recipe 
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="recipeId"></param>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(IEnumerable<RecipeCommentResponse>), 200)]
+    [HttpGet("{recipeId:int}/comments")]
+    [MapToApiVersion("0.2")]
+    public async Task<IEnumerable<RecipeCommentResponse>> GetRecipeCommentsAndCacheForCurrentUser(
+        [FromQuery] int userId,
+        [FromRoute] int recipeId,
+        [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10
+    )
+    {
+        var recipeComments = await _recipeService
+            .GetRecipeCommentsAndCacheForUser(userId, recipeId, offset, limit);
+        var response = _mapper.Map<IEnumerable<RecipeCommentResponse>>(recipeComments);
+
+        return response;
+    }
+
+    /// <summary>
     /// Returns recipe with it's categories, ingredients and paragraphs
     /// </summary>
     /// <param name="id">Recipe id by which it returns correct data</param>
     /// <response code="200">Recipe with corresponding id</response>
     [ProducesResponseType(typeof(WholeRecipeResponse), 200)]
     [HttpGet("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<WholeRecipeResponse> GetRecipeById([FromRoute] int id)
     {
         var recipe = await _recipeService.GetRecipeById(id);
@@ -139,6 +213,7 @@ public class RecipesController : ControllerBase
     /// <response code="200">Returns recipe model which were made while adding new data do DB</response>
     [ProducesResponseType(typeof(RecipeResponse), 200)]
     [HttpPost("user/{userId:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<RecipeResponse> AddRecipeWithUser([FromRoute] int userId, [FromBody] AddRecipeRequest request)
     {
         var model = _mapper.Map<AddRecipeModel>(request);
@@ -156,6 +231,7 @@ public class RecipesController : ControllerBase
     /// <returns>Recipe's ingredient that it added to recipe with weight, portion and nutrition data</returns>
     [ProducesResponseType(typeof(RecipeIngredientResponse), 200)]
     [HttpPost("{recipeId:int}/ingredients")]
+    [MapToApiVersion("0.1")]
     public async Task<RecipeIngredientResponse> AddIngredientToRecipe(
         [FromRoute] int recipeId,
         [FromBody] AddRecipeIngredientRequest request
@@ -177,6 +253,7 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [ProducesResponseType(typeof(RecipeCommentResponse), 200)]
     [HttpPost("{recipeId:int}/comments")]
+    [MapToApiVersion("0.1")]
     public async Task<RecipeCommentResponse> AddCommentToRecipe(
         [FromRoute] int recipeId,
         [FromBody] AddRecipeCommentRequest request
@@ -198,6 +275,7 @@ public class RecipesController : ControllerBase
     /// <param name="request">Recipe model to update to</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> UpdateRecipe(
         [FromRoute] int id,
         [FromBody] UpdateRecipeRequest request
@@ -218,6 +296,7 @@ public class RecipesController : ControllerBase
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPut("{recipeId:int}/ingredients/{ingredientId:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> UpdateRecipeIngredient(
         [FromRoute] int recipeId,
         [FromRoute] int ingredientId,
@@ -238,6 +317,7 @@ public class RecipesController : ControllerBase
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPut("{recipeId:int}/comments/{commentId:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> UpdateRecipeComment(
         [FromRoute] int recipeId,
         [FromRoute] int commentId,
@@ -258,6 +338,7 @@ public class RecipesController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> DeleteRecipe([FromRoute] int id)
     {
         await _recipeService.DeleteRecipe(id);
@@ -272,6 +353,7 @@ public class RecipesController : ControllerBase
     /// <param name="ingredientId">Ingredient id to search through recipes with</param>
     /// <returns></returns>
     [HttpDelete("{recipeId:int}/ingredients/{ingredientId:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> DeleteRecipeIngredient([FromRoute] int recipeId, [FromRoute] int ingredientId)
     {
         await _recipeService.DeleteRecipeIngredient(recipeId, ingredientId);
@@ -279,7 +361,14 @@ public class RecipesController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Method used to delete comment from some recipe
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="commentId"></param>
+    /// <returns></returns>
     [HttpDelete("{recipeId:int}/comments/{commentId:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> DeleteCommentFromIngredient(
         [FromRoute] int recipeId,
         [FromRoute] int commentId

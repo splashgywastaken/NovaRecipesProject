@@ -13,7 +13,16 @@ public interface IIngredientService
     /// <param name="offset">Sets offset for data it got</param>
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of IngredientModel</returns>
-    Task<IEnumerable<IngredientModel>> GetIngredients(int offset = 0, int limit = 10);
+    Task<IEnumerable<IngredientModel>> GetIngredients(int offset, int limit);
+    /// <summary>
+    /// Method to get basic ingredients list.
+    /// Caches everything using data of some user
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="offset">Sets offset for data it got</param>
+    /// <param name="limit">Sets limit for number of data to return</param>
+    /// <returns>Returns list of IngredientModel</returns>
+    Task<IEnumerable<IngredientModel>> GetIngredientsAndCacheForUser(int userId, int offset, int limit);
     /// <summary>
     /// Method to get ingredient by some Id
     /// </summary>

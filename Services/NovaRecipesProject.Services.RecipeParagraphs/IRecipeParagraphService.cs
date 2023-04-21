@@ -8,13 +8,28 @@ namespace NovaRecipesProject.Services.RecipeParagraphs;
 public interface IRecipeParagraphService
 {
     /// <summary>
-    /// Method 
+    /// Method to get paragraphs of a certain recipe
     /// </summary>
     /// <param name="recipeId">Recipe's id</param>
     /// <param name="offset">Sets offset for data it got</param>
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of RecipeParagraphModel</returns>
-    Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesId(int recipeId, int offset = 0, int limit = 10);
+    Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesId(int recipeId, int offset, int limit);
+
+    /// <summary>
+    /// Method to get paragraphs of a certain recipe and cache them using data about some user
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="recipeId">Recipe's id</param>
+    /// <param name="offset">Sets offset for data it got</param>
+    /// <param name="limit">Sets limit for number of data to return</param>
+    /// <returns>Returns list of RecipeParagraphModel</returns>
+    Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesIdAndCacheForUser(
+        int userId,
+        int recipeId, 
+        int offset = 0,
+        int limit = 10
+        );
     /// <summary>
     /// Method to get recipe paragraph by some Id
     /// </summary>

@@ -19,6 +19,7 @@ namespace NovaRecipesProject.Api.Controllers.RecipeParagraphs;
 [Route("api/v{version:apiVersion}/recipeParagraphs")]
 [ApiController]
 [ApiVersion("0.1")]
+[ApiVersion("0.2")]
 public class RecipeParagraphsController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -50,6 +51,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <returns>List of RecipeParagraphResponse ordered by order number value</returns>
     [ProducesResponseType(typeof(IEnumerable<RecipeParagraphResponse>), 200)]
     [HttpGet("recipe/{recipeId:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IEnumerable<RecipeParagraphResponse>> GetRecipesParagraphs(
         [FromRoute] int recipeId,
         [FromQuery] int offset = 0,
@@ -64,12 +66,40 @@ public class RecipeParagraphsController : ControllerBase
     }
 
     /// <summary>
+    /// Gets all recipe paragraphs of a certain recipe using its Id
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="recipeId"></param>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <returns>List of RecipeParagraphResponse ordered by order number value</returns>
+    [ProducesResponseType(typeof(IEnumerable<RecipeParagraphResponse>), 200)]
+    [HttpGet("recipe/{recipeId:int}")]
+    [MapToApiVersion("0.2")]
+    public async Task<IEnumerable<RecipeParagraphResponse>> GetRecipesParagraphsAndCacheWithUserId(
+        [FromQuery] int userId,
+        [FromRoute] int recipeId,
+        [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10
+    )
+    {
+        var recipeParagraphsByRecipesId =
+            await _recipeParagraphService.GetRecipeParagraphsByRecipesIdAndCacheForUser(userId, recipeId, offset, limit);
+        var response = _mapper.Map<IEnumerable<RecipeParagraphResponse>>(recipeParagraphsByRecipesId);
+
+        return response;
+    }
+
+
+
+    /// <summary>
     /// Gets RecipeParagraph by its id
     /// </summary>
     /// <param name="id">RecipeParagraph id by which it returns correct data</param>
     /// <response code="200">RecipeParagraph with corresponding id</response>
     [ProducesResponseType(typeof(RecipeParagraphResponse), 200)]
     [HttpGet("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<RecipeParagraphResponse> GetRecipeParagraphById([FromRoute] int id)
     {
         var recipeParagraphById = await _recipeParagraphService.GetRecipeParagraphById(id);
@@ -86,6 +116,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <response code="200">Returns RecipeParagraph model which were made while adding new data do DB</response>
     [ProducesResponseType(typeof(RecipeParagraphResponse), 200)]
     [HttpPost("recipe/{recipeId:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<RecipeParagraphResponse> AddRecipeParagraph(
         [FromRoute] int recipeId,
         [FromBody] AddRecipeParagraphRequest request
@@ -105,6 +136,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <param name="id">RecipeParagraph model id to update</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> ChangeRecipeParagraphOrderNumber([FromQuery] int orderNumber, [FromRoute] int id)
     {
         await _recipeParagraphService.ChangeRecipeParagraphOrderNumber(orderNumber, id);
@@ -118,6 +150,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <param name="request">RecipeParagraph model to update to</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> UpdateRecipeParagraph([FromRoute] int id, [FromBody] UpdateRecipeParagraphRequest request)
     {
         var model = _mapper.Map<UpdateRecipeParagraphModel>(request);
@@ -132,6 +165,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> DeleteRecipeParagraph([FromRoute] int id)
     {
         await _recipeParagraphService.DeleteRecipeParagraph(id);

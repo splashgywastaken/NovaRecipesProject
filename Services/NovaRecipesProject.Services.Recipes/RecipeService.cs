@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NovaRecipesProject.Common.Exceptions;
 using NovaRecipesProject.Common.Extensions;
+using NovaRecipesProject.Common.Tools;
 using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
@@ -120,13 +121,65 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
+    public async Task<IEnumerable<RecipeModel>> GetRecipesAndCacheForUser(int userId, int offset = 0, int limit = 10)
+    {
+        if (_cacheService != null)
+        {
+            try
+            {
+                var cachedData = await _cacheService
+                    .Get<IEnumerable<RecipeModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                // If there are some cached data
+                if (cachedData != null)
+                {
+                    // Enumerating cachedData to evade multiple enumerations
+                    var enumeratedCachedData = cachedData.ToList();
+                    // If there are less or equal stored cached data than what the limit is 
+                    if (enumeratedCachedData.Count <= limit)
+                    {
+                        return enumeratedCachedData;
+                    }
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+        }
+
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var recipes = context
+            .Recipes
+            .AsQueryable();
+
+        recipes = recipes
+            .SkipAndTake(offset, limit);
+
+        var data =
+            (await recipes.ToListAsync())
+            .Select(_mapper.Map<RecipeModel>)
+            .ToList();
+
+        if (_cacheService != null)
+            await _cacheService.Put(
+                CachingTools.GetContextCacheKey(ContextCacheKey, userId), 
+                data,
+                TimeSpan.FromSeconds(30)
+                );
+
+        return data;
+    }
+
+    /// <inheritdoc />
     public async Task<IEnumerable<RecipeModel>> GetUserRecipes(int userId, int offset = 0, int limit = 10)
     {
         if (_cacheService != null)
         {
             try
             {
-                var cachedData = await _cacheService.Get<IEnumerable<RecipeModel>?>(ContextCacheKey);
+                var cachedData = await _cacheService
+                    .Get<IEnumerable<RecipeModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
                 // If there are some cached data
                 if (cachedData != null)
                 {
@@ -164,7 +217,11 @@ public class RecipeService : IRecipeService
             .ToList();
 
         if (_cacheService != null)
-            await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
+            await _cacheService.Put(
+                CachingTools.GetContextCacheKey(ContextCacheKey, userId),
+                data,
+                TimeSpan.FromSeconds(30)
+                );
 
         return data;
     }
@@ -218,6 +275,64 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
+    public async Task<IEnumerable<RecipeCommentLightModel>> GetRecipeCommentsAndCacheForUser(
+        int userId,
+        int recipeId,
+        int offset = 0, 
+        int limit = 10
+        )
+    {
+        if (_cacheService != null)
+        {
+            try
+            {
+                var cachedData = await _cacheService
+                    .Get<IEnumerable<RecipeCommentLightModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                if (cachedData != null)
+                {
+                    var enumeratedData =
+                        cachedData
+                            .Where(x => x.RecipeId == recipeId)
+                            .ToList();
+                    if (enumeratedData.Count <= limit)
+                    {
+                        return enumeratedData;
+                    }
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var recipeComments = context
+            .RecipeComments
+            .Where(x => x.RecipeId == recipeId)
+            .OrderBy(x => x.CreatedDateTime)
+            .AsQueryable();
+
+        recipeComments = recipeComments
+            .SkipAndTake(offset, limit);
+
+        var data =
+            (await recipeComments.ToListAsync())
+            .Select(_mapper.Map<RecipeCommentLightModel>)
+            .ToList();
+
+        if (_cacheService != null)
+            await _cacheService.Put(
+                CachingTools.GetContextCacheKey(ContextCacheKey, userId), 
+                data, 
+                TimeSpan.FromSeconds(30)
+                );
+
+        return data;
+    }
+
+    /// <inheritdoc />
     public async Task<IEnumerable<RecipeIngredientModel>> GetRecipesIngredients(int recipeId)
     {
         if (_cacheService != null)
@@ -257,6 +372,55 @@ public class RecipeService : IRecipeService
 
         if (_cacheService != null)
             await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
+
+        return data;
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<RecipeIngredientModel>> GetRecipesIngredientsAndCacheForUser(int userId, int recipeId)
+    {
+        if (_cacheService != null)
+        {
+            try
+            {
+                var cachedData = await _cacheService
+                    .Get<IEnumerable<RecipeIngredientModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                if (cachedData != null)
+                {
+                    var enumeratedCachedData =
+                        cachedData
+                            // Checking that recipes in cache is really what we need
+                            .Where(x => x.RecipeId == recipeId)
+                            .ToList();
+                    if (enumeratedCachedData.Count >= 2)
+                        return enumeratedCachedData;
+                }
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+        }
+
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var recipeIngredientWithIngredients =
+            context.RecipeIngredients
+                .Where(x => x.RecipeId == recipeId)
+                .Include(x => x.Ingredient)
+                .AsQueryable();
+
+        var data =
+            (await recipeIngredientWithIngredients.ToListAsync())
+            .Select(_mapper.Map<RecipeIngredientModel>)
+            .ToList();
+
+        if (_cacheService != null)
+            await _cacheService.Put(
+                CachingTools.GetContextCacheKey(ContextCacheKey, userId),
+                data,
+                TimeSpan.FromSeconds(30)
+                );
 
         return data;
     }

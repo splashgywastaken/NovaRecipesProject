@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NovaRecipesProject.Common.Exceptions;
 using NovaRecipesProject.Common.Extensions;
+using NovaRecipesProject.Common.Tools;
 using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
@@ -86,6 +87,57 @@ public class CategoryService : ICategoryService
         
         if (_cacheService != null)
             await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
+
+        return data;
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<CategoryModel>> GetCategoriesAndCacheForUser(int userId, int offset = 0, int limit = 10)
+    {
+        if (_cacheService != null)
+        {
+            try
+            {
+                var cachedData = await _cacheService
+                    .Get<IEnumerable<CategoryModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                // If there are some cached data
+                if (cachedData != null)
+                {
+                    // Enumerating cachedData to evade multiple enumerations
+                    var enumeratedCachedData = cachedData.ToList();
+                    // If there are less or equal stored cached data than what the limit is 
+                    if (enumeratedCachedData.Count <= limit)
+                    {
+                        return enumeratedCachedData;
+                    }
+                }
+            }
+            catch
+            {
+                // Ignored
+            }
+        }
+
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var categories = context
+            .Categories
+            .AsQueryable();
+
+        categories = categories
+            .SkipAndTake(offset, limit);
+
+        var data =
+            (await categories.ToListAsync())
+            .Select(_mapper.Map<CategoryModel>)
+            .ToList();
+
+        if (_cacheService != null)
+            await _cacheService.Put(
+                CachingTools.GetContextCacheKey(ContextCacheKey, userId),
+                data, 
+                TimeSpan.FromSeconds(30)
+                );
 
         return data;
     }

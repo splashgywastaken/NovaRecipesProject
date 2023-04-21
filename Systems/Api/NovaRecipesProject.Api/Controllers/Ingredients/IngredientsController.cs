@@ -21,6 +21,7 @@ namespace NovaRecipesProject.Api.Controllers.Ingredients;
 [Route("api/v{version:apiVersion}/ingredients")]
 [ApiController]
 [ApiVersion("0.1")]
+[ApiVersion("0.2")]
 public class IngredientsController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -51,9 +52,36 @@ public class IngredientsController : ControllerBase
     /// <response code="200">List of ingredients responses</response>
     [ProducesResponseType(typeof(IEnumerable<IngredientResponse>), 200)]
     [HttpGet("")]
-    public async Task<IEnumerable<IngredientResponse>> GetIngredients([FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    [MapToApiVersion("0.1")]
+    public async Task<IEnumerable<IngredientResponse>> GetIngredients(
+        [FromQuery] int offset = 0, 
+        [FromQuery] int limit = 10
+        )
     {
         var categories = await _ingredientService.GetIngredients(offset, limit);
+        var response = _mapper.Map<IEnumerable<IngredientResponse>>(categories);
+
+        return response;
+    }
+
+    /// <summary>
+    /// Basic get ingredients
+    /// </summary>
+    /// <param name="userId">Lazy implementation for caching for current user</param>
+    /// <param name="offset">Offset to the first element</param>
+    /// <param name="limit">Count elements on the page</param>
+    /// <response code="200">List of ingredients responses</response>
+    [ProducesResponseType(typeof(IEnumerable<IngredientResponse>), 200)]
+    [HttpGet("")]
+    [MapToApiVersion("0.2")]
+    public async Task<IEnumerable<IngredientResponse>> GetIngredientsAndCacheForCurrentUser(
+        [FromQuery] int userId,
+        [FromQuery] int offset = 0, 
+        [FromQuery] int limit = 10
+        )
+    {
+        var categories = await _ingredientService
+            .GetIngredientsAndCacheForUser(userId, offset, limit);
         var response = _mapper.Map<IEnumerable<IngredientResponse>>(categories);
 
         return response;
@@ -66,6 +94,7 @@ public class IngredientsController : ControllerBase
     /// <response code="200">Ingredient with corresponding id</response>
     [ProducesResponseType(typeof(IngredientResponse), 200)]
     [HttpGet("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IngredientResponse> GetIngredientById([FromRoute] int id)
     {
         var category = await _ingredientService.GetIngredientById(id);
@@ -81,6 +110,7 @@ public class IngredientsController : ControllerBase
     /// <response code="200">Returns ingredient model which were made while adding new data do DB</response>
     [ProducesResponseType(typeof(IngredientResponse), 200)]
     [HttpPost("")]
+    [MapToApiVersion("0.1")]
     public async Task<IngredientResponse> AddIngredient([FromBody] AddIngredientRequest request)
     {
         var model = _mapper.Map<AddIngredientModel>(request);
@@ -97,6 +127,7 @@ public class IngredientsController : ControllerBase
     /// <param name="request">Ingredient model to update to</param>
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> UpdateIngredient([FromRoute] int id, [FromBody] UpdateIngredientRequest request)
     {
         var model = _mapper.Map<UpdateIngredientModel>(request);
@@ -111,6 +142,7 @@ public class IngredientsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
+    [MapToApiVersion("0.1")]
     public async Task<IActionResult> DeleteIngredient([FromRoute] int id)
     {
         await _ingredientService.DeleteIngredient(id);

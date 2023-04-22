@@ -1,9 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
 using AutoMapper;
+using AutoMapper.Configuration.Conventions;
 using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeIngredientModels;
 using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels;
+using NovaRecipesProject.Common.Enums;
 using NovaRecipesProject.Common.Responses;
 using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.Recipes;
@@ -58,6 +60,42 @@ public class RecipesController : ControllerBase
     public async Task<IEnumerable<RecipeResponse>> GetRecipes([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var recipes = await _recipeService.GetRecipes(offset, limit);
+        var response = _mapper.Map<IEnumerable<RecipeResponse>>(recipes);
+
+        return response;
+    }
+
+    /// <summary>
+    /// Get recipes. Uses filters to get list of recipes,
+    /// caches data using user's Id, which is temporarly given through query
+    /// </summary>
+    /// <param name="nameSearchString">Search string which used to search through recipes and their names</param>
+    /// <param name="searchType">Type of search
+    /// (describes should it include search string, be a full search string e.t.c.). By default its partial search</param>
+    /// <param name="sortType">Type of sort</param>
+    /// <param name="categoriesList">List of categories to search to</param>
+    /// <param name="offset">Offset for data</param>
+    /// <param name="limit">Limit for data</param>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
+    [HttpGet("filtered")]
+    [MapToApiVersion("0.2")]
+    public async Task<IEnumerable<RecipeResponse>> GetRecipesWithParameters(
+        [FromQuery] string? nameSearchString,
+        [FromQuery] SearchType searchType = SearchType.PartialMatch,
+        [FromQuery] SortType? sortType = null,
+        [FromQuery] List<string>? categoriesList = null,
+        [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10
+        )
+    {
+        var recipes = await _recipeService.GetRecipesFiltered(
+            nameSearchString,
+            searchType,
+            sortType,
+            categoriesList,
+            offset, limit
+            );
         var response = _mapper.Map<IEnumerable<RecipeResponse>>(recipes);
 
         return response;

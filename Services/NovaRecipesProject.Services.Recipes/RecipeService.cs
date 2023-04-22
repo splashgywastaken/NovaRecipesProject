@@ -1,5 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Security.Cryptography.X509Certificates;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using NovaRecipesProject.Common.Enums;
 using NovaRecipesProject.Common.Exceptions;
 using NovaRecipesProject.Common.Extensions;
 using NovaRecipesProject.Common.Tools;
@@ -13,6 +16,7 @@ using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 using NovaRecipesProject.Services.RecipesSubscriptions;
 using NovaRecipesProject.Services.RecipesSubscriptions.Models;
+using Npgsql;
 
 namespace NovaRecipesProject.Services.Recipes;
 
@@ -81,7 +85,7 @@ public class RecipeService : IRecipeService
         {
             try
             {
-                var cachedData = await _cacheService.Get<IEnumerable<RecipeModel>?>(ContextCacheKey);
+                var cachedData = await _cacheService.Get<IEnumerable<RecipeModel>?>(ContextCacheKey + "_basic_get");
                 // If there are some cached data
                 if (cachedData != null)
                 {
@@ -115,7 +119,98 @@ public class RecipeService : IRecipeService
             .ToList();
 
         if (_cacheService != null)
-            await _cacheService.Put(ContextCacheKey, data, TimeSpan.FromSeconds(30));
+            await _cacheService.Put(
+                ContextCacheKey,
+                data, 
+                TimeSpan.FromSeconds(30)
+                );
+
+        return data;
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<RecipeModel>> GetRecipesFiltered(
+        string? nameSearchString, 
+        SearchType searchType, 
+        SortType? sortType,
+        List<string>? categoriesList,
+        int offset, int limit)
+    {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        List<Recipe>? recipes;
+        if (nameSearchString != null)
+        {
+            // Searching for needed recipes using search type value and name of searched recipe
+            // Getting data about recipes and categories
+            recipes = await (searchType switch
+                {
+                    SearchType.FullMatch => context.Recipes
+                        .Where(p =>
+                            string.Equals(p.Name.ToLower(), nameSearchString.ToLower())
+                        ),
+                    SearchType.LetterCaseFullMatch => context.Recipes
+                        .Where(p =>
+                            string.Equals(p.Name, nameSearchString)
+                        ),
+                    SearchType.LetterCasePartialMatch => context.Recipes
+                        .Where(p =>
+                            p.Name.Contains(nameSearchString)
+                        ),
+                    SearchType.PartialMatch => context.Recipes
+                        .Where(p =>
+                            p.Name.ToLower().Contains(nameSearchString.ToLower())
+                        ),
+                    _ => throw new ArgumentOutOfRangeException(
+                        nameof(SearchType),
+                        searchType,
+                        $"Value for search type is not supported (searchType: {searchType})"
+                    )
+                })
+                .Include(p => p.Categories)
+                .ToListAsync();
+        }
+        else
+        {
+            recipes = await context
+                .Recipes
+                .Include(p => p.Categories)
+                .ToListAsync();
+        }
+        
+        // Use data about categories to search through recipes
+        recipes = recipes
+            .Where(
+                x =>
+                {
+                    // If categories of recipe is not null and categories for search also not null
+                    // then search could be performed
+                    if (!x.Categories.IsNullOrEmpty() && !categoriesList.IsNullOrEmpty())
+                        return x.Categories!.Select(c => c.Name).Intersect(categoriesList!).Any();
+                    // If there is no categories used for search then accept every data for recipe 
+                    // either categories from recipe is null but not the categories used for search
+                    // then just decline every data for recipe
+                    return categoriesList.IsNullOrEmpty();
+                }).ToList();
+
+        // Finally sort data and also take and skip some data
+        recipes = (sortType switch
+        {
+            SortType.NameAsc => recipes.OrderBy(p => p.Name),
+            SortType.NameDesc => recipes.OrderByDescending(p => p.Name),
+            SortType.IdAsc => recipes.OrderBy(p => p.Id),
+            SortType.IdDesc => recipes.OrderByDescending(p => p.Id),
+            null => recipes.OrderBy(p => p.Name),
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(sortType),
+                sortType,
+                $"Value for sort type is not supported (sortType: {sortType})"
+                )
+        })
+            .SkipAndTake(offset, limit)
+            .ToList();
+        
+        var data = _mapper.Map<IEnumerable<RecipeModel>>(recipes);
 
         return data;
     }

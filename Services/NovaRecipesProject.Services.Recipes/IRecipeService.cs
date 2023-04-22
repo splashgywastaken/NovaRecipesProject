@@ -1,4 +1,5 @@
-﻿using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
+﻿using NovaRecipesProject.Common.Enums;
+using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeModels;
 
@@ -16,7 +17,26 @@ public interface IRecipeService
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of RecipeModel</returns>
     Task<IEnumerable<RecipeModel>> GetRecipes(int offset, int limit);
-
+    /// <summary>
+    /// Method used to search for recipes using some filters.
+    /// Caching is not used for this method, because of data filters changes 
+    /// </summary>
+    /// <param name="nameSearchString">Search string which used to search through recipes and their names</param>
+    /// <param name="searchType">Type of search
+    /// (describes should it include search string, be a full search string e.t.c.). By default its partial search</param>
+    /// <param name="sortType">Type of sort</param>
+    /// <param name="categoriesList">List of categories to search to</param>
+    /// <param name="offset">Offset for data</param>
+    /// <param name="limit">Limit for data</param>
+    /// <returns></returns>
+    Task<IEnumerable<RecipeModel>> GetRecipesFiltered(
+        string? nameSearchString,
+        SearchType searchType,
+        SortType? sortType,
+        List<string>? categoriesList,
+        int offset,
+        int limit
+        );
     /// <summary>
     /// Method to get basic recipe list.
     /// Caches data using Id of some user

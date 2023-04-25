@@ -11,10 +11,6 @@ namespace NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels;
 public class AddRecipeCommentRequest
 {
     /// <summary>
-    /// Name of user that posted comment
-    /// </summary>
-    public int UserId { get; set; }
-    /// <summary>
     /// Comments text
     /// </summary>
     public string Text { get; set; } = null!;

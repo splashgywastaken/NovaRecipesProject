@@ -92,7 +92,11 @@ public class IngredientService : IIngredientService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<IngredientModel>> GetIngredientsAndCacheForUser(int userId, int offset = 0, int limit = 10)
+    public async Task<IEnumerable<IngredientModel>> GetIngredientsAndCacheForUser(
+        string userId,
+        int offset = 0,
+        int limit = 10
+        )
     {
         if (_cacheService != null)
         {

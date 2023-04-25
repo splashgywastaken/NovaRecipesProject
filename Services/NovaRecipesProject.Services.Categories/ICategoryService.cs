@@ -22,7 +22,7 @@ public interface ICategoryService
     /// <param name="offset">Sets offset for data it got</param>
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of CategoryModel</returns>
-    Task<IEnumerable<CategoryModel>> GetCategoriesAndCacheForUser(int userId, int offset, int limit);
+    Task<IEnumerable<CategoryModel>> GetCategoriesAndCacheForUser(string userId, int offset, int limit);
     /// <summary>
     /// Method to get category by some Id
     /// </summary>

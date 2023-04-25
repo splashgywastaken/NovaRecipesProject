@@ -4,6 +4,9 @@ using NovaRecipesProject.Api.Controllers.RecipeParagraphs.Models;
 using NovaRecipesProject.Common.Responses;
 using NovaRecipesProject.Services.RecipeParagraphs.Models;
 using NovaRecipesProject.Services.RecipeParagraphs;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using NovaRecipesProject.Common.Security;
 
 namespace NovaRecipesProject.Api.Controllers.RecipeParagraphs;
 
@@ -20,6 +23,7 @@ namespace NovaRecipesProject.Api.Controllers.RecipeParagraphs;
 [ApiController]
 [ApiVersion("0.1")]
 [ApiVersion("0.2")]
+[Authorize]
 public class RecipeParagraphsController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -52,6 +56,7 @@ public class RecipeParagraphsController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<RecipeParagraphResponse>), 200)]
     [HttpGet("recipe/{recipeId:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipeParagraphsRead)]
     public async Task<IEnumerable<RecipeParagraphResponse>> GetRecipesParagraphs(
         [FromRoute] int recipeId,
         [FromQuery] int offset = 0,
@@ -68,7 +73,6 @@ public class RecipeParagraphsController : ControllerBase
     /// <summary>
     /// Gets all recipe paragraphs of a certain recipe using its Id
     /// </summary>
-    /// <param name="userId"></param>
     /// <param name="recipeId"></param>
     /// <param name="offset"></param>
     /// <param name="limit"></param>
@@ -76,15 +80,16 @@ public class RecipeParagraphsController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<RecipeParagraphResponse>), 200)]
     [HttpGet("recipe/{recipeId:int}")]
     [MapToApiVersion("0.2")]
+    [Authorize(Policy = AppScopes.RecipeParagraphsRead)]
     public async Task<IEnumerable<RecipeParagraphResponse>> GetRecipesParagraphsAndCacheWithUserId(
-        [FromQuery] int userId,
         [FromRoute] int recipeId,
         [FromQuery] int offset = 0,
         [FromQuery] int limit = 10
     )
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var recipeParagraphsByRecipesId =
-            await _recipeParagraphService.GetRecipeParagraphsByRecipesIdAndCacheForUser(userId, recipeId, offset, limit);
+            await _recipeParagraphService.GetRecipeParagraphsByRecipesIdAndCacheForUser(userId!, recipeId, offset, limit);
         var response = _mapper.Map<IEnumerable<RecipeParagraphResponse>>(recipeParagraphsByRecipesId);
 
         return response;
@@ -100,6 +105,7 @@ public class RecipeParagraphsController : ControllerBase
     [ProducesResponseType(typeof(RecipeParagraphResponse), 200)]
     [HttpGet("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipeParagraphsRead)]
     public async Task<RecipeParagraphResponse> GetRecipeParagraphById([FromRoute] int id)
     {
         var recipeParagraphById = await _recipeParagraphService.GetRecipeParagraphById(id);
@@ -117,6 +123,7 @@ public class RecipeParagraphsController : ControllerBase
     [ProducesResponseType(typeof(RecipeParagraphResponse), 200)]
     [HttpPost("recipe/{recipeId:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipeParagraphsEdit)]
     public async Task<RecipeParagraphResponse> AddRecipeParagraph(
         [FromRoute] int recipeId,
         [FromBody] AddRecipeParagraphRequest request
@@ -137,6 +144,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipeParagraphsEdit)]
     public async Task<IActionResult> ChangeRecipeParagraphOrderNumber([FromQuery] int orderNumber, [FromRoute] int id)
     {
         await _recipeParagraphService.ChangeRecipeParagraphOrderNumber(orderNumber, id);
@@ -151,6 +159,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipeParagraphsEdit)]
     public async Task<IActionResult> UpdateRecipeParagraph([FromRoute] int id, [FromBody] UpdateRecipeParagraphRequest request)
     {
         var model = _mapper.Map<UpdateRecipeParagraphModel>(request);
@@ -166,6 +175,7 @@ public class RecipeParagraphsController : ControllerBase
     /// <returns></returns>
     [HttpDelete("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipeParagraphsEdit)]
     public async Task<IActionResult> DeleteRecipeParagraph([FromRoute] int id)
     {
         await _recipeParagraphService.DeleteRecipeParagraph(id);

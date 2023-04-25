@@ -32,7 +32,11 @@ public static class IS4Configuration
             ;
 
         services
-            .AddIdentityServer()
+            .AddIdentityServer(options =>
+            {
+                options.Authentication.CookieLifetime = TimeSpan.FromHours(1);
+                options.Authentication.CookieSlidingExpiration = false;
+            })
             
             .AddAspNetIdentity<User>()
 

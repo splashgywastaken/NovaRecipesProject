@@ -22,7 +22,7 @@ public interface IIngredientService
     /// <param name="offset">Sets offset for data it got</param>
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of IngredientModel</returns>
-    Task<IEnumerable<IngredientModel>> GetIngredientsAndCacheForUser(int userId, int offset, int limit);
+    Task<IEnumerable<IngredientModel>> GetIngredientsAndCacheForUser(string userId, int offset, int limit);
     /// <summary>
     /// Method to get ingredient by some Id
     /// </summary>

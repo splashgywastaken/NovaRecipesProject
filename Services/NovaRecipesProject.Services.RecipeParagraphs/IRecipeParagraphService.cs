@@ -25,7 +25,7 @@ public interface IRecipeParagraphService
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of RecipeParagraphModel</returns>
     Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesIdAndCacheForUser(
-        int userId,
+        string userId,
         int recipeId, 
         int offset = 0,
         int limit = 10

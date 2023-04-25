@@ -1,9 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Api.Controllers.Categories.Models;
 using NovaRecipesProject.Api.Controllers.Recipes;
 using NovaRecipesProject.Common.Responses;
+using NovaRecipesProject.Common.Security;
 using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Categories;
 using NovaRecipesProject.Services.Categories.Models;
@@ -24,6 +27,7 @@ namespace NovaRecipesProject.Api.Controllers.Categories;
 [ApiController]
 [ApiVersion("0.1")]
 [ApiVersion("0.2")]
+[Authorize]
 public class CategoriesController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -60,6 +64,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
     [HttpGet("")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.CategoriesRead)]
     public async Task<IEnumerable<CategoryResponse>> GetCategories([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var categories = await _categoryService.GetCategories(offset, limit);
@@ -72,21 +77,22 @@ public class CategoriesController : ControllerBase
     /// [Get] for categories.
     /// Caches data using user data (caches for current user in session)
     /// </summary>
-    /// <param name="userId">User's Id for lazy implementation of caching</param>
     /// <param name="offset">Offset to the first element</param>
     /// <param name="limit">Count elements on the page</param>
     /// <response code="200">List of category responses</response>
     [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
+    [Authorize(Policy = AppScopes.CategoriesRead)]
     [HttpGet("")]
     [MapToApiVersion("0.2")]
+    [Authorize(Policy = AppScopes.CategoriesRead)]
     public async Task<IEnumerable<CategoryResponse>> GetCategoriesAndCacheForCurrentUser(
-        [FromQuery] int userId,
         [FromQuery] int offset = 0,
         [FromQuery] int limit = 10
         )
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var categories = await _categoryService
-                .GetCategoriesAndCacheForUser(userId, offset, limit);
+                .GetCategoriesAndCacheForUser(userId!, offset, limit);
         var response = _mapper.Map<IEnumerable<CategoryResponse>>(categories);
 
         return response;
@@ -100,6 +106,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(typeof(CategoryResponse), 200)]
     [HttpGet("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.CategoriesRead)]
     public async Task<CategoryResponse> GetCategoryById([FromRoute] int id)
     {
         var category = await _categoryService.GetCategoryById(id);
@@ -116,6 +123,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(typeof(CategoryResponse), 200)]
     [HttpPost("")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.CategoriesEdit)]
     public async Task<CategoryResponse> AddCategory([FromBody] AddCategoryRequest request)
     {
         var model = _mapper.Map<AddCategoryModel>(request);
@@ -133,6 +141,7 @@ public class CategoriesController : ControllerBase
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.CategoriesEdit)]
     public async Task<IActionResult> UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryRequest request)
     {
         var model = _mapper.Map<UpdateCategoryModel>(request);
@@ -148,6 +157,7 @@ public class CategoriesController : ControllerBase
     /// <returns></returns>
     [HttpDelete("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.CategoriesEdit)]
     public async Task<IActionResult> DeleteCategory([FromRoute] int id)
     {
         await _categoryService.DeleteCategory(id);

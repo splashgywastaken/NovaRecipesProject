@@ -92,7 +92,11 @@ public class CategoryService : ICategoryService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<CategoryModel>> GetCategoriesAndCacheForUser(int userId, int offset = 0, int limit = 10)
+    public async Task<IEnumerable<CategoryModel>> GetCategoriesAndCacheForUser(
+        string userId, 
+        int offset = 0,
+        int limit = 10
+        )
     {
         if (_cacheService != null)
         {

@@ -45,7 +45,7 @@ public interface IRecipeService
     /// <param name="offset">Sets offset for data it got</param>
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns>Returns list of RecipeModel</returns>
-    Task<IEnumerable<RecipeModel>> GetRecipesAndCacheForUser(int userId, int offset, int limit);
+    Task<IEnumerable<RecipeModel>> GetRecipesAndCacheForUser(string userId, int offset, int limit);
     /// <summary>
     /// Method to get list of recipes of exact user
     /// </summary>
@@ -53,7 +53,7 @@ public interface IRecipeService
     /// <param name="offset">Sets offset for data it got</param>
     /// <param name="limit">Sets limit for number of data to return</param>
     /// <returns></returns>
-    Task<IEnumerable<RecipeModel>> GetUserRecipes(int userId, int offset, int limit);
+    Task<IEnumerable<RecipeModel>> GetUserRecipes(string userId, int offset, int limit);
     /// <summary>
     /// Method used to get comments of certain recipe
     /// </summary>
@@ -72,7 +72,7 @@ public interface IRecipeService
     /// <param name="limit">limit for data</param>
     /// <returns>List of comments for certain recipe ordered by CreatedDateTime value</returns>
     Task<IEnumerable<RecipeCommentLightModel>> GetRecipeCommentsAndCacheForUser(
-        int userId, 
+        string userId, 
         int recipeId,
         int offset, 
         int limit
@@ -92,7 +92,7 @@ public interface IRecipeService
     /// <param name="recipeId">recipe id to get list of ingredients from</param>
     /// <returns>Returns <c>IEnumerable</c> of <c>RecipeIngredientModel</c> which
     /// describes main information about recipe's ingredients</returns>
-    Task<IEnumerable<RecipeIngredientModel>> GetRecipesIngredientsAndCacheForUser(int userId, int recipeId);
+    Task<IEnumerable<RecipeIngredientModel>> GetRecipesIngredientsAndCacheForUser(string userId, int recipeId);
     /// <summary>
     /// Method to get recipe by some Id
     /// </summary>

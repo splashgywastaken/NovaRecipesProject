@@ -27,10 +27,18 @@ public static class AppClients
                 AccessTokenLifetime = 3600, // 1 hour
 
                 AllowedScopes = {
-                    AppScopes.RecipesRead,
-                    AppScopes.RecipesPublish,
+                    AppScopes.AllRead,
+                    AppScopes.AllEdit,
                     AppScopes.UsersView,
                     AppScopes.UsersModerate,
+                    AppScopes.CategoriesRead,
+                    AppScopes.CategoriesEdit,
+                    AppScopes.IngredientsRead,
+                    AppScopes.IngredientsEdit,
+                    AppScopes.RecipeParagraphsRead,
+                    AppScopes.RecipeParagraphsEdit,
+                    AppScopes.RecipesRead,
+                    AppScopes.RecipesEdit
                 }
             }
             ,
@@ -55,10 +63,18 @@ public static class AppClients
                 SlidingRefreshTokenLifetime = 1296000, // 15 days
 
                 AllowedScopes = {
-                    AppScopes.RecipesRead,
-                    AppScopes.RecipesPublish,
+                    AppScopes.AllRead,
+                    AppScopes.AllEdit,
                     AppScopes.UsersView,
                     AppScopes.UsersModerate,
+                    AppScopes.CategoriesRead,
+                    AppScopes.CategoriesEdit,
+                    AppScopes.IngredientsRead,
+                    AppScopes.IngredientsEdit,
+                    AppScopes.RecipeParagraphsRead,
+                    AppScopes.RecipeParagraphsEdit,
+                    AppScopes.RecipesRead,
+                    AppScopes.RecipesEdit
                 }
             }
         };

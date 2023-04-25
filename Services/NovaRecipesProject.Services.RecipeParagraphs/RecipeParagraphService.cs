@@ -98,7 +98,12 @@ public class RecipeParagraphService : IRecipeParagraphService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesIdAndCacheForUser(int userId, int recipeId, int offset = 0, int limit = 10)
+    public async Task<IEnumerable<RecipeParagraphModel>> GetRecipeParagraphsByRecipesIdAndCacheForUser(
+        string userId, 
+        int recipeId, 
+        int offset = 0,
+        int limit = 10
+        )
     {
         if (_cacheService != null)
         {

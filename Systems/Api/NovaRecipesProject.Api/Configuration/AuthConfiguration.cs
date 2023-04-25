@@ -36,7 +36,7 @@ public static class AuthConfiguration
             .AddEntityFrameworkStores<MainDbContext>()
             .AddUserManager<UserManager<User>>()
             .AddDefaultTokenProviders();
-
+        
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
@@ -60,13 +60,58 @@ public static class AuthConfiguration
                 options.Audience = "api";
             });
 
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(AppScopes.RecipesRead, policy => policy.RequireClaim("scope", AppScopes.RecipesRead));
-            options.AddPolicy(AppScopes.RecipesPublish, policy => policy.RequireClaim("scope", AppScopes.RecipesPublish));
-            options.AddPolicy(AppScopes.UsersView, policy => policy.RequireClaim("scope", AppScopes.UsersView));
-            options.AddPolicy(AppScopes.UsersModerate, policy => policy.RequireClaim("scope", AppScopes.UsersModerate));
+            options.AddPolicy(
+                AppScopes.UsersView,
+                policy => policy.RequireClaim("scope", AppScopes.UsersView)
+            );
+            options.AddPolicy(
+                AppScopes.UsersModerate,
+                policy => policy.RequireClaim("scope", AppScopes.UsersModerate)
+                );
+            options.AddPolicy(
+                AppScopes.AllRead,
+                policy => policy.RequireClaim("scope", AppScopes.AllRead)
+            );
+            options.AddPolicy(
+                AppScopes.AllEdit,
+                policy => policy.RequireClaim("scope", AppScopes.AllEdit)
+            );
+            options.AddPolicy(
+                AppScopes.CategoriesRead,
+                policy => policy.RequireClaim("scope", AppScopes.CategoriesRead)
+            );
+            options.AddPolicy(
+                AppScopes.CategoriesEdit,
+                policy => policy.RequireClaim("scope", AppScopes.CategoriesEdit)
+            );
+            options.AddPolicy(
+                AppScopes.IngredientsRead,
+                policy => policy.RequireClaim("scope", AppScopes.IngredientsRead)
+            );
+            options.AddPolicy(
+                AppScopes.IngredientsEdit,
+                policy => policy.RequireClaim("scope", AppScopes.IngredientsEdit)
+            );
+            options.AddPolicy(
+                AppScopes.RecipeParagraphsRead,
+                policy => policy.RequireClaim("scope", AppScopes.RecipeParagraphsRead)
+            );
+            options.AddPolicy(
+                AppScopes.RecipeParagraphsEdit,
+                policy => policy.RequireClaim("scope", AppScopes.RecipeParagraphsEdit)
+            );
+            options.AddPolicy(
+                AppScopes.RecipesRead, 
+                policy => policy.RequireClaim("scope", AppScopes.RecipesRead)
+                );
+            options.AddPolicy(
+                AppScopes.RecipesEdit,
+                policy => policy.RequireClaim("scope", AppScopes.RecipesEdit)
+            );
         });
 
         return services;
@@ -82,7 +127,7 @@ public static class AuthConfiguration
         app.UseAuthentication();
 
         app.UseAuthorization();
-
+        
         return app;
     }
 }

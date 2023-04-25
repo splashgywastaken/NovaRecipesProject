@@ -216,7 +216,7 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<RecipeModel>> GetRecipesAndCacheForUser(int userId, int offset = 0, int limit = 10)
+    public async Task<IEnumerable<RecipeModel>> GetRecipesAndCacheForUser(string userId, int offset = 0, int limit = 10)
     {
         if (_cacheService != null)
         {
@@ -267,14 +267,20 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<RecipeModel>> GetUserRecipes(int userId, int offset = 0, int limit = 10)
+    public async Task<IEnumerable<RecipeModel>> GetUserRecipes(string userGuid, int offset = 0, int limit = 10)
     {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var userId = (await context
+            .Users
+            .FirstOrDefaultAsync(x => x.Id.ToString() == userGuid))!.EntryId;
+
         if (_cacheService != null)
         {
             try
             {
                 var cachedData = await _cacheService
-                    .Get<IEnumerable<RecipeModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                    .Get<IEnumerable<RecipeModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userGuid));
                 // If there are some cached data
                 if (cachedData != null)
                 {
@@ -296,8 +302,6 @@ public class RecipeService : IRecipeService
             }
         }
 
-        await using var context = await _dbContextFactory.CreateDbContextAsync();
-
         var recipes = context
             .Recipes
             .Where(x => x.RecipeUserId == userId)
@@ -313,7 +317,7 @@ public class RecipeService : IRecipeService
 
         if (_cacheService != null)
             await _cacheService.Put(
-                CachingTools.GetContextCacheKey(ContextCacheKey, userId),
+                CachingTools.GetContextCacheKey(ContextCacheKey, userGuid),
                 data,
                 TimeSpan.FromSeconds(30)
                 );
@@ -371,18 +375,25 @@ public class RecipeService : IRecipeService
 
     /// <inheritdoc />
     public async Task<IEnumerable<RecipeCommentLightModel>> GetRecipeCommentsAndCacheForUser(
-        int userId,
+        string userGuid,
         int recipeId,
         int offset = 0, 
         int limit = 10
         )
     {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var userId = (await context
+            .Users
+            .FirstOrDefaultAsync(x => x.Id.ToString() == userGuid))!.EntryId;
+
+
         if (_cacheService != null)
         {
             try
             {
                 var cachedData = await _cacheService
-                    .Get<IEnumerable<RecipeCommentLightModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                    .Get<IEnumerable<RecipeCommentLightModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userGuid));
                 if (cachedData != null)
                 {
                     var enumeratedData =
@@ -400,9 +411,7 @@ public class RecipeService : IRecipeService
                 // ignored
             }
         }
-
-        await using var context = await _dbContextFactory.CreateDbContextAsync();
-
+        
         var recipeComments = context
             .RecipeComments
             .Where(x => x.RecipeId == recipeId)
@@ -419,7 +428,7 @@ public class RecipeService : IRecipeService
 
         if (_cacheService != null)
             await _cacheService.Put(
-                CachingTools.GetContextCacheKey(ContextCacheKey, userId), 
+                CachingTools.GetContextCacheKey(ContextCacheKey, userGuid), 
                 data, 
                 TimeSpan.FromSeconds(30)
                 );
@@ -472,14 +481,20 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<RecipeIngredientModel>> GetRecipesIngredientsAndCacheForUser(int userId, int recipeId)
+    public async Task<IEnumerable<RecipeIngredientModel>> GetRecipesIngredientsAndCacheForUser(string userGuid, int recipeId)
     {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var userId = (await context
+            .Users
+            .FirstOrDefaultAsync(x => x.Id.ToString() == userGuid))!.EntryId;
+
         if (_cacheService != null)
         {
             try
             {
                 var cachedData = await _cacheService
-                    .Get<IEnumerable<RecipeIngredientModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userId));
+                    .Get<IEnumerable<RecipeIngredientModel>?>(CachingTools.GetContextCacheKey(ContextCacheKey, userGuid));
                 if (cachedData != null)
                 {
                     var enumeratedCachedData =
@@ -497,8 +512,6 @@ public class RecipeService : IRecipeService
             }
         }
 
-        await using var context = await _dbContextFactory.CreateDbContextAsync();
-
         var recipeIngredientWithIngredients =
             context.RecipeIngredients
                 .Where(x => x.RecipeId == recipeId)
@@ -512,7 +525,7 @@ public class RecipeService : IRecipeService
 
         if (_cacheService != null)
             await _cacheService.Put(
-                CachingTools.GetContextCacheKey(ContextCacheKey, userId),
+                CachingTools.GetContextCacheKey(ContextCacheKey, userGuid),
                 data,
                 TimeSpan.FromSeconds(30)
                 );
@@ -630,9 +643,8 @@ public class RecipeService : IRecipeService
 
         var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == recipeId);
         ProcessException.ThrowIf(() => recipe is null, $"The recipe (id: {model.RecipeId}) was not found");
-
-        // The most basic check for if user exists
-        var user = await context.Users.FirstOrDefaultAsync(x => x.EntryId == model.UserId);
+        
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Id.ToString() == model.UserId);
         ProcessException.ThrowIf(() => user is null, $"The user (username: {model.UserId}) was not found");
 
         var recipeComment = _mapper.Map<RecipeComment>(model);

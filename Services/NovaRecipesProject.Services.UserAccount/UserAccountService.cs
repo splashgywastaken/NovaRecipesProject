@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.EmailSender.Models;
@@ -11,6 +13,8 @@ using Azure.Core;
 using Common.Exceptions;
 using Common.Validator;
 using Context.Entities;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NovaRecipesProject.Context;
@@ -46,7 +50,7 @@ public class UserAccountService : IUserAccountService
         _action = action;
         _dbContextFactory = dbContextFactory;
     }
-
+    
     /// <inheritdoc />
     public async Task<UserAccountModel> Create(RegisterUserAccountModel model)
     {
@@ -64,7 +68,6 @@ public class UserAccountService : IUserAccountService
             FullName = model.Name,
             UserName = model.Email, // login = email
             Email = model.Email,
-            // TODO: as for now leave it like this, later you will need to implement real email confirmation
             EmailConfirmed = false,
             PhoneNumber = null,
             PhoneNumberConfirmed = false

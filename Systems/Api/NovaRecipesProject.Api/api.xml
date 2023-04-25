@@ -290,12 +290,11 @@
             <param name="limit">Count elements on the page</param>
             <response code="200">List of category responses</response>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.GetCategoriesAndCacheForCurrentUser(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Categories.CategoriesController.GetCategoriesAndCacheForCurrentUser(System.Int32,System.Int32)">
             <summary>
             [Get] for categories.
             Caches data using user data (caches for current user in session)
             </summary>
-            <param name="userId">User's Id for lazy implementation of caching</param>
             <param name="offset">Offset to the first element</param>
             <param name="limit">Count elements on the page</param>
             <response code="200">List of category responses</response>
@@ -415,11 +414,10 @@
             <param name="limit">Count elements on the page</param>
             <response code="200">List of ingredients responses</response>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.GetIngredientsAndCacheForCurrentUser(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Ingredients.IngredientsController.GetIngredientsAndCacheForCurrentUser(System.Int32,System.Int32)">
             <summary>
-            Basic get ingredients
+            Basic get ingredients, gets data about user from user that is currently signed-in
             </summary>
-            <param name="userId">Lazy implementation for caching for current user</param>
             <param name="offset">Offset to the first element</param>
             <param name="limit">Count elements on the page</param>
             <response code="200">List of ingredients responses</response>
@@ -512,11 +510,10 @@
             <param name="limit"></param>
             <returns>List of RecipeParagraphResponse ordered by order number value</returns>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.RecipeParagraphs.RecipeParagraphsController.GetRecipesParagraphsAndCacheWithUserId(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.RecipeParagraphs.RecipeParagraphsController.GetRecipesParagraphsAndCacheWithUserId(System.Int32,System.Int32,System.Int32)">
             <summary>
             Gets all recipe paragraphs of a certain recipe using its Id
             </summary>
-            <param name="userId"></param>
             <param name="recipeId"></param>
             <param name="offset"></param>
             <param name="limit"></param>
@@ -821,20 +818,18 @@
             <param name="limit">Limit for data</param>
             <returns></returns>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipesAndCacheForCurrentUser(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipesAndCacheForCurrentUser(System.Int32,System.Int32)">
             <summary>
             Basic get recipes. Used to get list of recipes to use them then in other methods
             </summary>
-            <param name="userId"></param>
             <param name="offset">Offset to the first element</param>
             <param name="limit">Count elements on the page</param>
             <response code="200">List of recipe responses</response>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetUserRecipes(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetUserRecipes(System.Int32,System.Int32)">
             <summary>
             Basic get recipes for some user and cache data using user's data
             </summary>
-            <param name="userId">User's id to get data for</param>
             <param name="offset">Offset to the first element</param>
             <param name="limit">Count elements on the page</param>
             <response code="200">List of recipe responses</response>
@@ -846,11 +841,10 @@
             <param name="recipeId"></param>
             <returns></returns>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipesIngredientsAndCacheForCurrentUser(System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipesIngredientsAndCacheForCurrentUser(System.Int32)">
             <summary>
             Gets all data about recipes ingredients and caches data for current user
             </summary>
-            <param name="userId"></param>
             <param name="recipeId"></param>
             <returns></returns>
         </member>
@@ -863,11 +857,10 @@
             <param name="limit"></param>
             <returns></returns>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipeCommentsAndCacheForCurrentUser(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.GetRecipeCommentsAndCacheForCurrentUser(System.Int32,System.Int32,System.Int32)">
             <summary>
             Gets all comments of certain recipe 
             </summary>
-            <param name="userId"></param>
             <param name="recipeId"></param>
             <param name="offset"></param>
             <param name="limit"></param>

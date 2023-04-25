@@ -1,13 +1,13 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Security.Claims;
 using AutoMapper;
-using AutoMapper.Configuration.Conventions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeIngredientModels;
 using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels;
 using NovaRecipesProject.Common.Enums;
 using NovaRecipesProject.Common.Responses;
-using NovaRecipesProject.Services.Actions;
+using NovaRecipesProject.Common.Security;
 using NovaRecipesProject.Services.Recipes;
 using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
@@ -28,6 +28,7 @@ namespace NovaRecipesProject.Api.Controllers.Recipes;
 [ApiController]
 [ApiVersion("0.1")]
 [ApiVersion("0.2")]
+[Authorize]
 public class RecipesController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -57,6 +58,7 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
     [HttpGet("")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<IEnumerable<RecipeResponse>> GetRecipes([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         var recipes = await _recipeService.GetRecipes(offset, limit);
@@ -80,6 +82,7 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
     [HttpGet("filtered")]
     [MapToApiVersion("0.2")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<IEnumerable<RecipeResponse>> GetRecipesWithParameters(
         [FromQuery] string? nameSearchString,
         [FromQuery] SearchType searchType = SearchType.PartialMatch,
@@ -104,20 +107,20 @@ public class RecipesController : ControllerBase
     /// <summary>
     /// Basic get recipes. Used to get list of recipes to use them then in other methods
     /// </summary>
-    /// <param name="userId"></param>
     /// <param name="offset">Offset to the first element</param>
     /// <param name="limit">Count elements on the page</param>
     /// <response code="200">List of recipe responses</response>
     [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
     [HttpGet("")]
     [MapToApiVersion("0.2")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<IEnumerable<RecipeResponse>> GetRecipesAndCacheForCurrentUser(
-        [FromQuery] int userId,
         [FromQuery] int offset = 0,
         [FromQuery] int limit = 10
         )
     {
-        var recipes = await _recipeService.GetRecipesAndCacheForUser(userId, offset, limit);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var recipes = await _recipeService.GetRecipesAndCacheForUser(userId!, offset, limit);
         var response = _mapper.Map<IEnumerable<RecipeResponse>>(recipes);
 
         return response;
@@ -126,16 +129,20 @@ public class RecipesController : ControllerBase
     /// <summary>
     /// Basic get recipes for some user and cache data using user's data
     /// </summary>
-    /// <param name="userId">User's id to get data for</param>
     /// <param name="offset">Offset to the first element</param>
     /// <param name="limit">Count elements on the page</param>
     /// <response code="200">List of recipe responses</response>
     [ProducesResponseType(typeof(IEnumerable<RecipeResponse>), 200)]
     [HttpGet("user/{userId:int}")]
     [MapToApiVersion("0.2")]
-    public async Task<IEnumerable<RecipeResponse>> GetUserRecipes([FromRoute] int userId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    [Authorize(Policy = AppScopes.RecipesRead)]
+    public async Task<IEnumerable<RecipeResponse>> GetUserRecipes(
+        [FromQuery] int offset = 0, 
+        [FromQuery] int limit = 10
+        )
     {
-        var recipes = await _recipeService.GetUserRecipes(userId, offset, limit);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var recipes = await _recipeService.GetUserRecipes(userId!, offset, limit);
         var response = _mapper.Map<IEnumerable<RecipeResponse>>(recipes);
 
         return response;
@@ -149,6 +156,7 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<RecipeIngredientResponse>), 200)]
     [HttpGet("{recipeId:int}/ingredients")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<IEnumerable<RecipeIngredientResponse>> GetRecipesIngredients([FromRoute] int recipeId)
     {
         var ingredients = await _recipeService.GetRecipesIngredients(recipeId);
@@ -160,19 +168,19 @@ public class RecipesController : ControllerBase
     /// <summary>
     /// Gets all data about recipes ingredients and caches data for current user
     /// </summary>
-    /// <param name="userId"></param>
     /// <param name="recipeId"></param>
     /// <returns></returns>
     [ProducesResponseType(typeof(IEnumerable<RecipeIngredientResponse>), 200)]
     [HttpGet("{recipeId:int}/ingredients")]
     [MapToApiVersion("0.2")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<IEnumerable<RecipeIngredientResponse>> GetRecipesIngredientsAndCacheForCurrentUser(
-        [FromQuery] int userId,
         [FromRoute] int recipeId
         )
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var ingredients = await _recipeService
-            .GetRecipesIngredientsAndCacheForUser(userId, recipeId);
+            .GetRecipesIngredientsAndCacheForUser(userId!, recipeId);
         var response = _mapper.Map<IEnumerable<RecipeIngredientResponse>>(ingredients);
 
         return response;
@@ -188,6 +196,7 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<RecipeCommentResponse>), 200)]
     [HttpGet("{recipeId:int}/comments")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<IEnumerable<RecipeCommentResponse>> GetRecipeComments(
         [FromRoute] int recipeId, 
         [FromQuery] int offset = 0, 
@@ -203,7 +212,6 @@ public class RecipesController : ControllerBase
     /// <summary>
     /// Gets all comments of certain recipe 
     /// </summary>
-    /// <param name="userId"></param>
     /// <param name="recipeId"></param>
     /// <param name="offset"></param>
     /// <param name="limit"></param>
@@ -211,15 +219,16 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<RecipeCommentResponse>), 200)]
     [HttpGet("{recipeId:int}/comments")]
     [MapToApiVersion("0.2")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<IEnumerable<RecipeCommentResponse>> GetRecipeCommentsAndCacheForCurrentUser(
-        [FromQuery] int userId,
         [FromRoute] int recipeId,
         [FromQuery] int offset = 0,
         [FromQuery] int limit = 10
     )
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var recipeComments = await _recipeService
-            .GetRecipeCommentsAndCacheForUser(userId, recipeId, offset, limit);
+            .GetRecipeCommentsAndCacheForUser(userId!, recipeId, offset, limit);
         var response = _mapper.Map<IEnumerable<RecipeCommentResponse>>(recipeComments);
 
         return response;
@@ -233,6 +242,7 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(WholeRecipeResponse), 200)]
     [HttpGet("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesRead)]
     public async Task<WholeRecipeResponse> GetRecipeById([FromRoute] int id)
     {
         var recipe = await _recipeService.GetRecipeById(id);
@@ -252,6 +262,7 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(RecipeResponse), 200)]
     [HttpPost("user/{userId:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<RecipeResponse> AddRecipeWithUser([FromRoute] int userId, [FromBody] AddRecipeRequest request)
     {
         var model = _mapper.Map<AddRecipeModel>(request);
@@ -270,6 +281,7 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(RecipeIngredientResponse), 200)]
     [HttpPost("{recipeId:int}/ingredients")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<RecipeIngredientResponse> AddIngredientToRecipe(
         [FromRoute] int recipeId,
         [FromBody] AddRecipeIngredientRequest request
@@ -292,12 +304,14 @@ public class RecipesController : ControllerBase
     [ProducesResponseType(typeof(RecipeCommentResponse), 200)]
     [HttpPost("{recipeId:int}/comments")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<RecipeCommentResponse> AddCommentToRecipe(
         [FromRoute] int recipeId,
         [FromBody] AddRecipeCommentRequest request
     )
     {
         var model = _mapper.Map<AddRecipeCommentModel>(request);
+        model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         var recipeComment = await _recipeService.AddCommentToRecipe(recipeId, model);
         var response = _mapper.Map<RecipeCommentResponse>(recipeComment);
 
@@ -314,6 +328,7 @@ public class RecipesController : ControllerBase
     /// <response code="200"></response>
     [HttpPut("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<IActionResult> UpdateRecipe(
         [FromRoute] int id,
         [FromBody] UpdateRecipeRequest request
@@ -335,6 +350,7 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [HttpPut("{recipeId:int}/ingredients/{ingredientId:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<IActionResult> UpdateRecipeIngredient(
         [FromRoute] int recipeId,
         [FromRoute] int ingredientId,
@@ -356,6 +372,7 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [HttpPut("{recipeId:int}/comments/{commentId:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<IActionResult> UpdateRecipeComment(
         [FromRoute] int recipeId,
         [FromRoute] int commentId,
@@ -377,6 +394,7 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [HttpDelete("{id:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<IActionResult> DeleteRecipe([FromRoute] int id)
     {
         await _recipeService.DeleteRecipe(id);
@@ -392,6 +410,7 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [HttpDelete("{recipeId:int}/ingredients/{ingredientId:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<IActionResult> DeleteRecipeIngredient([FromRoute] int recipeId, [FromRoute] int ingredientId)
     {
         await _recipeService.DeleteRecipeIngredient(recipeId, ingredientId);
@@ -407,6 +426,7 @@ public class RecipesController : ControllerBase
     /// <returns></returns>
     [HttpDelete("{recipeId:int}/comments/{commentId:int}")]
     [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
     public async Task<IActionResult> DeleteCommentFromIngredient(
         [FromRoute] int recipeId,
         [FromRoute] int commentId

@@ -9,7 +9,7 @@ public static class CachingTools
     /// Method used to get full context cache key using some arguments
     /// </summary>
     /// <returns></returns>
-    public static string GetContextCacheKey(string contextCacheKey, int arg)
+    public static string GetContextCacheKey(string contextCacheKey, string arg)
     {
         return $"{contextCacheKey}::{arg}";
     }

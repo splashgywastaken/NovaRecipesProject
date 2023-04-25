@@ -43,7 +43,7 @@
             <param name="limit">Limit for data</param>
             <returns></returns>
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetRecipesAndCacheForUser(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetRecipesAndCacheForUser(System.String,System.Int32,System.Int32)">
             <summary>
             Method to get basic recipe list.
             Caches data using Id of some user
@@ -53,7 +53,7 @@
             <param name="limit">Sets limit for number of data to return</param>
             <returns>Returns list of RecipeModel</returns>
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetUserRecipes(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetUserRecipes(System.String,System.Int32,System.Int32)">
             <summary>
             Method to get list of recipes of exact user
             </summary>
@@ -71,7 +71,7 @@
             <param name="limit">limit for data</param>
             <returns>List of comments for certain recipe ordered by CreatedDateTime value</returns>
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetRecipeCommentsAndCacheForUser(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetRecipeCommentsAndCacheForUser(System.String,System.Int32,System.Int32,System.Int32)">
             <summary>
             Method used to get comments of certain recipe and cache data using user's data
             </summary>
@@ -89,7 +89,7 @@
             <returns>Returns <c>IEnumerable</c> of <c>RecipeIngredientModel</c> which
             describes main information about recipe's ingredients</returns>
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetRecipesIngredientsAndCacheForUser(System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.IRecipeService.GetRecipesIngredientsAndCacheForUser(System.String,System.Int32)">
             <summary>
             Method to get list of recipe's ingredients. And cache using user's data
             </summary>
@@ -474,22 +474,22 @@
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipesFiltered(System.String,NovaRecipesProject.Common.Enums.SearchType,System.Nullable{NovaRecipesProject.Common.Enums.SortType},System.Collections.Generic.List{System.String},System.Int32,System.Int32)">
             <inheritdoc />
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipesAndCacheForUser(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipesAndCacheForUser(System.String,System.Int32,System.Int32)">
             <inheritdoc />
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetUserRecipes(System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetUserRecipes(System.String,System.Int32,System.Int32)">
             <inheritdoc />
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipeComments(System.Int32,System.Int32,System.Int32)">
             <inheritdoc />
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipeCommentsAndCacheForUser(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipeCommentsAndCacheForUser(System.String,System.Int32,System.Int32,System.Int32)">
             <inheritdoc />
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipesIngredients(System.Int32)">
             <inheritdoc />
         </member>
-        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipesIngredientsAndCacheForUser(System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipesIngredientsAndCacheForUser(System.String,System.Int32)">
             <inheritdoc />
         </member>
         <member name="M:NovaRecipesProject.Services.Recipes.RecipeService.GetRecipeById(System.Int32)">

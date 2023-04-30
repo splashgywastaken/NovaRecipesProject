@@ -20,5 +20,5 @@ public class EmailModel
     /// <summary>
     /// 
     /// </summary>
-    public string From { get; set; } = null!;
+    public string? From { get; set; } 
 }

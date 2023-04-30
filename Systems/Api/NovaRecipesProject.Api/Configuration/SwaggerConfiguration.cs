@@ -75,6 +75,7 @@ public static class SwaggerConfiguration
                             {AppScopes.AllEdit, "EditAll"},
                             {AppScopes.UsersView, "UsersView"},
                             {AppScopes.UsersModerate, "UsersModerate"},
+                            {AppScopes.UsersSubscriptions, "UsersSubscriptions"},
                             {AppScopes.CategoriesRead, "CategoriesRead"},
                             {AppScopes.CategoriesEdit, "CategoriesEdit"},
                             {AppScopes.IngredientsRead, "IngredientsRead"},

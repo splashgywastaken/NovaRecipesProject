@@ -562,11 +562,6 @@
             DTO model for add method
             </summary>
         </member>
-        <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels.AddRecipeCommentRequest.UserId">
-            <summary>
-            Name of user that posted comment
-            </summary>
-        </member>
         <member name="P:NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels.AddRecipeCommentRequest.Text">
             <summary>
             Comments text
@@ -963,19 +958,17 @@
             <param name="logger"></param>
             <param name="recipeCommentsSubscriptionsService"></param>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController.Subscribe(System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController.Subscribe(System.Int32)">
             <summary>
-            Method used to subscribe for specific author
+            Method used to subscribe for specific recipe comments
             </summary>
-            <param name="subscriberId"></param>
             <param name="recipeId"></param>
             <returns></returns>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController.Unsubscribe(System.Int32,System.Int32)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments.RecipeCommentsSubscriptionsController.Unsubscribe(System.Int32)">
             <summary>
-            
+            Method used to unsubscribe user from recipe's comments
             </summary>
-            <param name="subscriberId"></param>
             <param name="recipeId"></param>
             <returns></returns>
         </member>

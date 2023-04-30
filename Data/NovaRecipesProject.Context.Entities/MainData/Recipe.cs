@@ -1,6 +1,7 @@
 ﻿using NovaRecipesProject.Context.Entities.Common;
+using NovaRecipesProject.Context.Entities.MailingAndSubscriptions;
 
-namespace NovaRecipesProject.Context.Entities;
+namespace NovaRecipesProject.Context.Entities.MainData;
 
 /// <summary>
 /// Recipe entity that contains base info about recipes 
@@ -24,18 +25,18 @@ public class Recipe : BaseNameDescription
     /// <summary>
     /// Recipe's main text data used to describe recipe
     /// </summary>
-    public List<RecipeParagraph> RecipeParagraphs { get; set; } = null!;
+    public virtual List<RecipeParagraph> RecipeParagraphs { get; set; } = null!;
     /// <summary>
     /// Entity for connections
     /// </summary>
-    public List<RecipeIngredient> RecipeIngredients { get; set; } = null!;
+    public virtual List<RecipeIngredient> RecipeIngredients { get; set; } = null!;
 
     /// <summary>
     /// List of comments related to this recipe
     /// </summary>
-    public List<RecipeComment>? RecipeComments { get; set; } = null!;
+    public virtual List<RecipeComment>? RecipeComments { get; set; } = null!;
     /// <summary>
     /// List of subscribers for comment section of a recipe
     /// </summary>
-    public List<RecipeCommentsSubscription>? RecipeCommentsSubscribers { get; set; } = null!;
+    public virtual List<RecipeCommentsSubscription>? RecipeCommentsSubscribers { get; set; } = null!;
 }

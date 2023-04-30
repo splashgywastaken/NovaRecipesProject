@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using NovaRecipesProject.Context.Entities.Common;
+using NovaRecipesProject.Context.Entities.MailingAndSubscriptions;
 
-namespace NovaRecipesProject.Context.Entities;
+namespace NovaRecipesProject.Context.Entities.MainData;
 
 /// <summary>
 /// Class used to describe entity for comment section in recipes
@@ -28,9 +29,9 @@ public class RecipeComment : BaseEntity
     /// Recipe related to comment
     /// </summary>
     [Required]
-    public int RecipeId { get; set; }
+    public int CommentRecipeId { get; set; }
     /// <summary>
     /// Recipe related to comment
     /// </summary>
-    public Recipe Recipe { get; set; } = null!;
+    public Recipe CommentRecipe { get; set; } = null!;
 }

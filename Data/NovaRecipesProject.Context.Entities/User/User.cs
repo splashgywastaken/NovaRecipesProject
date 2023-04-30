@@ -5,6 +5,8 @@ namespace NovaRecipesProject.Context.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using NovaRecipesProject.Context.Entities.MainData;
+using NovaRecipesProject.Context.Entities.MailingAndSubscriptions;
 
 /// <inheritdoc />
 public class User : IdentityUser<Guid>

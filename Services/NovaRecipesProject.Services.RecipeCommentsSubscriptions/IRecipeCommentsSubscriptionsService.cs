@@ -11,14 +11,14 @@ public interface IRecipeCommentsSubscriptionsService
     /// <param name="subscriberId"></param>
     /// <param name="recipeId"></param>
     /// <returns></returns>
-    public Task Subscribe(int subscriberId, int recipeId);
+    public Task Subscribe(string subscriberId, int recipeId);
     /// <summary>
     /// Method that unsubscribes user from certain author
     /// </summary>
     /// <param name="subscriberId"></param>
     /// <param name="recipeId"></param>
     /// <returns></returns>
-    public Task Unsubscribe(int subscriberId, int recipeId);
+    public Task Unsubscribe(string subscriberId, int recipeId);
 
     /// <summary>
     /// Method that notifies 

@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using NovaRecipesProject.Common.Exceptions;
 using NovaRecipesProject.Common.Extensions;
 using NovaRecipesProject.Common.Validator;
-using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Services.Cache;
 using NovaRecipesProject.Services.Ingredients.Models;
 using NovaRecipesProject.Common.Tools;
+using NovaRecipesProject.Context.Entities.MainData;
 
 namespace NovaRecipesProject.Services.Ingredients;
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 
 namespace NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 

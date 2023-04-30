@@ -9,7 +9,7 @@ public static class HealthCheckConfiguration
     public static IServiceCollection AddAppHealthChecks(this IServiceCollection services)
     {
         services.AddHealthChecks()
-            .AddCheck<SelfHealthCheck>("DSRNetSchool.Worker");
+            .AddCheck<SelfHealthCheck>("NovaRecipesProject.RecipeNewCommentsSenderWorker");
 
         return services;
     }

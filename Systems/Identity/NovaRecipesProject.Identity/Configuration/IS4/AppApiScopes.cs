@@ -10,6 +10,7 @@ public static class AppApiScopes
         {
             new (AppScopes.AllRead, "Access to the whole API - Read data"),
             new (AppScopes.AllEdit, "Access to the whole API - Write, edit or delete data"),
+            new (AppScopes.UsersSubscriptions, "Access to subscriptions API - allows user to subscribe to any notifications"),
             new (AppScopes.UsersView, "Access to users API - Read data"),
             new (AppScopes.UsersModerate, "Access to users API - Write, edit or delete data"),
             new (AppScopes.CategoriesRead, "Access to categories API - Read data"),

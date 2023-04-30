@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using NovaRecipesProject.Common.Models.BaseModels;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 
 #pragma warning disable CS1591
 

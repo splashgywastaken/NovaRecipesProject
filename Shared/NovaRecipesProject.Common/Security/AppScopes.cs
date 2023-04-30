@@ -8,6 +8,10 @@ namespace NovaRecipesProject.Common.Security;
 public static class AppScopes
 {
     /// <summary>
+    /// Allows user to subscribe to any notifications
+    /// </summary>
+    public const string UsersSubscriptions = "users_subscriptions";
+    /// <summary>
     /// Scope used to view users pages
     /// </summary>
     public const string UsersView = "users_view";

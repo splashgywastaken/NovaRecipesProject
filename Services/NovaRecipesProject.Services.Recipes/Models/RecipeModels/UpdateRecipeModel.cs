@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using NovaRecipesProject.Common.Models.BaseModels;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 using NovaRecipesProject.Services.Categories.Models;
 
 namespace NovaRecipesProject.Services.Recipes.Models.RecipeModels;

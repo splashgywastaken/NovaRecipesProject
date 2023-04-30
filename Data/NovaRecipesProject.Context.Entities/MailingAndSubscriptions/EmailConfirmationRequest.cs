@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using NovaRecipesProject.Context.Entities.Common;
 
-namespace NovaRecipesProject.Context.Entities;
+namespace NovaRecipesProject.Context.Entities.MailingAndSubscriptions;
 
 /// <summary>
 /// Entity used to keep data about emails confirmation status
@@ -17,5 +17,5 @@ public class EmailConfirmationRequest : BaseEntity
     /// Request's date and time of creation, used to tell if too much time went since request was created
     /// </summary>
     [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public DateTime RequestCreationDataTime { get; set; }
+    public DateTime RequestCreationDateTime { get; set; }
 }

@@ -8,6 +8,7 @@ using NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels;
 using NovaRecipesProject.Common.Enums;
 using NovaRecipesProject.Common.Responses;
 using NovaRecipesProject.Common.Security;
+using NovaRecipesProject.Context.Entities;
 using NovaRecipesProject.Services.Recipes;
 using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
@@ -254,17 +255,17 @@ public class RecipesController : ControllerBase
 
     #region AddMethods
     /// <summary>
-    /// Method to add new data to DB
+    /// Method used for adding new recipe to DB. Gets userId from currently signed in user
     /// </summary>
-    /// <param name="userId"></param>
     /// <param name="request"></param>
     /// <response code="200">Returns recipe model which were made while adding new data do DB</response>
     [ProducesResponseType(typeof(RecipeResponse), 200)]
-    [HttpPost("user/{userId:int}")]
+    [HttpPost("user")]
     [MapToApiVersion("0.1")]
     [Authorize(Policy = AppScopes.RecipesEdit)]
-    public async Task<RecipeResponse> AddRecipeWithUser([FromRoute] int userId, [FromBody] AddRecipeRequest request)
+    public async Task<RecipeResponse> AddRecipeWithUser([FromBody] AddRecipeRequest request)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         var model = _mapper.Map<AddRecipeModel>(request);
         var recipe = await _recipeService.AddRecipeWithUser(userId, model);
         var response = _mapper.Map<RecipeResponse>(recipe);

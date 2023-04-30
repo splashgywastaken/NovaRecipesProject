@@ -34,6 +34,17 @@ services:
       - novarecipesproject_redis
       - novarecipesproject_api
 
+  #novarecipesproject_commentsmailingjobscheduler:
+  #  image: ${DOCKER_REGISTRY-}novarecipesprojectcommentsmailingjobscheduler
+  #  build:
+  #    context: .
+  #    dockerfile: Systems/Schedulers/NovaRecipesProject.CommentsMailingJobScheduler/Dockerfile
+  #  depends_on:
+  #    - novarecipesproject_postgresql
+  #    - novarecipesproject_redis
+  #    - novarecipesproject_rabbitmq
+  #    - novarecipesproject_api
+
   novarecipesproject_recipeinfosenderworker_1:
     image: ${DOCKER_REGISTRY-}novarecipesprojectrecipeinfosenderworker
     build:

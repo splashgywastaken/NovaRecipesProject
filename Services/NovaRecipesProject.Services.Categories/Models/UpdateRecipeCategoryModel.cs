@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 
 namespace NovaRecipesProject.Services.Categories.Models;
 

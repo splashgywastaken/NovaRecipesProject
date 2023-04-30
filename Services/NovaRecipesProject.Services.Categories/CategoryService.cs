@@ -5,7 +5,7 @@ using NovaRecipesProject.Common.Extensions;
 using NovaRecipesProject.Common.Tools;
 using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 using NovaRecipesProject.Services.Cache;
 using NovaRecipesProject.Services.Categories.Models;
 

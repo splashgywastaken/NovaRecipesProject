@@ -1,6 +1,6 @@
 ﻿using NovaRecipesProject.Context.Entities.Common;
 
-namespace NovaRecipesProject.Context.Entities;
+namespace NovaRecipesProject.Context.Entities.MainData;
 
 /// <summary>
 /// Category entity

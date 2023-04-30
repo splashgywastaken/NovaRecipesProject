@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.VisualBasic.CompilerServices;
 using NovaRecipesProject.Common.Models.BaseModels;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 
 namespace NovaRecipesProject.Services.RecipesSubscriptions.Models;
 

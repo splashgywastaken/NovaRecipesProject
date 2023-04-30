@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>../../api.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Quartz" Version="3.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Jobs\" />
+    <Folder Include="Factories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\NovaRecipesProject.Context\NovaRecipesProject.Context.csproj" />
+    <ProjectReference Include="..\NovaRecipesProject.Services.Actions\NovaRecipesProject.Services.Actions.csproj" />
+  </ItemGroup>
+
+</Project>

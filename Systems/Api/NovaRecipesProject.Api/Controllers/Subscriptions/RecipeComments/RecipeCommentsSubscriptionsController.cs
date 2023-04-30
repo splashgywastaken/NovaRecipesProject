@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NovaRecipesProject.Api.Controllers.Subscriptions.Recipes;
 using NovaRecipesProject.Common.Responses;
+using NovaRecipesProject.Common.Security;
 using NovaRecipesProject.Services.RecipeCommentsSubscriptions;
 using NovaRecipesProject.Services.RecipesSubscriptions;
+using System.Security.Claims;
 
 namespace NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments;
 
@@ -18,6 +21,7 @@ namespace NovaRecipesProject.Api.Controllers.Subscriptions.RecipeComments;
 [Route("api/v{version:apiVersion}/recipes")]
 [ApiController]
 [ApiVersion("0.1")]
+[Authorize]
 public class RecipeCommentsSubscriptionsController : ControllerBase
 {
     private readonly ILogger<RecipesSubscriptionController> _logger;
@@ -38,35 +42,35 @@ public class RecipeCommentsSubscriptionsController : ControllerBase
     }
 
     /// <summary>
-    /// Method used to subscribe for specific author
+    /// Method used to subscribe for specific recipe comments
     /// </summary>
-    /// <param name="subscriberId"></param>
     /// <param name="recipeId"></param>
     /// <returns></returns>
     [HttpPost("{recipeId:int}/comments/subscriptions")]
+    [Authorize(Policy = AppScopes.UsersSubscriptions)]
     public async Task<ActionResult> Subscribe(
-        [FromQuery] int subscriberId,
         [FromRoute] int recipeId
     )
     {
-        await _recipeCommentsSubscriptionsService.Subscribe(subscriberId, recipeId);
+        var subscriberId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        await _recipeCommentsSubscriptionsService.Subscribe(subscriberId!, recipeId);
 
         return Ok();
     }
 
     /// <summary>
-    /// 
+    /// Method used to unsubscribe user from recipe's comments
     /// </summary>
-    /// <param name="subscriberId"></param>
     /// <param name="recipeId"></param>
     /// <returns></returns>
     [HttpDelete("{recipeId:int}/comments/subscriptions")]
+    [Authorize(Policy = AppScopes.UsersSubscriptions)]
     public async Task<ActionResult> Unsubscribe(
-        [FromQuery] int subscriberId,
         [FromRoute] int recipeId
     )
     {
-        await _recipeCommentsSubscriptionsService.Unsubscribe(subscriberId, recipeId);
+        var subscriberId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        await _recipeCommentsSubscriptionsService.Unsubscribe(subscriberId!, recipeId);
 
         return Ok();
     }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using NovaRecipesProject.Common.Models.BaseModels;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 using NovaRecipesProject.Services.Categories.Models;
 using NovaRecipesProject.Services.RecipeParagraphs.Models;
 using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;

@@ -32,6 +32,14 @@ services:
     env_file:
       - env.identity
 
+  #novarecipesproject_commentsmailingjobscheduler:
+  #  ports:
+  #    - "80"
+  #  networks:
+  #    - shared_novarecipesproject_net
+  #  env_file:
+  #    - env.commentsmailingjobscheduler
+
   novarecipesproject_emailsenderworker_1:
     networks:
       - shared_novarecipesproject_net

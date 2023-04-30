@@ -1,6 +1,6 @@
 ﻿using NovaRecipesProject.Context.Entities.Common;
 
-namespace NovaRecipesProject.Context.Entities;
+namespace NovaRecipesProject.Context.Entities.MainData;
 
 /// <summary>
 /// Entity used to describe steps in recipe or other things that need to be in some sort of order

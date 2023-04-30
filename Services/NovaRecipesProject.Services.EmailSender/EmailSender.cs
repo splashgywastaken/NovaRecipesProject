@@ -14,6 +14,9 @@ public class EmailSender : IEmailSender
     private readonly bool _useSsl;
     private readonly string _username;
     private readonly string _password;
+    // Default sender address for "from" value
+    private readonly string _senderAddress;
+    private readonly string _senderName;
     /// <summary>
     /// Logger used to log data about sending emails 
     /// </summary>
@@ -35,13 +38,18 @@ public class EmailSender : IEmailSender
         _useSsl = settings.UseSsl;
         _username = settings.Username;
         _password = settings.Password;
+        _senderAddress = settings.SenderAddress;
+        _senderName = settings.SenderName;
     }
 
     /// <inheritdoc />
-    public void Send(string from, string to, string subject, string body)
+    public void Send(string? from, string to, string subject, string body)
     {
         var message = new MimeMessage();
-        message.From.Add(new MailboxAddress("Site administration", from));
+        message.From.Add(
+            from is null ?
+                new MailboxAddress(_senderName, _senderAddress)
+                : new MailboxAddress(_senderName, from));
         message.To.Add(new MailboxAddress("Receiver", to));
         message.Subject = subject;
 
@@ -60,12 +68,17 @@ public class EmailSender : IEmailSender
     }
 
     /// <inheritdoc />
-    public async Task SendAsync(string from, string to, string subject, string body)
+    public async Task SendAsync(string? from, string to, string subject, string body)
     {
         var message = new MimeMessage();
-        message.From.Add(new MailboxAddress("", from));
+        message.From.Add(
+            from is null ?
+                new MailboxAddress(_senderName, _senderAddress)
+                : new MailboxAddress(_senderName, from));
         message.To.Add(new MailboxAddress("", to));
         message.Subject = subject;
+
+        Logger.LogInformation($"Message: from {message.From}, to {message.To}, subject {message.Subject}");
 
         var builder = new BodyBuilder
         {

@@ -140,7 +140,121 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.ToTable("user_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Category", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.EmailConfirmationRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("RequestCreationDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<Guid>("Uid")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Uid")
+                        .IsUnique();
+
+                    b.ToTable("emailConfirmationRequests", (string)null);
+                });
+
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.NewCommentInRecipeNotification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("NotificationCreationDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.HasIndex("Uid")
+                        .IsUnique();
+
+                    b.ToTable("newCommentInRecipeNotification", (string)null);
+                });
+
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.RecipeCommentsSubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("SubscriptionRecipeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SubscriptionSubscriberId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubscriptionSubscriberId");
+
+                    b.HasIndex("Uid")
+                        .IsUnique();
+
+                    b.HasIndex("SubscriptionRecipeId", "SubscriptionSubscriberId")
+                        .IsUnique();
+
+                    b.ToTable("recipeCommentsSubscription", (string)null);
+                });
+
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.RecipesSubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SubscriberId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("Uid")
+                        .IsUnique();
+
+                    b.ToTable("userRecipesSubscription", (string)null);
+                });
+
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,35 +282,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.ToTable("categories", (string)null);
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.EmailConfirmationRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("RequestCreationDataTime")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<Guid>("Uid")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Uid")
-                        .IsUnique();
-
-                    b.ToTable("emailConfirmationRequests", (string)null);
-                });
-
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Ingredient", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.Ingredient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -233,7 +319,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.ToTable("ingredients", (string)null);
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Recipe", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.Recipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -266,7 +352,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.ToTable("recipes", (string)null);
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeComment", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.RecipeComment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -274,13 +360,13 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CommentRecipeId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("now()");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -295,7 +381,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("CommentRecipeId");
 
                     b.HasIndex("Uid")
                         .IsUnique();
@@ -303,42 +389,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.ToTable("recipeComments", (string)null);
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeCommentsSubscription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("RecipeId1")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SubscriberId")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("Uid")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId1");
-
-                    b.HasIndex("SubscriberId");
-
-                    b.HasIndex("Uid")
-                        .IsUnique();
-
-                    b.HasIndex("RecipeId", "SubscriberId")
-                        .IsUnique();
-
-                    b.ToTable("recipeCommentsSubscription", (string)null);
-                });
-
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeIngredient", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.RecipeIngredient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -375,7 +426,7 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.ToTable("recipeIngredients", (string)null);
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeParagraph", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.RecipeParagraph", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -409,36 +460,6 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                         .IsUnique();
 
                     b.ToTable("recipeParagraphs", (string)null);
-                });
-
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipesSubscription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SubscriberId")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("Uid")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("Uid")
-                        .IsUnique();
-
-                    b.HasIndex("SubscriberId", "AuthorId")
-                        .IsUnique();
-
-                    b.ToTable("userRecipesSubscription", (string)null);
                 });
 
             modelBuilder.Entity("NovaRecipesProject.Context.Entities.User", b =>
@@ -548,13 +569,13 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
 
             modelBuilder.Entity("CategoryRecipe", b =>
                 {
-                    b.HasOne("NovaRecipesProject.Context.Entities.Category", null)
+                    b.HasOne("NovaRecipesProject.Context.Entities.MainData.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NovaRecipesProject.Context.Entities.Recipe", null)
+                    b.HasOne("NovaRecipesProject.Context.Entities.MainData.Recipe", null)
                         .WithMany()
                         .HasForeignKey("RecipesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -612,7 +633,50 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Recipe", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.NewCommentInRecipeNotification", b =>
+                {
+                    b.HasOne("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.RecipeCommentsSubscription", "Subscription")
+                        .WithMany("NewCommentNotifications")
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.RecipeCommentsSubscription", b =>
+                {
+                    b.HasOne("NovaRecipesProject.Context.Entities.MainData.Recipe", "SubscriptionRecipe")
+                        .WithMany("RecipeCommentsSubscribers")
+                        .HasForeignKey("SubscriptionRecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NovaRecipesProject.Context.Entities.User", "SubscriptionSubscriber")
+                        .WithMany("RecipeCommentsSubscriptions")
+                        .HasForeignKey("SubscriptionSubscriberId")
+                        .HasPrincipalKey("EntryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubscriptionRecipe");
+
+                    b.Navigation("SubscriptionSubscriber");
+                });
+
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.RecipesSubscription", b =>
+                {
+                    b.HasOne("NovaRecipesProject.Context.Entities.User", "Author")
+                        .WithMany("RecipesSubscriptions")
+                        .HasForeignKey("AuthorId")
+                        .HasPrincipalKey("EntryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.Recipe", b =>
                 {
                     b.HasOne("NovaRecipesProject.Context.Entities.User", "User")
                         .WithMany("Recipes")
@@ -624,50 +688,26 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeComment", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.RecipeComment", b =>
                 {
-                    b.HasOne("NovaRecipesProject.Context.Entities.Recipe", "Recipe")
+                    b.HasOne("NovaRecipesProject.Context.Entities.MainData.Recipe", "CommentRecipe")
                         .WithMany("RecipeComments")
-                        .HasForeignKey("RecipeId")
+                        .HasForeignKey("CommentRecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Recipe");
+                    b.Navigation("CommentRecipe");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeCommentsSubscription", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.RecipeIngredient", b =>
                 {
-                    b.HasOne("NovaRecipesProject.Context.Entities.Recipe", "Recipe")
-                        .WithMany()
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NovaRecipesProject.Context.Entities.Recipe", null)
-                        .WithMany("RecipeCommentsSubscribers")
-                        .HasForeignKey("RecipeId1");
-
-                    b.HasOne("NovaRecipesProject.Context.Entities.User", "Subscriber")
-                        .WithMany("RecipeCommentsSubscriptions")
-                        .HasForeignKey("SubscriberId")
-                        .HasPrincipalKey("EntryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("Subscriber");
-                });
-
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeIngredient", b =>
-                {
-                    b.HasOne("NovaRecipesProject.Context.Entities.Ingredient", "Ingredient")
+                    b.HasOne("NovaRecipesProject.Context.Entities.MainData.Ingredient", "Ingredient")
                         .WithMany("RecipeIngredients")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NovaRecipesProject.Context.Entities.Recipe", "Recipe")
+                    b.HasOne("NovaRecipesProject.Context.Entities.MainData.Recipe", "Recipe")
                         .WithMany("RecipeIngredients")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -678,9 +718,9 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipeParagraph", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.RecipeParagraph", b =>
                 {
-                    b.HasOne("NovaRecipesProject.Context.Entities.Recipe", "Recipe")
+                    b.HasOne("NovaRecipesProject.Context.Entities.MainData.Recipe", "Recipe")
                         .WithMany("RecipeParagraphs")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -689,33 +729,17 @@ namespace NovaRecipesProject.Context.Migrations.PostgreSQL.Migrations
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.RecipesSubscription", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MailingAndSubscriptions.RecipeCommentsSubscription", b =>
                 {
-                    b.HasOne("NovaRecipesProject.Context.Entities.User", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .HasPrincipalKey("EntryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NovaRecipesProject.Context.Entities.User", "Subscriber")
-                        .WithMany("RecipesSubscriptions")
-                        .HasForeignKey("SubscriberId")
-                        .HasPrincipalKey("EntryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Subscriber");
+                    b.Navigation("NewCommentNotifications");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Ingredient", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.Ingredient", b =>
                 {
                     b.Navigation("RecipeIngredients");
                 });
 
-            modelBuilder.Entity("NovaRecipesProject.Context.Entities.Recipe", b =>
+            modelBuilder.Entity("NovaRecipesProject.Context.Entities.MainData.Recipe", b =>
                 {
                     b.Navigation("RecipeComments");
 

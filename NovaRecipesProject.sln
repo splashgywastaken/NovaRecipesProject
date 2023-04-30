@@ -69,7 +69,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.RecipeIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.RecipeCommentsSubscriptions", "Services\NovaRecipesProject.Services.RecipeCommentsSubscriptions\NovaRecipesProject.Services.RecipeCommentsSubscriptions.csproj", "{9AB043B1-8C36-407B-A5EA-758EEA9AE197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaRecipesProject.RecipeNewCommentsSenderWorker", "Systems\Workers\NovaRecipesProject.RecipeNewCommentsSenderWorker\NovaRecipesProject.RecipeNewCommentsSenderWorker.csproj", "{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.RecipeNewCommentsSenderWorker", "Systems\Workers\NovaRecipesProject.RecipeNewCommentsSenderWorker\NovaRecipesProject.RecipeNewCommentsSenderWorker.csproj", "{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.Services.Scheduler", "Services\NovaRecipesProject.Services.Scheduler\NovaRecipesProject.Services.Scheduler.csproj", "{B3850987-F87D-41DD-BC87-670793CDB15E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schedulers", "Schedulers", "{80342C89-E29B-4B31-AD72-18C4E14A6B8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaRecipesProject.CommentsMailingJobScheduler", "Systems\Schedulers\NovaRecipesProject.CommentsMailingJobScheduler\NovaRecipesProject.CommentsMailingJobScheduler.csproj", "{6E8E559A-8D9B-4FA1-A43F-96D514C8B063}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3ECECEA5-E9DD-4E51-BB07-B35CB905EEF5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,6 +192,14 @@ Global
 		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3850987-F87D-41DD-BC87-670793CDB15E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3850987-F87D-41DD-BC87-670793CDB15E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3850987-F87D-41DD-BC87-670793CDB15E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3850987-F87D-41DD-BC87-670793CDB15E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E8E559A-8D9B-4FA1-A43F-96D514C8B063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E8E559A-8D9B-4FA1-A43F-96D514C8B063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E8E559A-8D9B-4FA1-A43F-96D514C8B063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E8E559A-8D9B-4FA1-A43F-96D514C8B063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -215,6 +234,9 @@ Global
 		{9E033436-E7C2-4CC6-8F98-8BDD9F0E7DCB} = {C4441DAD-4225-4F23-8829-8F0052812721}
 		{9AB043B1-8C36-407B-A5EA-758EEA9AE197} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
 		{E36275C8-65B8-4D60-AC0A-758A7AEA92DF} = {C4441DAD-4225-4F23-8829-8F0052812721}
+		{B3850987-F87D-41DD-BC87-670793CDB15E} = {F93FF718-2027-47EA-ADC2-AF8721A0F2A8}
+		{80342C89-E29B-4B31-AD72-18C4E14A6B8A} = {0C0EF47D-C334-4402-A389-364160B173F6}
+		{6E8E559A-8D9B-4FA1-A43F-96D514C8B063} = {80342C89-E29B-4B31-AD72-18C4E14A6B8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {923486EB-E594-49ED-9246-C7BBAA6025EB}

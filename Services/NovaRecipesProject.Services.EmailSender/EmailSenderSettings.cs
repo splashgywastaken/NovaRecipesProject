@@ -23,6 +23,14 @@ public class EmailSenderSettings
     /// </summary>
     public string Username { get; set; } = null!;
     /// <summary>
+    /// Sender's address, this will be used as default sender if other is not used
+    /// </summary>
+    public string SenderAddress { get; set; } = null!;
+    /// <summary>
+    /// Used for mailkits message system 
+    /// </summary>
+    public string SenderName { get; set; } = null!;
+    /// <summary>
     /// User's password
     /// </summary>
     public string Password { get; set; } = null!;

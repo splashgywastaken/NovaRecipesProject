@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Logging;
 using NovaRecipesProject.Common.Exceptions;
 using NovaRecipesProject.Common.Validator;
 using NovaRecipesProject.Context;
 using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MailingAndSubscriptions;
 using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.EmailSender.Models;
 using NovaRecipesProject.Services.RecipesSubscriptions.Models;
@@ -14,6 +17,7 @@ namespace NovaRecipesProject.Services.RecipesSubscriptions;
 /// <inheritdoc />
 public class RecipeSubscriptionsService : IRecipeSubscriptionsService
 {
+    private readonly ILogger<RecipeSubscriptionsService> _logger;
     private readonly IMapper _mapper;
     private readonly IAction _action;
     private readonly IDbContextFactory<MainDbContext> _dbContextFactory;
@@ -24,15 +28,18 @@ public class RecipeSubscriptionsService : IRecipeSubscriptionsService
     /// <param name="mapper"></param>
     /// <param name="action"></param>
     /// <param name="dbContextFactory"></param>
+    /// <param name="logger"></param>
     public RecipeSubscriptionsService(
         IMapper mapper,
         IAction action, 
-        IDbContextFactory<MainDbContext> dbContextFactory
+        IDbContextFactory<MainDbContext> dbContextFactory, 
+        ILogger<RecipeSubscriptionsService> logger
         )
     {
         _mapper = mapper;
         _action = action;
         _dbContextFactory = dbContextFactory;
+        _logger = logger;
     }
 
     /// <inheritdoc />
@@ -79,8 +86,7 @@ public class RecipeSubscriptionsService : IRecipeSubscriptionsService
         {
             Email = subscriber!.Email!,
             Subject = "NovaRecipes notification",
-            Message = $"You successfully subscribed to new recipes from {author!.UserName} author",
-            From = "nickdur@yandex.ru"
+            Message = $"You successfully subscribed to new recipes from {author!.FullName} author"
         });
     }
 
@@ -122,8 +128,7 @@ public class RecipeSubscriptionsService : IRecipeSubscriptionsService
         {
             Email = subscriber!.Email!,
             Subject = "NovaRecipes notification",
-            Message = $"You successfully unsubscribed from new recipes from {author!.UserName} author",
-            From = "nickdur@yandex.ru"
+            Message = $"You successfully unsubscribed from new recipes from {author!.FullName} author"
         });
     }
 
@@ -142,20 +147,24 @@ public class RecipeSubscriptionsService : IRecipeSubscriptionsService
             $"The user (author Id: {authorId} was not found)"
         );
 
-        var subscribers = await context.RecipesSubscriptions
+        var subscribersIds = await context
+            .RecipesSubscriptions
             .Where(rs => rs.AuthorId == authorId)
-            .Select(s => s.Subscriber)
+            .Select(rs => rs.SubscriberId)
+            .ToListAsync();
+        var subscribers = await context
+            .Users
+            .Where(u => subscribersIds.Contains(u.EntryId))
             .ToListAsync();
 
         foreach (var subscriber in subscribers)
         {
+            _logger.LogInformation($"Sending email about new recipe to subscriber {subscriber.FullName}");
             await _action.SendRecipeInfoEmail(new EmailModel
             {
                 Email = subscriber.Email!,
                 Subject = "NovaRecipes notification",
-                // TODO: replace here with working link or some usefull data about recipe
-                Message = $"Author {author!.UserName} posted new recipe http://localhost:10000/recipes/{recipe.Id}, go check it out!",
-                From = "nickdur@yandex.ru"
+                Message = $"Author {author!.UserName} posted new recipe {recipe.Name}, go check it out!"
             });
         }
     }

@@ -73,6 +73,10 @@ public static class AuthConfiguration
                 policy => policy.RequireClaim("scope", AppScopes.UsersModerate)
                 );
             options.AddPolicy(
+                AppScopes.UsersSubscriptions,
+                policy => policy.RequireClaim("scope", AppScopes.UsersSubscriptions)
+            );
+            options.AddPolicy(
                 AppScopes.AllRead,
                 policy => policy.RequireClaim("scope", AppScopes.AllRead)
             );

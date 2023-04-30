@@ -106,7 +106,7 @@ public interface IRecipeService
     /// <param name="userId">User Id to add recipe to</param>
     /// <param name="model">Basic data about recipe</param>
     /// <returns></returns>
-    Task<RecipeModel> AddRecipeWithUser(int userId, AddRecipeModel model);
+    Task<RecipeModel> AddRecipeWithUser(string userId, AddRecipeModel model);
     /// <summary>
     /// Creates new entry for join table, basically adds ingredient to a recipe
     /// </summary>

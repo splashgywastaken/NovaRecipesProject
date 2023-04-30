@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using NovaRecipesProject.Context.Entities.MailingAndSubscriptions;
 using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.EmailSender.Models;
 using Npgsql;
@@ -81,8 +82,7 @@ public class UserAccountService : IUserAccountService
         {
             Email = model.Email,
             Subject = "NovaRecipes notification",
-            Message = "You are registered",
-            From = "nickdur@yandex.ru"
+            Message = "You are registered"
         });
 
         // Returning the created user
@@ -130,8 +130,7 @@ public class UserAccountService : IUserAccountService
             Email = email,
             Subject = "Email confirmation",
             Message = "Please, confirm email using this link: " +
-                      $"http://localhost/10000/account/confirm-email/{request.Id}",
-            From = "nickdur@yandex.ru"
+                      $"http://localhost/10000/account/confirm-email/{request.Id}"
         });
 
         return new OkObjectResult("Email confirmation request created");
@@ -163,7 +162,7 @@ public class UserAccountService : IUserAccountService
                 );
 
         // If time from creating request do not exceeds limit
-        if (request!.RequestCreationDataTime + Consts.EmailRequests.RequestExpireTime > DateTime.Now)
+        if (request!.RequestCreationDateTime + Consts.EmailRequests.RequestExpireTime > DateTime.Now)
         {
             // Setting email confirmed as true
             user.EmailConfirmed = true;
@@ -184,8 +183,7 @@ public class UserAccountService : IUserAccountService
         {
             Email = request.Email,
             Subject = "Email confirmation",
-            Message = "Email was confirmed successfully",
-            From = "nickdur@yandex.ru"
+            Message = "Email was confirmed successfully"
         });
 
         return new OkObjectResult("Email was confirmed");

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Context.Entities.MainData;
 
 namespace NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 
@@ -12,7 +12,7 @@ public class AddRecipeCommentModel
 #pragma warning disable CS1591
     public string UserId { get; set; } = null!;
     public string Text { get; set; } = null!;
-    public int RecipeId { get; set; }
+    public int CommentRecipeId { get; set; }
 #pragma warning restore CS1591
 }
 
@@ -46,7 +46,7 @@ public class AddRecipeCommentModelValidator : AbstractValidator<AddRecipeComment
             .NotNull()
             .WithMessage("Comment should not be null");
 
-        RuleFor(x => x.RecipeId)
+        RuleFor(x => x.CommentRecipeId)
             .GreaterThanOrEqualTo(0)
             .WithMessage("Id can't be a negative value");
     }

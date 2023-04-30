@@ -39,24 +39,24 @@ public class RecipesSubscriptionController : ControllerBase
     }
 
     /// <summary>
-    /// Method used to subscribe for specific author
+    /// Method used to subscribe for new recipes of specific author
     /// </summary>
     /// <param name="subscriberId"></param>
-    /// <param name="recipeId"></param>
+    /// <param name="authorId"></param>
     /// <returns></returns>
     [HttpPost("")]
     public async Task<ActionResult> Subscribe(
         [FromQuery] int subscriberId,
-        [FromQuery] int recipeId
+        [FromQuery] int authorId
         )
     {
-        await _recipeSubscriptionsService.Subscribe(subscriberId, recipeId);
+        await _recipeSubscriptionsService.Subscribe(subscriberId, authorId);
 
         return Ok();
     }
 
     /// <summary>
-    /// 
+    /// Method used to unsubscribe from new recipes of specific author
     /// </summary>
     /// <param name="subscriberId"></param>
     /// <param name="authorId"></param>

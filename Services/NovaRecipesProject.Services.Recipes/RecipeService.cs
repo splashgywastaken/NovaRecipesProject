@@ -637,6 +637,57 @@ public class RecipeService : IRecipeService
     }
 
     /// <inheritdoc />
+    public async Task AddCategoryToRecipe(int recipeId, int categoryId)
+    {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var recipe = await context
+            .Recipes
+            .Where(r => r.Id == recipeId)
+            .Include(r => r.Categories)
+            .FirstOrDefaultAsync();
+        ProcessException.ThrowIf(() => recipe is null, $"There is no recipe for such Id: {recipeId}");
+
+        var category = await context
+            .Categories
+            .Where(r => r.Id == recipeId)
+            .Include(c => c.Recipes)
+            .FirstOrDefaultAsync();
+        ProcessException.ThrowIf(() => category is null, $"There is no category for such Id: {categoryId}");
+
+        ProcessException.ThrowIf(
+            () => recipe!.Categories!.Contains(category!),
+            $"There is already one category (categoryId: {categoryId}) in recipe (recipeId {recipeId})");
+        if (recipe!.Categories.IsNullOrEmpty())
+        {
+            recipe.Categories = new List<Category>
+            {
+                category!
+            };
+        } 
+        else
+        {
+            recipe.Categories!.Add(category!);
+        }
+
+        if (category!.Recipes.IsNullOrEmpty())
+        {
+            category!.Recipes = new List<Recipe>
+            {
+                recipe
+            };
+        }
+        else
+        {
+            category.Recipes!.Add(recipe!);
+        }
+
+        context.Categories.Update(category);
+        context.Recipes.Update(recipe);
+        await context.SaveChangesAsync();
+    }
+
+    /// <inheritdoc />
     public async Task<RecipeCommentLightModel> AddCommentToRecipe(int recipeId, AddRecipeCommentModel model)
     {
         _logger.LogInformation($"Recipe Id = {recipeId}");
@@ -767,6 +818,34 @@ public class RecipeService : IRecipeService
             );
 
         context.RecipeIngredients.Remove(recipeIngredient!);
+        await context.SaveChangesAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task DeleteRecipeCategory(int recipeId, int categoryId)
+    {
+        await using var context = await _dbContextFactory.CreateDbContextAsync();
+
+        var recipe = await context
+            .Recipes
+            .Where(r => r.Id == recipeId)
+            .Include(r => r.Categories)
+            .FirstOrDefaultAsync();
+        ProcessException.ThrowIf(() => recipe is null, $"There is no recipe for such Id: {recipeId}");
+
+        var category = await context
+            .Categories
+            .Where(r => r.Id == recipeId)
+            .Include(c => c.Recipes)
+            .FirstOrDefaultAsync();
+        ProcessException.ThrowIf(() => category is null, $"There is no category for such Id: {categoryId}");
+
+        ProcessException.ThrowIf(
+            () => recipe!.Categories!.Contains(category!),
+            $"There is no such category (categoryId: {categoryId}) in recipe (recipeId {recipeId})");
+
+        var recipecont = context.Recipes.Find(recipeId);
+        var categorycont = context.Categories.Find(categoryId);
         await context.SaveChangesAsync();
     }
 

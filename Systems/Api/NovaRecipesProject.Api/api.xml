@@ -868,11 +868,10 @@
             <param name="id">Recipe id by which it returns correct data</param>
             <response code="200">Recipe with corresponding id</response>
         </member>
-        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddRecipeWithUser(System.Int32,NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels.AddRecipeRequest)">
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddRecipeWithUser(NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeModels.AddRecipeRequest)">
             <summary>
-            Method to add new data to DB
+            Method used for adding new recipe to DB. Gets userId from currently signed in user
             </summary>
-            <param name="userId"></param>
             <param name="request"></param>
             <response code="200">Returns recipe model which were made while adding new data do DB</response>
         </member>
@@ -883,6 +882,14 @@
             <param name="recipeId">Recipe to ingredient add to</param>
             <param name="request">Data about ingredient in recipe</param>
             <returns>Recipe's ingredient that it added to recipe with weight, portion and nutrition data</returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddIngredientToRecipe(System.Int32,System.Int32)">
+            <summary>
+            Links category to recipe
+            </summary>
+            <param name="recipeId"></param>
+            <param name="categoryId"></param>
+            <returns></returns>
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.AddCommentToRecipe(System.Int32,NovaRecipesProject.Api.Controllers.Recipes.Models.RecipeCommentModels.AddRecipeCommentRequest)">
             <summary>
@@ -932,6 +939,14 @@
             </summary>
             <param name="recipeId">Recipe id to search through recipes with</param>
             <param name="ingredientId">Ingredient id to search through recipes with</param>
+            <returns></returns>
+        </member>
+        <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.DeleteRecipeCategory(System.Int32,System.Int32)">
+            <summary>
+            Method used to delete connection between some recipe and category
+            </summary>
+            <param name="recipeId"></param>
+            <param name="categoryId"></param>
             <returns></returns>
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Recipes.RecipesController.DeleteCommentFromIngredient(System.Int32,System.Int32)">
@@ -990,15 +1005,15 @@
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController.Subscribe(System.Int32,System.Int32)">
             <summary>
-            Method used to subscribe for specific author
+            Method used to subscribe for new recipes of specific author
             </summary>
             <param name="subscriberId"></param>
-            <param name="recipeId"></param>
+            <param name="authorId"></param>
             <returns></returns>
         </member>
         <member name="M:NovaRecipesProject.Api.Controllers.Subscriptions.Recipes.RecipesSubscriptionController.Unsubscribe(System.Int32,System.Int32)">
             <summary>
-            
+            Method used to unsubscribe from new recipes of specific author
             </summary>
             <param name="subscriberId"></param>
             <param name="authorId"></param>

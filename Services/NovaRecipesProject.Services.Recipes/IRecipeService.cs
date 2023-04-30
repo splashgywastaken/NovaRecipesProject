@@ -113,6 +113,14 @@ public interface IRecipeService
     /// <param name="model"></param>
     /// <returns>Model with </returns>
     Task<RecipeIngredientModel> AddIngredientToRecipe(AddRecipeIngredientModel model);
+
+    /// <summary>
+    /// Creates new entry for join table, basically adds category to a recipe
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="categoryId"></param>
+    /// <returns>Model with </returns>
+    Task AddCategoryToRecipe(int recipeId, int categoryId);
     /// <summary>
     /// Creates new entry for recipeComments table for certain recipe
     /// </summary>
@@ -158,6 +166,14 @@ public interface IRecipeService
     /// <param name="ingredientId">Ingredient id to search through recipes with</param>
     /// <returns></returns>
     Task DeleteRecipeIngredient(int recipeId, int ingredientId);
+
+    /// <summary>
+    /// Deletes entry in RecipeIngredient table in DB
+    /// </summary>
+    /// <param name="recipeId">Recipe id</param>
+    /// <param name="categoryId">Category id</param>
+    /// <returns></returns>
+    Task DeleteRecipeCategory(int recipeId, int categoryId);
 
     /// <summary>
     /// Deletes comment for certain recipe

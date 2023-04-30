@@ -9,6 +9,7 @@ using NovaRecipesProject.Common.Enums;
 using NovaRecipesProject.Common.Responses;
 using NovaRecipesProject.Common.Security;
 using NovaRecipesProject.Context.Entities;
+using NovaRecipesProject.Services.Actions;
 using NovaRecipesProject.Services.Recipes;
 using NovaRecipesProject.Services.Recipes.Models.RecipeCommentModels;
 using NovaRecipesProject.Services.Recipes.Models.RecipeIngredientModels;
@@ -297,6 +298,26 @@ public class RecipesController : ControllerBase
     }
 
     /// <summary>
+    /// Links category to recipe
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="categoryId"></param>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(RecipeIngredientResponse), 200)]
+    [HttpPost("{recipeId:int}/categories/{categoryId:int}")]
+    [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
+    public async Task<IActionResult> AddIngredientToRecipe(
+        [FromRoute] int recipeId,
+        [FromRoute] int categoryId
+    )
+    {
+        await _recipeService.AddCategoryToRecipe(recipeId, categoryId);
+
+        return Ok();
+    }
+
+    /// <summary>
     /// Adds new entry for recipe's comment
     /// </summary>
     /// <param name="recipeId"></param>
@@ -415,6 +436,22 @@ public class RecipesController : ControllerBase
     public async Task<IActionResult> DeleteRecipeIngredient([FromRoute] int recipeId, [FromRoute] int ingredientId)
     {
         await _recipeService.DeleteRecipeIngredient(recipeId, ingredientId);
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// Method used to delete connection between some recipe and category
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="categoryId"></param>
+    /// <returns></returns>
+    [HttpDelete("{recipeId:int}/categories/{categoryId:int}")]
+    [MapToApiVersion("0.1")]
+    [Authorize(Policy = AppScopes.RecipesEdit)]
+    public async Task<IActionResult> DeleteRecipeCategory([FromRoute] int recipeId, [FromRoute] int categoryId)
+    {
+        await _recipeService.DeleteRecipeCategory(recipeId, categoryId);
 
         return Ok();
     }
